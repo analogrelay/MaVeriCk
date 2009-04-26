@@ -28,8 +28,12 @@ namespace Maverick.Web.Tests {
             mockRequest.Setup(r => r.QueryString)
                        .Returns(new NameValueCollection());
 
+            var mockResponse = new Mock<HttpResponseBase>();
+            
             mockContext.SetupGet(c => c.Request)
                        .Returns(mockRequest.Object);
+            mockContext.SetupGet(c => c.Response)
+                       .Returns(mockResponse.Object);
 
             return mockContext.Object;
         }
