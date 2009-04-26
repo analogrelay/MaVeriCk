@@ -74,9 +74,32 @@ namespace Maverick.Web.Tests {
             }, () => mockApplication.Object);
         }
 
-        public static PortalRequestContext CreateMockPortalRequestContext() {
+        internal static PortalRequestContext CreateMockPortalRequestContext() {
             HttpContextBase httpContext = CreateMockHttpContext();
             return new PortalRequestContext(httpContext);
+        }
+
+        internal static ViewContext CreateViewContext(string url) {
+            RouteData routeData = new RouteData();
+            routeData.Values["controller"] = "Controller";
+            routeData.Values["action"] = "Action";
+            routeData.Values["id"] = "Id";
+            ControllerContext controllerContext = new ControllerContext(CreateMockHttpContext(url),
+                                                                        routeData,
+                                                                        new Mock<ControllerBase>().Object);
+            return new ViewContext(controllerContext,
+                                   new Mock<IView>().Object,
+                                   new ViewDataDictionary(),
+                                   new TempDataDictionary());
+        }
+
+        internal static HtmlHelper CreateHtmlHelper() {
+            RouteCollection routes = new RouteCollection();
+            routes.MapRoute("Default",
+                            "{controller}/{action}/{id}",
+                            new { controller = "Page", action = "View", id = "" });
+            HtmlHelper helper = new HtmlHelper(CreateViewContext("http://localhost/Foo/Bar"), new ViewPage(), routes);
+            return helper;
         }
     }
 }
