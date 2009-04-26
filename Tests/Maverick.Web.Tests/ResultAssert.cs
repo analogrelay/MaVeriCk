@@ -176,6 +176,10 @@ namespace Maverick.Web.Tests {
             Assert.IsInstanceOfType(result, typeof(EmptyResult));
         }
 
+        public static void IsUnauthorized(ActionResult result) {
+            Assert.IsInstanceOfType(result, typeof(HttpUnauthorizedResult));
+        }
+
         private static void StringsEqualOrBothNullOrEmpty(string expected, string actual, string messageFormat, string bothEmptyParameter) {
             if (String.IsNullOrEmpty(expected)) {
                 Assert.IsTrue(String.IsNullOrEmpty(actual), messageFormat, bothEmptyParameter);
@@ -187,6 +191,5 @@ namespace Maverick.Web.Tests {
                                 expected);
             }
         }
-
     }
 }
