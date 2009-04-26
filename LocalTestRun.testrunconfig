@@ -2,7 +2,7 @@
 <TestRunConfiguration name="Local Test Run" id="50b16d07-7e3b-4c34-9812-ee41d4ffb78a" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
   <Description>This is a default test run configuration for a local test run.</Description>
   <Deployment>
-    <DeploymentItem filename="Tests\Maverick.Data.NHibernate.Tests\TestFiles\" outputDirectory="TestFiles" />
+    <DeploymentItem filename="Libraries\SQLite\System.Data.SQLite.DLL" />
   </Deployment>
   <NamingScheme baseName="NormalTestRun" useDefault="false" />
   <TestTypeSpecific>

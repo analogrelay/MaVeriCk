@@ -81,7 +81,7 @@ namespace TestUtilities {
         }
 
         public static Stream OpenTestFile(Assembly context, string resourceName) {
-            Assert.AreNotEqual("DotNetNuke.Integrity.Tests.Utilities", context.GetName().Name, "Test Utility assembly does not contain any test files, did you forget to provide the proper context when writing a custom utility function?");
+            Assert.AreNotEqual("TestUtilities", context.GetName().Name, "Test Utility assembly does not contain any test files, did you forget to provide the proper context when writing a custom utility function?");
             resourceName = String.Format("{0}.{1}", context.GetName().Name, resourceName);
             Stream strm = context.GetManifestResourceStream(resourceName);
             if (strm == null) {

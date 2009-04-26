@@ -13,7 +13,7 @@
     </Regular>
   </CodeCoverage>
   <Deployment>
-    <DeploymentItem filename="Tests\Maverick.Data.NHibernate.Tests\TestFiles\" outputDirectory="TestFiles" />
+    <DeploymentItem filename="Libraries\SQLite\System.Data.SQLite.DLL" />
   </Deployment>
   <NamingScheme baseName="CodeCoverageRun" useDefault="false" />
   <TestTypeSpecific>

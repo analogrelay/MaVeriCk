@@ -199,6 +199,7 @@ namespace Maverick.Web.Tests {
             
             // Assert
             Assert.AreSame(expected, actual);
+            MaverickApplication.Routes = null;
         }
 
         private static void PrepareSetupMvcExtensionsTest() {

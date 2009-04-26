@@ -17,11 +17,14 @@ using NHibernate.Connection;
 using NHibernate.Dialect;
 using TestUtilities;
 using TargetResources = Maverick.Data.NHibernate.Properties.Resources;
+using System.IO;
 
 namespace Maverick.Data.NHibernate.Tests {
     [TestClass]
     public class NHibernateDataContextFactoryTests {
-        private const string NHibernateConfigurationFilePath = @"TestFiles\NHibernate\NHibernate.config";
+        private const string TestFilesPath = "TestFiles";
+        private const string NHibernateConfigurationFilePath = NHibernateConfigurationDirectory + "NHibernate.config";
+        private const string NHibernateConfigurationDirectory = TestFilesPath + @"\NHibernate\";
 
         [TestMethod]
         public void CreateDataContext_Guards_Against_Null_ConnectionSource() {
@@ -71,8 +74,8 @@ namespace Maverick.Data.NHibernate.Tests {
                                                                  });
             SetupMockSessionFactory(factory);
 
-            
-            
+
+
             // Act
             DataContext context = factory.CreateDataContext();
 
@@ -98,20 +101,26 @@ namespace Maverick.Data.NHibernate.Tests {
         [TestMethod]
         public void CreateSessionFactory_Correctly_Configures_NHibernate_SessionFactory() {
             // Arrange
+            ExtractConfigurationFile();
+
             NHibernateDataContextFactory factory = CreateFactory(null);
             factory.ConfigurationFilePath = NHibernateConfigurationFilePath;
 
             // Act
             ISessionFactory context = factory.CreateSessionFactory();
-            
+
             // Assert
             Assert.IsInstanceOfType(context.Dialect, typeof(SQLiteDialect));
             Assert.IsInstanceOfType(context.ConnectionProvider, typeof(DriverConnectionProvider));
+
+            Directory.Delete("TestFiles", true);
         }
 
         [TestMethod]
         public void ConfigurationSource_Uses_Configuration_File_Path_If_Provided() {
             // Arrange
+            ExtractConfigurationFile();
+
             Configuration cfg = null;
             NHibernateDataContextFactory factory = CreateFactory(null);
             factory.ConfigurationFilePath = NHibernateConfigurationFilePath;
@@ -128,6 +137,15 @@ namespace Maverick.Data.NHibernate.Tests {
             Assert.AreEqual("NHibernate.Driver.SQLite20Driver", cfg.Properties["connection.driver_class"]);
             Assert.AreEqual("TestConnectionSource", cfg.Properties["connection.connection_string_name"]);
             Assert.AreEqual("NHibernate.Dialect.SQLiteDialect", cfg.Properties["dialect"]);
+
+            Directory.Delete("TestFiles", true);
+        }
+
+        private static void ExtractConfigurationFile() {
+            if (!Directory.Exists(NHibernateConfigurationDirectory)) {
+                Directory.CreateDirectory(NHibernateConfigurationDirectory);
+            }
+            TestFileManager.ExtractTestFile("TestFiles.NHibernate.NHibernate.config", NHibernateConfigurationFilePath);
         }
 
         private static void SetupMockSessionFactory(NHibernateDataContextFactory factory) {
@@ -159,7 +177,7 @@ namespace Maverick.Data.NHibernate.Tests {
         }
 
         private static NHibernateDataContextFactory CreateFactory(Func<Configuration> configurationSource, IList<MappingContributor> contributors) {
-            NHibernateDataContextFactory factory = new Mock<NHibernateDataContextFactory> {CallBase = true}.Object;
+            NHibernateDataContextFactory factory = new Mock<NHibernateDataContextFactory> { CallBase = true }.Object;
             factory.ConfigurationSource = configurationSource;
             factory.MappingContributors = contributors;
 

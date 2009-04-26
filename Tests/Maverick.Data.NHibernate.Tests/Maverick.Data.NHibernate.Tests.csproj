@@ -109,14 +109,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestFiles\NHibernate\MappingBaselines\Maverick.Models.Module.hbm.xml" />
-    <Content Include="TestFiles\NHibernate\MappingBaselines\Maverick.Models.Page.hbm.xml" />
-    <Content Include="TestFiles\NHibernate\MappingBaselines\Maverick.Models.Portal.hbm.xml" />
-    <Content Include="TestFiles\NHibernate\MappingBaselines\Maverick.Models.PortalPrefix.hbm.xml" />
+    <EmbeddedResource Include="TestFiles\NHibernate\MappingBaselines\Maverick.Models.Module.hbm.xml" />
+    <EmbeddedResource Include="TestFiles\NHibernate\MappingBaselines\Maverick.Models.Page.hbm.xml" />
+    <EmbeddedResource Include="TestFiles\NHibernate\MappingBaselines\Maverick.Models.Portal.hbm.xml" />
+    <EmbeddedResource Include="TestFiles\NHibernate\MappingBaselines\Maverick.Models.PortalPrefix.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="TestFiles\NHibernate\NHibernate.config" />
+    <EmbeddedResource Include="TestFiles\NHibernate\NHibernate.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

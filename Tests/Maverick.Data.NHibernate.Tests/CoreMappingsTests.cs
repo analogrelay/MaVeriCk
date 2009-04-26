@@ -11,6 +11,7 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 using FluentNHibernate.Cfg;
 using Maverick.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -19,13 +20,20 @@ using TestUtilities;
 namespace Maverick.Data.NHibernate.Tests {
     [TestClass]
     public class CoreMappingsTests {
-        private const string MappingFileOutputPath = @"TestOutput\NHibernate\Mappings";
-        private const string MappingBaselinePath = @"TestFiles\NHibernate\MappingBaselines";
-
+        private const string TestFilesPath = "TestFiles";
+        private const string MappingFileOutputPath = TestFilesPath + @"\Output\NHibernate\Mappings";
+        private const string MappingBaselinePath = TestFilesPath + @"\Input\NHibernate\Baselines";
+        private const string MappingBaselineResourceNamespace = MappingBaselineResourceAssembly+"TestFiles.NHibernate.MappingBaselines.";
+        private const string MappingBaselineResourceAssembly = "Maverick.Data.NHibernate.Tests.";
+        
         [TestMethod]
         public void CoreMappings_Generates_Correct_NHibernate_Mapping_Xml() {
             if(!Directory.Exists(MappingFileOutputPath)) {
                 Directory.CreateDirectory(MappingFileOutputPath);
+            }
+
+            if (!Directory.Exists(MappingBaselinePath)) {
+                Directory.CreateDirectory(MappingBaselinePath);
             }
 
             // Arrange
@@ -43,10 +51,18 @@ namespace Maverick.Data.NHibernate.Tests {
 
             // Assert
 #if !GENERATE_BASELINES
+            foreach(string fullResourceName in Assembly.GetExecutingAssembly().GetManifestResourceNames()) {
+                if(fullResourceName.StartsWith(MappingBaselineResourceNamespace)) {
+                    string asmRelativeName = fullResourceName.Substring(MappingBaselineResourceAssembly.Length);
+                    string folderRelativeName = fullResourceName.Substring(MappingBaselineResourceNamespace.Length);
+                    TestFileManager.ExtractTestFile(asmRelativeName, Path.Combine(MappingBaselinePath, folderRelativeName));
+                }
+            }
             TestFileManager.CompareFilesAgainstBaseline(MappingFileOutputPath, MappingBaselinePath, "*.hbm.xml", (e, a) => {
                 FileAssert.TextFilesAreEqual(e, a, TokenTransformer, "The mapping files did not match");
             });
 #endif
+            Directory.Delete(TestFilesPath, true);
         }
 
         private static string TokenTransformer(string arg) {
