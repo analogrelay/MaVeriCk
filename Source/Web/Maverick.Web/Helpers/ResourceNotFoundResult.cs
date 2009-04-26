@@ -12,9 +12,17 @@ using System.Web.Mvc;
 
 namespace Maverick.Web.Helpers {
     public class ResourceNotFoundResult : ActionResult {
-        private static Func<ActionResult> _defaultInnerResultFactory = () => new EmptyResult();
+        private static readonly Func<ActionResult> FallbackInnerResultFactory = () => new EmptyResult();
+        
+        private static Func<ActionResult> _defaultInnerResultFactory;
+        
         public static Func<ActionResult> DefaultInnerResultFactory {
-            get { return _defaultInnerResultFactory; }
+            get {
+                if(_defaultInnerResultFactory == null) {
+                    return FallbackInnerResultFactory;
+                }
+                return _defaultInnerResultFactory;
+            }
             set { _defaultInnerResultFactory = value; }
         }
 
