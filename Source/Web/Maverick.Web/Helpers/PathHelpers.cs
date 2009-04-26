@@ -1,13 +1,16 @@
 // --------------------------------------------------------------------------------------------------------------------- 
-// <copyright file="PathHelpers.cs" company="Andrew Nurse">
-//   Copyright (c) 2009 Andrew Nurse.  Licensed under the Ms-PL license: http://opensource.org/licenses/ms-pl.html
+// <copyright file="PathHelpers" company="Microsoft">
+//   Direct copy from System.Web.Mvc.PathHelpers, from the (Ms-PL licensed) ASP.Net MVC Source Code
 // </copyright>
 // <summary>
 //   Defines the PathHelpers type.
 // </summary>
 // ---------------------------------------------------------------------------------------------------------------------
 
-// Direct copy from System.Web.Mvc.PathHelpers, from the (Ms-PL licensed) ASP.Net MVC Source Code
+// THIS CODE WAS NOT CREATED BY THE MAVERICK PROJECT - It is from the ASP.Net MVC Framework
+// This code is Copyright Microsoft Corp., licensed to Maverick under the Microsoft Public License
+// The original source is: http://aspnet.codeplex.com
+
 using System;
 using System.Collections.Specialized;
 using System.Web;
