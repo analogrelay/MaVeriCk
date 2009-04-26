@@ -100,6 +100,7 @@
     <Compile Include="Controllers\MaverickControllerTests.cs" />
     <Compile Include="DictionaryAssert.cs" />
     <Compile Include="Helpers\HttpContextBaseExtensionsTests.cs" />
+    <Compile Include="Helpers\IdentityHtmlHelpersTests.cs" />
     <Compile Include="Identity\ISessionIdentityManagerTests.cs" />
     <Compile Include="MaverickApplicationTests.cs" />
     <Compile Include="Mockery.cs" />
