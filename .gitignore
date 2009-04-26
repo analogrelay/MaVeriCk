@@ -1,16 +1,31 @@
-# User-specific settings
-_ReSharper*/
-*.user
-*.suo
-
-# Build Outputs
-bin/
-obj/
-*.dll
+#ignore thumbnails created by windows
+Thumbs.db
+#Ignore files build by Visual Studio
+*.obj
+*.exe
 *.pdb
-*.simian
-
-# Other
-*.vssscc
+*.user
+*.aps
+*.pch
 *.vspscc
+*.vssscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
 *.Cache
+*.ilk
+*.log
+[Bb]in
+[Db]ebug*/
+*.lib
+*.sbr
+*.simian
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
