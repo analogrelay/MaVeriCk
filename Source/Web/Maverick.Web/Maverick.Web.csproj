@@ -126,7 +126,7 @@
     <Compile Include="Models\ControlPanelViewModel.cs" />
     <Compile Include="Models\ModuleApplicationViewModel.cs" />
     <Compile Include="Models\PageViewModel.cs" />
-    <Compile Include="Helpers\StylesheetExtensions.cs" />
+    <Compile Include="Helpers\ImportExtensions.cs" />
     <Compile Include="Models\PrincipalExtensions.cs" />
     <Compile Include="Models\UserIdentity.cs" />
     <Compile Include="Models\ZoneViewModel.cs" />

@@ -13,7 +13,7 @@ using System.Web.Mvc;
 
 namespace Maverick.Web.Helpers {
     // TODO: This is NOT the place for this
-    public static class StylesheetExtensions {
+    public static class ImportExtensions {
         public static string Stylesheet(this HtmlHelper helper, string contentPath) {
             // HACK: Need a better way to use UrlHelper
             UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext, helper.RouteCollection);
