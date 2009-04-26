@@ -20,6 +20,7 @@ using System.Web;
 using Moq;
 using Maverick.Web.Models;
 using Microsoft.IdentityModel.Claims;
+using TestUtilities;
 
 namespace Maverick.Web.Tests.Helpers {
     [TestClass]
@@ -30,6 +31,26 @@ namespace Maverick.Web.Tests.Helpers {
         [TestMethod]
         public void LoginLink_With_No_Arguments_Uses_Defaults() {
             RunLinkTest(h => h.LoginLink(), GetExpectedLoginLink);
+        }
+
+        [TestMethod]
+        public void LoginLink_Requires_Non_Null_Helper_Parameter() {
+            AutoTester.ArgumentNull<HtmlHelper>(marker => marker.LoginLink());
+            AutoTester.ArgumentNull<HtmlHelper>(marker => marker.LoginLink("Foo"));
+            AutoTester.ArgumentNull<HtmlHelper>(marker => marker.LoginLink("Foo", "Bar"));
+        }
+
+        [TestMethod]
+        public void LoginLink_Requires_Non_Null_Title_Parameter() {
+            HtmlHelper helper = Mockery.CreateHtmlHelper();
+            AutoTester.StringArgumentNullOrEmpty(marker => helper.LoginLink(marker));
+            AutoTester.StringArgumentNullOrEmpty(marker => helper.LoginLink(marker, "Foo"));
+        }
+
+        [TestMethod]
+        public void LoginLink_Requires_Non_Null_IdentitySource_Parameter() {
+            HtmlHelper helper = Mockery.CreateHtmlHelper();
+            AutoTester.StringArgumentNullOrEmpty(marker => helper.LoginLink("Foo", marker));
         }
 
         [TestMethod]
@@ -48,6 +69,26 @@ namespace Maverick.Web.Tests.Helpers {
         }
 
         [TestMethod]
+        public void LogoutLink_Requires_Non_Null_Helper_Parameter() {
+            AutoTester.ArgumentNull<HtmlHelper>(marker => marker.LogoutLink());
+            AutoTester.ArgumentNull<HtmlHelper>(marker => marker.LogoutLink("Foo"));
+            AutoTester.ArgumentNull<HtmlHelper>(marker => marker.LogoutLink("Foo", "Bar"));
+        }
+
+        [TestMethod]
+        public void LogoutLink_Requires_Non_Null_Title_Parameter() {
+            HtmlHelper helper = Mockery.CreateHtmlHelper();
+            AutoTester.StringArgumentNullOrEmpty(marker => helper.LogoutLink(marker));
+            AutoTester.StringArgumentNullOrEmpty(marker => helper.LogoutLink(marker, "Foo"));
+        }
+
+        [TestMethod]
+        public void LogoutLink_Requires_Non_Null_IdentitySource_Parameter() {
+            HtmlHelper helper = Mockery.CreateHtmlHelper();
+            AutoTester.StringArgumentNullOrEmpty(marker => helper.LogoutLink("Foo", marker));
+        }
+
+        [TestMethod]
         public void LogoutLink_Title_Parameter_Overrides_Default_Link_Title() {
             RunLinkTest(h => h.LogoutLink("Foo"), h => GetExpectedLogoutLink(h, "Foo"));
         }
@@ -55,6 +96,11 @@ namespace Maverick.Web.Tests.Helpers {
         [TestMethod]
         public void LogoutLink_IdentitySource_Parameter_Appends_IdentitySource_To_Url() {
             RunLinkTest(h => h.LogoutLink("Foo", "Bar"), h => GetExpectedLogoutLink(h, "Foo", "Bar"));
+        }
+
+        [TestMethod]
+        public void CurrentUser_Requires_Non_Null_Helper_Parameter() {
+            AutoTester.ArgumentNull<HtmlHelper>(marker => marker.CurrentUser());
         }
 
         [TestMethod]

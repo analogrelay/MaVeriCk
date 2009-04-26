@@ -26,16 +26,22 @@ namespace Maverick.Web.Helpers {
 
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login", Justification = "The term Login is commonly used on the Web")]
         public static string LoginLink(this HtmlHelper htmlHelper) {
+            Arg.NotNull("htmlHelper", htmlHelper);
             return LoginLink(htmlHelper, DefaultLoginLinkTitle);
         }
 
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login", Justification = "The term Login is commonly used on the Web")]
         public static string LoginLink(this HtmlHelper htmlHelper, string title) {
+            Arg.NotNull("htmlHelper", htmlHelper);
+            Arg.NotNullOrEmpty("title", title);
             return htmlHelper.ActionLink(title, DefaultLoginAction, DefaultLoginController, new {returnUrl = GetReturnUrl(htmlHelper), page = (Page)null}, null);
         }
 
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login", Justification = "The term Login is commonly used on the Web")]
         public static string LoginLink(this HtmlHelper htmlHelper, string title, string identitySource) {
+            Arg.NotNull("htmlHelper", htmlHelper);
+            Arg.NotNullOrEmpty("title", title);
+            Arg.NotNullOrEmpty("identitySource", identitySource);
             return htmlHelper.ActionLink(title, DefaultLoginAction, DefaultLoginController, new { returnUrl = GetReturnUrl(htmlHelper), id = identitySource, page = (Page)null }, null);
         }
 
@@ -46,16 +52,22 @@ namespace Maverick.Web.Helpers {
 
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Logout", Justification = "The term Logout is commonly used on the Web")]
         public static string LogoutLink(this HtmlHelper htmlHelper, string title) {
+            Arg.NotNull("htmlHelper", htmlHelper);
+            Arg.NotNullOrEmpty("title", title);
             return htmlHelper.ActionLink(title, DefaultLogoutAction, DefaultLogoutController, new {page = (Page)null}, null);
         }
 
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Logout", Justification = "The term Logout is commonly used on the Web")]
         public static string LogoutLink(this HtmlHelper htmlHelper, string title, string identitySource) {
+            Arg.NotNull("htmlHelper", htmlHelper);
+            Arg.NotNullOrEmpty("title", title);
+            Arg.NotNullOrEmpty("identitySource", identitySource);
             return htmlHelper.ActionLink(title, DefaultLogoutAction, DefaultLogoutController, new { id = identitySource, page = (Page)null }, null);
         }
 
         public static UserIdentity CurrentUser(this HtmlHelper htmlHelper) {
-            if(!htmlHelper.ViewContext.HttpContext.Request.IsAuthenticated) {
+            Arg.NotNull("htmlHelper", htmlHelper);
+            if (!htmlHelper.ViewContext.HttpContext.Request.IsAuthenticated) {
                 return null;
             }
             IClaimsPrincipal principal = htmlHelper.ViewContext.HttpContext.User as IClaimsPrincipal;
