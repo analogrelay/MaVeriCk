@@ -19,7 +19,7 @@ namespace Maverick.Web.Helpers {
             Arg.NotNullOrEmpty("baseId", baseId);
 
             ModuleRequestResult moduleContext = helper.ViewContext.HttpContext.GetActiveModule();
-            if(moduleContext != null) {
+            if(moduleContext != null && moduleContext.Module != null) {
                 return String.Format(CultureInfo.InvariantCulture, 
                                      "m{0}_{1}", 
                                      moduleContext.Module.Id, 
