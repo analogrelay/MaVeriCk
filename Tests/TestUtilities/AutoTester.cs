@@ -17,11 +17,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TestUtilities {
     public static class AutoTester {
+        // Helper to test for argument null exception.  Guarantees that the correct paramname is used,
+        // even when the method is refactored
         public static void ArgumentNull<T>(Expression<Action<T>> expr) where T : class {
             // Run the tests
             RunArgumentTests(expr, (paramName, method, act) => ExceptionAssert.ThrowsArgNull(paramName, () => act(null)));
         }
 
+        // Helper to test for argument null exception.  Guarantees that the correct paramname is used,
+        // even when the method is refactored
         public static void StringArgumentNullOrEmpty(Expression<Action<string>> expr) {
             // Run the tests
             RunArgumentTests(expr, (paramName, method, act) => {
