@@ -1,4 +1,4 @@
-MaVeriCk is Copyright Andrew Nurse (2009): http://blog.vibrantcode.com
+dMaVeriCk is Copyright Andrew Nurse (2009): http://blog.vibrantcode.com
 
 Microsoft Public License (Ms-PL)
 
