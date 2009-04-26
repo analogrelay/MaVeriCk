@@ -15,6 +15,9 @@ namespace Maverick.Web.Helpers {
     // TODO: This is NOT the place for this
     public static class ImportExtensions {
         public static string Stylesheet(this HtmlHelper helper, string contentPath) {
+            Arg.NotNull("helper", helper);
+            Arg.NotNullOrEmpty("contentPath", contentPath);
+
             // HACK: Need a better way to use UrlHelper
             UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext, helper.RouteCollection);
 
@@ -24,6 +27,9 @@ namespace Maverick.Web.Helpers {
         }
 
         public static string Script(this HtmlHelper helper, string contentPath) {
+            Arg.NotNull("helper", helper);
+            Arg.NotNullOrEmpty("contentPath", contentPath);
+
             // HACK: Need a better way to use UrlHelper
             UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext, helper.RouteCollection);
 

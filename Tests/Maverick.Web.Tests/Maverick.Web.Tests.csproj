@@ -101,6 +101,7 @@
     <Compile Include="DictionaryAssert.cs" />
     <Compile Include="Helpers\HttpContextBaseExtensionsTests.cs" />
     <Compile Include="Helpers\IdentityHtmlHelpersTests.cs" />
+    <Compile Include="Helpers\ImportExtensionsTests.cs" />
     <Compile Include="Helpers\ModuleHtmlHelpersTests.cs" />
     <Compile Include="Helpers\PathHelpersTests.cs" />
     <Compile Include="Helpers\ResourceNotFoundResultTests.cs" />
