@@ -15,6 +15,7 @@ using Maverick.Web.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestUtilities;
 using System.Web.Mvc;
+using Moq;
 
 namespace Maverick.Web.Tests.Helpers {
     [TestClass]
@@ -30,6 +31,55 @@ namespace Maverick.Web.Tests.Helpers {
             ResourceNotFoundResult.DefaultInnerResultFactory = () => new HttpUnauthorizedResult();
             ResultAssert.IsUnauthorized(ResourceNotFoundResult.DefaultInnerResultFactory());
             ResourceNotFoundResult.DefaultInnerResultFactory = null;
+        }
+
+        [TestMethod]
+        public void ExecuteResult_Sets_StatusCode_To_404() {
+            // Arrange
+            ControllerContext context = Mockery.CreateMockControllerContext();
+            ResourceNotFoundResult result = new ResourceNotFoundResult();
+
+            // Act
+            result.ExecuteResult(context);
+
+            // Assert
+            Mock.Get(context.HttpContext.Response)
+                .VerifySet(r => r.StatusCode, 404);
+        }
+
+        [TestMethod]
+        public void ExecuteResult_Executes_Default_InnerResult_With_Context_If_No_InnerResult_Provided() {
+            // Arrange
+            ControllerContext context = Mockery.CreateMockControllerContext();
+            var mockResult = new Mock<ActionResult>();
+            ResourceNotFoundResult.DefaultInnerResultFactory = () => mockResult.Object;
+            ResourceNotFoundResult result = new ResourceNotFoundResult();
+            
+            // Act
+            result.ExecuteResult(context);
+
+            // Assert
+            mockResult.Verify(r => r.ExecuteResult(context));
+        }
+
+        [TestMethod]
+        public void ExecuteResult_Executes_Provided_InnerResult_With_Context_If_No_InnerResult_Provided() {
+            // Arrange
+            ControllerContext context = Mockery.CreateMockControllerContext();
+            ResourceNotFoundResult.DefaultInnerResultFactory = () => {
+                Assert.Fail("Expected that the default inner result factory would not be used");
+                return null;
+            };
+            var mockResult = new Mock<ActionResult>();
+            ResourceNotFoundResult result = new ResourceNotFoundResult() {
+                InnerResult = mockResult.Object
+            };
+            
+            // Act
+            result.ExecuteResult(context);
+
+            // Assert
+            mockResult.Verify(r => r.ExecuteResult(context));
         }
     }
 }
