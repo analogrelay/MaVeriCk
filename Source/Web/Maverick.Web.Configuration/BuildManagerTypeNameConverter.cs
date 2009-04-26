@@ -30,27 +30,28 @@ namespace Maverick.Web.Configuration {
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value) {
             string stringValue = value as string;
-            if (stringValue != null) {
-                Type type = TypeResolver(stringValue);
-
-                if (type == null) {
-                    throw new ArgumentException(String.Format(CultureInfo.CurrentUICulture,
-                                                              Resources.Error_CouldNotResolveType,
-                                                              value),
-                                                "value");
-                }
-                return type;
+            if(stringValue == null) {
+                throw GetConvertFromException(value);
             }
-            return base.ConvertFrom(context, culture, value);
+
+            Type type = TypeResolver(stringValue);
+
+            if (type == null) {
+                throw new ArgumentException(String.Format(CultureInfo.CurrentUICulture,
+                                                          Resources.Error_CouldNotResolveType,
+                                                          value),
+                                            "value");
+            }
+            return type;
         }
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType) {
             Type type = value as Type;
-            if(type != null && destinationType == typeof(string)) {
-                return type.AssemblyQualifiedName;
+            if(type == null || destinationType != typeof(string)) {
+                throw GetConvertToException(value, destinationType);
             }
 
-            return base.ConvertTo(context, culture, value, destinationType);
+            return type.AssemblyQualifiedName;
         }
     }
 }

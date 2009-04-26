@@ -17,19 +17,19 @@ namespace Maverick.ComponentModel {
             Arg.NotNull("value", value);
 
             string stringValue = value as string;
-            if(stringValue != null) {
-                return new Version(stringValue.Trim());
+            if(stringValue == null) {
+                throw GetConvertFromException(value);
             }
-            return base.ConvertFrom(context, culture, value);
+            return new Version(stringValue.Trim());
         }
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType) {
             Arg.NotNull("value", value);
             
-            if(destinationType == typeof(string)) {
-                return value.ToString();
+            if(destinationType != typeof(string)) {
+                throw GetConvertToException(value, destinationType);
             }
-            return base.ConvertTo(context, culture, value, destinationType);
+            return value.ToString();
         }
     }
 }
