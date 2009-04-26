@@ -15,6 +15,9 @@ using Maverick.Web.ModuleFramework;
 namespace Maverick.Web.Helpers {
     public static class ModuleHtmlHelpers {
         public static string Id(this HtmlHelper helper, string baseId) {
+            Arg.NotNull("helper", helper);
+            Arg.NotNullOrEmpty("baseId", baseId);
+
             ModuleRequestResult moduleContext = helper.ViewContext.HttpContext.GetActiveModule();
             if(moduleContext != null) {
                 return String.Format(CultureInfo.InvariantCulture, 

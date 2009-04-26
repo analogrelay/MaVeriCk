@@ -101,6 +101,7 @@
     <Compile Include="DictionaryAssert.cs" />
     <Compile Include="Helpers\HttpContextBaseExtensionsTests.cs" />
     <Compile Include="Helpers\IdentityHtmlHelpersTests.cs" />
+    <Compile Include="Helpers\ModuleHtmlHelpersTests.cs" />
     <Compile Include="Identity\ISessionIdentityManagerTests.cs" />
     <Compile Include="MaverickApplicationTests.cs" />
     <Compile Include="Mockery.cs" />
