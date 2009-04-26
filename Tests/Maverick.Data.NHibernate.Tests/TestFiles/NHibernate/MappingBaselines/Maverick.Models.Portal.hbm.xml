@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="{{ASSEMBLY}}" namespace="Maverick.Models">
+  <class name="Portal" table="Portals" xmlns="urn:nhibernate-mapping-2.2">
+    <id name="Id" type="Int32" column="Id">
+      <generator class="identity" />
+    </id>
+    <property name="Name" type="String">
+      <column name="Name" not-null="true" length="256" />
+    </property>
+    <bag name="PortalPrefixes" inverse="true">
+      <key column="PortalId" />
+      <one-to-many class="Maverick.Models.PortalPrefix, {{ASSEMBLY}}" />
+    </bag>
+    <bag name="Pages" inverse="true">
+      <key column="PageId" />
+      <one-to-many class="Maverick.Models.Page, {{ASSEMBLY}}" />
+    </bag>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,172 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7E36044C-424B-4C30-BA82-80BA45768497}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Maverick.Web.Tests</RootNamespace>
+    <AssemblyName>Maverick.Web.Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRules>
+    </CodeAnalysisRules>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-CodeAnalysis|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug-CodeAnalysis\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.IdentityModel, Version=0.5.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Moq, Version=3.0.108.5, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libraries\Tests\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition, Version=2009.1.23.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libraries\System.ComponentModel.Composition.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.IdentityModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="ActionFilterAssert.cs" />
+    <Compile Include="ClaimsAssert.cs" />
+    <Compile Include="Configuration\AppSettingsCatalogTests.cs" />
+    <Compile Include="Configuration\BuildManagerTypeNameConverterTests.cs" />
+    <Compile Include="Configuration\CatalogElementCollectionTests.cs" />
+    <Compile Include="Configuration\CatalogElementTests.cs" />
+    <Compile Include="Configuration\ConfigurationElementCollectionTestsBase.cs" />
+    <Compile Include="Configuration\ConfigurationElementTestsBase.cs" />
+    <Compile Include="Configuration\ComponentsSectionTests.cs" />
+    <Compile Include="Configuration\ConfiguredCatalogTests.cs" />
+    <Compile Include="Configuration\ConnectionStringsCatalogTests.cs" />
+    <Compile Include="Configuration\IConfigurationElementAccessor.cs" />
+    <Compile Include="Configuration\IConfigurationElementCollectionAccessor.cs" />
+    <Compile Include="Controllers\CompositionContainerControllerFactoryTests.cs" />
+    <Compile Include="Controllers\IdentityControllerTestsHelper.cs" />
+    <Compile Include="Controllers\MaverickControllerTests.cs" />
+    <Compile Include="DictionaryAssert.cs" />
+    <Compile Include="Helpers\HttpContextBaseExtensionsTests.cs" />
+    <Compile Include="Identity\ISessionIdentityManagerTests.cs" />
+    <Compile Include="MaverickApplicationTests.cs" />
+    <Compile Include="Mockery.cs" />
+    <Compile Include="Controllers\IdentityControllerTests.cs" />
+    <Compile Include="Controllers\ModuleControllerTests.cs" />
+    <Compile Include="Controllers\PageControllerTests.cs" />
+    <Compile Include="ControllerTestBase.cs" />
+    <Compile Include="HttpContextDataContextManagerTests.cs" />
+    <Compile Include="Identity\AzureAcsLiveIdentitySourceTests.cs" />
+    <Compile Include="Identity\IdentityServicesTests.cs" />
+    <Compile Include="Identity\IdentitySourceTests.cs" />
+    <Compile Include="Identity\WSFederationIdentitySourceBaseTests.cs" />
+    <Compile Include="MiscAssert.cs" />
+    <Compile Include="Models\ClaimCollectionExtensionsTests.cs" />
+    <Compile Include="ModuleFramework\ModuleApplicationTests.cs" />
+    <Compile Include="ModuleFramework\ModuleApplicationTests.ExecuteRequest.cs" />
+    <Compile Include="ModuleFramework\ModuleDelegatingViewEngineTests.cs" />
+    <Compile Include="PortalRequestContextTests.cs" />
+    <Compile Include="ResultAssert.cs" />
+    <Compile Include="Routing\ModuleRouteRewriterTests.cs" />
+    <Compile Include="Routing\PagePrerouterTests.cs" />
+    <Compile Include="Routing\PortalVirtualizationPrerouterTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Theming\ThemedWebFormViewEngineTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\Core\Maverick.Core\Maverick.Core.csproj">
+      <Project>{0DDF699A-DDB4-49C0-A43E-D4ACD7E0C23F}</Project>
+      <Name>Maverick.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Data\Maverick.Data\Maverick.Data.csproj">
+      <Project>{B87CE80F-95EA-491F-9924-BCAC361C950E}</Project>
+      <Name>Maverick.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Maverick.DomainServices\Maverick.DomainServices.csproj">
+      <Project>{C9D2EE9C-4464-4678-886A-59046C7E8F9C}</Project>
+      <Name>Maverick.DomainServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Web\Maverick.Web.Configuration\Maverick.Web.Configuration.csproj">
+      <Project>{8E576815-9075-4C3F-9D33-35226F9308B1}</Project>
+      <Name>Maverick.Web.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Web\Maverick.Web\Maverick.Web.csproj">
+      <Project>{8C45AB2D-5A7A-48E0-AF2F-D8A0AF401CD5}</Project>
+      <Name>Maverick.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Maverick.Tests\Maverick.Tests.csproj">
+      <Project>{610A0F46-8D00-4126-8050-BCD005E6B277}</Project>
+      <Name>Maverick.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestUtilities\TestUtilities.csproj">
+      <Project>{436E62B6-EDC0-45A4-B37D-A568A5494339}</Project>
+      <Name>TestUtilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>$(SolutionDir)Tools\Simian\RunSimian.cmd $(SolutionDir)</PostBuildEvent>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,16 @@
+# User-specific settings
+_ReSharper*/
+*.user
+*.suo
+
+# Build Outputs
+bin/
+obj/
+*.dll
+*.pdb
+*.simian
+
+# Other
+*.vssscc
+*.vspscc
+*.Cache

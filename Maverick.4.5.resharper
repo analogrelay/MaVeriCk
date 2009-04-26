@@ -1,0 +1,332 @@
+<Configuration>
+  <SharedSolutionTemplateManager>
+    <FileTemplates>
+      <Template uid="62388d25-a032-4c6e-8fd0-df9fe134f59a" shortcut="" description="Migration" text="using RikMigrations;&#xD;&#xA;&#xD;&#xA;namespace Maverick.Data.Migrations&#xD;&#xA;{&#xD;&#xA;    [Migration(typeof($MIGRATIONNAME$$MIGRATIONVERSION$), $MIGRATIONVERSION$, DatabaseModules.$MIGRATIONMODULE$)]&#xD;&#xA;    public class $MIGRATIONNAME$$MIGRATIONVERSION$ : IMigration&#xD;&#xA;    {&#xD;&#xA;        public void Up(DbProvider db)&#xD;&#xA;        {&#xD;&#xA;			$END$&#xD;&#xA;        }&#xD;&#xA;&#xD;&#xA;        public void Down(DbProvider db)&#xD;&#xA;        {&#xD;&#xA;        }&#xD;&#xA;    }&#xD;&#xA;}&#xD;&#xA;" reformat="True" shortenQualifiedReferences="True">
+        <Context>
+          <ProjectLanguageContext language="CSharp" />
+        </Context>
+        <Categories />
+        <Variables>
+          <Variable name="MIGRATIONNAME" expression="" initialRange="0" />
+          <Variable name="MIGRATIONVERSION" expression="" initialRange="0" />
+          <Variable name="MIGRATIONMODULE" expression="" initialRange="0" />
+        </Variables>
+        <CustomProperties>
+          <Property key="FileName" value="Migration" />
+          <Property key="Extension" value="cs" />
+          <Property key="ValidateFileName" value="False" />
+        </CustomProperties>
+      </Template>
+      <Template uid="dffcbccc-e1db-4d95-8582-76be46f37c05" shortcut="" description="TestClass" text="using Microsoft.VisualStudio.TestTools.UnitTesting;&#xD;&#xA;using TestUtilities;&#xD;&#xA;&#xD;&#xA;namespace $NAMESPACE$ {&#xD;&#xA;    [TestClass]&#xD;&#xA;    public class $CLASSNAME$ {&#xD;&#xA;		$END$&#xD;&#xA;    }&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
+        <Context>
+          <ProjectLanguageContext language="CSharp" />
+        </Context>
+        <Categories />
+        <Variables>
+          <Variable name="NAMESPACE" expression="fileDefaultNamespace()" initialRange="0" />
+          <Variable name="CLASSNAME" expression="getFileNameWithoutExtension()" initialRange="0" />
+        </Variables>
+        <CustomProperties>
+          <Property key="FileName" value="Class" />
+          <Property key="Extension" value="cs" />
+          <Property key="ValidateFileName" value="True" />
+        </CustomProperties>
+      </Template>
+    </FileTemplates>
+  </SharedSolutionTemplateManager>
+  <CodeStyleSettings>
+    <ExternalPath IsNull="False">
+    </ExternalPath>
+    <Sharing>SOLUTION</Sharing>
+    <CSharp>
+      <FormatSettings>
+        <ALIGN_MULTILINE_ARRAY_AND_OBJECT_INITIALIZER>False</ALIGN_MULTILINE_ARRAY_AND_OBJECT_INITIALIZER>
+        <ANONYMOUS_METHOD_DECLARATION_BRACES>END_OF_LINE</ANONYMOUS_METHOD_DECLARATION_BRACES>
+        <BLANK_LINES_AROUND_FIELD>0</BLANK_LINES_AROUND_FIELD>
+        <CASE_BLOCK_BRACES>END_OF_LINE</CASE_BLOCK_BRACES>
+        <EMPTY_BLOCK_STYLE>TOGETHER</EMPTY_BLOCK_STYLE>
+        <FORCE_ATTRIBUTE_STYLE>SEPARATE</FORCE_ATTRIBUTE_STYLE>
+        <FORCE_FIXED_BRACES_STYLE>ALWAYS_ADD</FORCE_FIXED_BRACES_STYLE>
+        <FORCE_FOR_BRACES_STYLE>ALWAYS_ADD</FORCE_FOR_BRACES_STYLE>
+        <FORCE_FOREACH_BRACES_STYLE>ALWAYS_ADD</FORCE_FOREACH_BRACES_STYLE>
+        <FORCE_IFELSE_BRACES_STYLE>ALWAYS_ADD</FORCE_IFELSE_BRACES_STYLE>
+        <FORCE_USING_BRACES_STYLE>ALWAYS_ADD</FORCE_USING_BRACES_STYLE>
+        <FORCE_WHILE_BRACES_STYLE>ALWAYS_ADD</FORCE_WHILE_BRACES_STYLE>
+        <INDENT_ANONYMOUS_METHOD_BLOCK>False</INDENT_ANONYMOUS_METHOD_BLOCK>
+        <INDENT_EMBRACED_INITIALIZER_BLOCK>False</INDENT_EMBRACED_INITIALIZER_BLOCK>
+        <INDENT_NESTED_FIXED_STMT>True</INDENT_NESTED_FIXED_STMT>
+        <INDENT_NESTED_USINGS_STMT>True</INDENT_NESTED_USINGS_STMT>
+        <INDENT_SIZE>4</INDENT_SIZE>
+        <INITIALIZER_BRACES>END_OF_LINE</INITIALIZER_BRACES>
+        <INVOCABLE_DECLARATION_BRACES>END_OF_LINE</INVOCABLE_DECLARATION_BRACES>
+        <MODIFIERS_ORDER IsNull="False">
+          <Item>public</Item>
+          <Item>protected</Item>
+          <Item>internal</Item>
+          <Item>private</Item>
+          <Item>new</Item>
+          <Item>abstract</Item>
+          <Item>virtual</Item>
+          <Item>override</Item>
+          <Item>sealed</Item>
+          <Item>static</Item>
+          <Item>readonly</Item>
+          <Item>extern</Item>
+          <Item>unsafe</Item>
+          <Item>volatile</Item>
+        </MODIFIERS_ORDER>
+        <OTHER_BRACES>END_OF_LINE</OTHER_BRACES>
+        <PLACE_FIELD_ATTRIBUTE_ON_SAME_LINE>False</PLACE_FIELD_ATTRIBUTE_ON_SAME_LINE>
+        <PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>False</PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>
+        <SIMPLE_EMBEDDED_STATEMENT_STYLE>LINE_BREAK</SIMPLE_EMBEDDED_STATEMENT_STYLE>
+        <SPACE_AFTER_TYPECAST_PARENTHESES>False</SPACE_AFTER_TYPECAST_PARENTHESES>
+        <SPACE_AROUND_MULTIPLICATIVE_OP>True</SPACE_AROUND_MULTIPLICATIVE_OP>
+        <SPACE_BEFORE_CATCH_PARENTHESES>False</SPACE_BEFORE_CATCH_PARENTHESES>
+        <SPACE_BEFORE_FIXED_PARENTHESES>False</SPACE_BEFORE_FIXED_PARENTHESES>
+        <SPACE_BEFORE_FOR_PARENTHESES>False</SPACE_BEFORE_FOR_PARENTHESES>
+        <SPACE_BEFORE_FOREACH_PARENTHESES>False</SPACE_BEFORE_FOREACH_PARENTHESES>
+        <SPACE_BEFORE_IF_PARENTHESES>False</SPACE_BEFORE_IF_PARENTHESES>
+        <SPACE_BEFORE_LOCK_PARENTHESES>False</SPACE_BEFORE_LOCK_PARENTHESES>
+        <SPACE_BEFORE_SIZEOF_PARENTHESES>False</SPACE_BEFORE_SIZEOF_PARENTHESES>
+        <SPACE_BEFORE_SWITCH_PARENTHESES>False</SPACE_BEFORE_SWITCH_PARENTHESES>
+        <SPACE_BEFORE_TYPEOF_PARENTHESES>False</SPACE_BEFORE_TYPEOF_PARENTHESES>
+        <SPACE_BEFORE_USING_PARENTHESES>False</SPACE_BEFORE_USING_PARENTHESES>
+        <SPACE_BEFORE_WHILE_PARENTHESES>False</SPACE_BEFORE_WHILE_PARENTHESES>
+        <STICK_COMMENT>False</STICK_COMMENT>
+        <TYPE_DECLARATION_BRACES>END_OF_LINE</TYPE_DECLARATION_BRACES>
+        <WRAP_ARGUMENTS_STYLE>CHOP_IF_LONG</WRAP_ARGUMENTS_STYLE>
+        <WRAP_EXTENDS_LIST_STYLE>CHOP_IF_LONG</WRAP_EXTENDS_LIST_STYLE>
+        <WRAP_PARAMETERS_STYLE>CHOP_IF_LONG</WRAP_PARAMETERS_STYLE>
+      </FormatSettings>
+      <UsingsSettings />
+      <Naming2 />
+      <CustomMemberReorderingPatterns><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+I. Overall
+
+I.1 Each pattern can have <Match>....</Match> element. For the given type declaration, the pattern with the match, evaluated to 'true' with the largest weight, will be used 
+I.2 Each pattern consists of the sequence of <Entry>...</Entry> elements. Type member declarations are distributed between entries
+I.3 If pattern has RemoveAllRegions="true" attribute, then all regions will be cleared prior to reordering. Otherwise, only auto-generated regions will be cleared
+I.4 The contents of each entry is sorted by given keys (First key is primary,  next key is secondary, etc). Then the declarations are grouped and en-regioned by given property
+
+II. Available match operands
+
+Each operand may have Weight="..." attribute. This weight will be added to the match weight if the operand is evaluated to 'true'.
+The default weight is 1
+
+II.1 Boolean functions:
+II.1.1 <And>....</And>
+II.1.2 <Or>....</Or>
+II.1.3 <Not>....</Not>
+
+II.2 Operands
+II.2.1 <Kind Is="..."/>. Kinds are: class, struct, interface, enum, delegate, type, constructor, destructor, property, indexer, method, operator, field, constant, event, member
+II.2.2 <Name Is="..." [IgnoreCase="true/false"] />. The 'Is' attribute contains regular expression
+II.2.3 <HasAttribute CLRName="..." [Inherit="true/false"] />. The 'CLRName' attribute contains regular expression
+II.2.4 <Access Is="..."/>. The 'Is' values are: public, protected, internal, protected internal, private
+II.2.5 <Static/>
+II.2.6 <Abstract/>
+II.2.7 <Virtual/>
+II.2.8 <Override/>
+II.2.9 <Sealed/>
+II.2.10 <Readonly/>
+II.2.11 <ImplementsInterface CLRName="..."/>. The 'CLRName' attribute contains regular expression
+II.2.12 <HandlesEvent />
+-->
+
+<Patterns xmlns="urn:shemas-jetbrains-com:member-reordering-patterns">
+
+  <!--Do not reorder COM interfaces and structs marked by StructLayout attribute-->
+  <Pattern>
+    <Match>
+      <Or Weight="100">
+        <And>
+          <Kind Is="interface"/>
+          <Or>
+            <HasAttribute CLRName="System.Runtime.InteropServices.InterfaceTypeAttribute"/>
+            <HasAttribute CLRName="System.Runtime.InteropServices.ComImport"/>
+          </Or>
+        </And>
+        <HasAttribute CLRName="System.Runtime.InteropServices.StructLayoutAttribute"/>
+      </Or>
+    </Match>
+  </Pattern>
+
+  <!--Special formatting of NUnit test fixture-->
+  <Pattern RemoveAllRegions="true">
+    <Match>
+      <And Weight="100">
+        <Kind Is="class"/>
+        <HasAttribute CLRName="NUnit.Framework.TestFixtureAttribute" Inherit="true"/>
+      </And>
+    </Match>
+
+    <!--Setup/Teardow-->
+    <Entry>
+      <Match>
+        <And>
+          <Kind Is="method"/>
+          <Or>
+            <HasAttribute CLRName="NUnit.Framework.SetUpAttribute" Inherit="true"/>
+            <HasAttribute CLRName="NUnit.Framework.TearDownAttribute" Inherit="true"/>
+            <HasAttribute CLRName="NUnit.Framework.FixtureSetUpAttribute" Inherit="true"/>
+            <HasAttribute CLRName="NUnit.Framework.FixtureTearDownAttribute" Inherit="true"/>
+          </Or>
+        </And>
+      </Match>
+      <Group Region="Setup/Teardown"/>
+    </Entry>
+    
+    <!--All other members-->
+    <Entry/>
+    
+    <!--Test methods-->
+    <Entry>
+      <Match>
+        <And Weight="100">
+          <Kind Is="method"/>
+          <HasAttribute CLRName="NUnit.Framework.TestAttribute" Inherit="false"/>
+        </And>
+      </Match>
+      <Sort>
+        <Name/>
+      </Sort>
+    </Entry>
+  </Pattern>
+
+  <!--Default pattern-->
+  <Pattern RemoveAllRegions="true">
+
+    <!--public delegate-->
+    <Entry>
+      <Match>
+        <And Weight="100">
+          <Access Is="public"/>
+          <Kind Is="delegate"/>
+        </And>
+      </Match>
+      <Sort>
+        <Name/>
+      </Sort>
+    </Entry>
+    
+    <!--public enum-->
+    <Entry>
+      <Match>
+        <And Weight="100">
+          <Access Is="public"/>
+          <Kind Is="enum"/>
+        </And>
+      </Match>
+      <Sort>
+        <Name/>
+      </Sort>
+    </Entry>
+
+    <!--fields and constants-->
+    <Entry>
+      <Match>
+        <Or>
+          <Kind Is="constant"/>
+          <Kind Is="field"/>
+        </Or>
+      </Match>
+      <Sort>
+        <Kind Order="constant field"/>
+        <Static/>
+        <Readonly/>
+        <Name/>
+      </Sort>
+    </Entry>
+
+    <!--Constructors. Place static one first-->
+    <Entry>
+      <Match>
+        <Kind Is="constructor"/>
+      </Match>
+      <Sort>
+        <Static/>
+      </Sort>
+    </Entry>
+    
+    <!--properties, indexers-->
+    <Entry>
+      <Match>
+        <Or>
+          <Kind Is="property"/>
+          <Kind Is="indexer"/>
+        </Or>
+      </Match>
+    </Entry>
+    
+    <!--interface implementations-->
+    <Entry>
+      <Match>
+        <And Weight="100">
+          <Kind Is="member"/>
+          <ImplementsInterface/>
+        </And>
+      </Match>
+      <Sort>
+        <ImplementsInterface Immediate="true"/>
+      </Sort>
+      <Group>
+        <ImplementsInterface Immediate="true" Region="${ImplementsInterface} Members"/>
+      </Group>
+    </Entry>
+    
+    <!--all other members-->
+    <Entry/>
+    
+    <!--nested types-->
+    <Entry>
+      <Match>
+        <Kind Is="type"/>
+      </Match>
+      <Sort>
+        <Name/>
+      </Sort>
+      <Group>
+        <Name Region="Nested type: ${Name}"/>
+      </Group>
+    </Entry>
+  </Pattern>
+  
+</Patterns>
+]]></CustomMemberReorderingPatterns>
+    </CSharp>
+    <VB>
+      <FormatSettings>
+        <INDENT_SIZE>4</INDENT_SIZE>
+      </FormatSettings>
+      <ImportsSettings />
+      <Naming2 />
+    </VB>
+    <FileHeader><![CDATA[-----------------------------------------------------------------------
+ <copyright company="Andrew Nurse">
+     Copyright (c) 2009 Andrew Nurse.
+     See License.txt in this solution's root folder for licensing details.
+ </copyright>
+-----------------------------------------------------------------------]]></FileHeader>
+    <GenerateMemberBody />
+    <Naming2>
+      <ExceptionName IsNull="False">
+      </ExceptionName>
+      <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="NotPublicInstanceFields" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Parameters" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="TypesAndNamespaces" />
+      <PredefinedRule Inspect="True" Prefix="I" Suffix="" Style="AaBb" ElementKind="Interfaces" />
+      <PredefinedRule Inspect="True" Prefix="T" Suffix="" Style="AaBb" ElementKind="TypeParameters" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="MethodPropertyEvent" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Locals" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="LocalConstants" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PublicFields" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Constants" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="StaticReadonly" />
+      <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="NotPublicStaticFields" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="EnumMember" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Other" />
+    </Naming2>
+  </CodeStyleSettings>
+</Configuration>
