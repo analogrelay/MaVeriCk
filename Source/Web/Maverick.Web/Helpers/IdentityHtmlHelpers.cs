@@ -17,12 +17,12 @@ using Microsoft.IdentityModel.Claims;
 
 namespace Maverick.Web.Helpers {
     public static class IdentityHtmlHelpers {
-        private const string DefaultLoginLinkTitle = "Login";
-        private const string DefaultLoginAction = "Login";
-        private const string DefaultLoginController = "Identity";
-        private const string DefaultLogoutLinkTitle = "Logout";
-        private const string DefaultLogoutController = "Identity";
-        private const string DefaultLogoutAction = "Logout";
+        internal const string DefaultLoginLinkTitle = "Login";
+        internal const string DefaultLoginAction = "Login";
+        internal const string DefaultLoginController = "Identity";
+        internal const string DefaultLogoutLinkTitle = "Logout";
+        internal const string DefaultLogoutController = "Identity";
+        internal const string DefaultLogoutAction = "Logout";
 
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login", Justification = "The term Login is commonly used on the Web")]
         public static string LoginLink(this HtmlHelper htmlHelper) {
