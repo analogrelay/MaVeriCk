@@ -33,7 +33,11 @@ namespace Maverick.Web.Routing {
                 _newAppRelativeUrl = _newAppRelativeUrl.Substring(1);
             }
 
-            _currentExecutionFilePath = _wrappedRequest.ApplicationPath + "/" + _newAppRelativeUrl;
+            string appPath = _wrappedRequest.ApplicationPath;
+            if(!appPath.EndsWith("/")) {
+                appPath += "/";
+            }
+            _currentExecutionFilePath = appPath + _newAppRelativeUrl;
 
             Uri originalUrl = _wrappedRequest.Url;
 
