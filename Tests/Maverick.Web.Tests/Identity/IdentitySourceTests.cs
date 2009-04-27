@@ -11,6 +11,8 @@ using System;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Maverick.ComponentModel;
+using Maverick.Models;
+using Maverick.Web.Helpers;
 using Maverick.Web.Identity;
 using Microsoft.IdentityModel.Claims;
 using Microsoft.IdentityModel.Tokens;
@@ -174,6 +176,52 @@ namespace Maverick.Web.Tests.Identity {
             // Assert
             Assert.AreEqual(1, sessionPrincipal.Identities.Count);
             EnumerableAssert.ElementsAreEqual(claims, sessionPrincipal.Identities[0].Claims);
+        }
+
+        [TestMethod]
+        public void ReturnToLastPage_Returns_RedirectToRouteResult_For_Current_Page_If_ReturnUrl_Invalid() {
+            // Arrange
+            Page expected = new Page();
+            IdentitySource source = CreateIdentitySource();
+            ControllerContext context = Mockery.CreateMockControllerContext();
+            context.HttpContext.GetPortalContext().ActivePage = expected;
+            context.HttpContext.Request.QueryString["returnUrl"] = "http://localhost:foo";
+
+            // Act
+            ActionResult result = source.ReturnToLastPage(context);
+
+            // Assert
+            ResultAssert.IsRedirectToRoute(result, new {controller = "Page", action = "View", page = expected});
+        }
+
+        [TestMethod]
+        public void ReturnToLastPage_Returns_RedirectToRouteResult_For_Current_Page_If_ReturnUrl_Missing() {
+            // Arrange
+            Page expected = new Page();
+            IdentitySource source = CreateIdentitySource();
+            ControllerContext context = Mockery.CreateMockControllerContext();
+            context.HttpContext.GetPortalContext().ActivePage = expected;
+
+            // Act
+            ActionResult result = source.ReturnToLastPage(context);
+
+            // Assert
+            ResultAssert.IsRedirectToRoute(result, new { controller = "Page", action = "View", page = expected });
+        }
+
+        [TestMethod]
+        public void ReturnToLastPage_Returns_RedirectResult_For_ReturnUrl_If_Present_And_Valid() {
+            // Arrange
+            const string expected = "http://www.foo.example/";
+            IdentitySource source = CreateIdentitySource();
+            ControllerContext context = Mockery.CreateMockControllerContext();
+            context.HttpContext.Request.QueryString["returnUrl"] = expected;
+
+            // Act
+            ActionResult result = source.ReturnToLastPage(context);
+
+            // Assert
+            ResultAssert.IsRedirect(result, expected);
         }
 
         private static RouteValueDictionary SetupGenerateLandingUrlTest(string requestUrlBase, Func<IdentitySource, ControllerContext, Uri> act) {

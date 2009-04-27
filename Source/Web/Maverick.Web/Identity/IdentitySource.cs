@@ -45,10 +45,11 @@ namespace Maverick.Web.Identity {
 
         public virtual Uri GetReturnUrl(ControllerContext context) {
             string returnUrl = context.HttpContext.Request.QueryString["returnUrl"];
-            if(String.IsNullOrEmpty(returnUrl)) {
+            Uri url;
+            if(String.IsNullOrEmpty(returnUrl) || !Uri.TryCreate(returnUrl, UriKind.RelativeOrAbsolute, out url)) {
                 return null;
             }
-            return new Uri(returnUrl);
+            return url;
         }
 
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Logout", Justification = "The term Logout is commonly used on the Web")]
@@ -65,7 +66,18 @@ namespace Maverick.Web.Identity {
         }
 
         protected internal virtual ActionResult ReturnToLastPage(ControllerContext context) {
-            return new RedirectResult(GetReturnUrl(context).ToString());
+            Uri returnUrl = GetReturnUrl(context);
+            if (returnUrl != null) {
+                return new RedirectResult(returnUrl.ToString());
+            }
+            return
+                new RedirectToRouteResult(
+                    new RouteValueDictionary(
+                        new {
+                            controller = "Page",
+                            action = "View",
+                            page = context.HttpContext.GetPortalContext().ActivePage
+                        }));
         }
 
         protected internal virtual void SetSessionPrincipal(IClaimsPrincipal principal) {
