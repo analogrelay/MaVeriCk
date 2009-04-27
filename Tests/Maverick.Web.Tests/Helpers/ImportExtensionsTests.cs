@@ -40,5 +40,29 @@ namespace Maverick.Web.Tests.Helpers {
             HtmlHelper helper = Mockery.CreateHtmlHelper();
             AutoTester.StringArgumentNullOrEmpty(marker => helper.Script(marker));
         }
+
+        [TestMethod]
+        public void Stylesheet_Returns_Link_Tag_Referencing_Resolved_Content_Path() {
+            // Arrange
+            HtmlHelper helper = Mockery.CreateHtmlHelper();
+
+            // Act
+            string actual = helper.Stylesheet("~/Content/Styles.css");
+
+            // Assert
+            Assert.AreEqual("<link href=\"/Content/Styles.css\" type=\"text/css\" rel=\"stylesheet\"></link>", actual);
+        }
+
+        [TestMethod]
+        public void Script_Returns_Script_Tag_Referencing_Resolved_Content_Path() {
+            // Arrange
+            HtmlHelper helper = Mockery.CreateHtmlHelper();
+
+            // Act
+            string actual = helper.Script("~/Scripts/jquery.js");
+
+            // Assert
+            Assert.AreEqual("<script src=\"/Scripts/jquery.js\" type=\"text/javascript\"></script>", actual);
+        }
     }
 }
