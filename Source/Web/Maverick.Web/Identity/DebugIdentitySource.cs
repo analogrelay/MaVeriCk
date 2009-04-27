@@ -13,15 +13,19 @@ using System.ComponentModel.Composition;
 using System.Web.Mvc;
 using Microsoft.IdentityModel.Claims;
 
+using SysClaimTypes = System.IdentityModel.Claims.ClaimTypes;
+
 namespace Maverick.Web.Identity {
     [Export(typeof(IdentitySource))]
     [IdentitySource("Debug", "0.1.0.0")]
     public class DebugIdentitySource : IdentitySource {
         public override ActionResult Login(ControllerContext controllerContext, Uri returnUrl) {
+            Arg.NotNull("controllerContext", controllerContext);
+
             // Just give the user the SuperUser role
             SetSessionPrincipal(CreateSessionPrincipal(new List<Claim> {
-                new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", "Maverick Developer"),
-                new Claim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "SuperUser")
+                new Claim(SysClaimTypes.Name, "Maverick Developer"),
+                new Claim(ClaimTypes.Role, "SuperUser")
             }));
             return ReturnToLastPage(controllerContext);
         }
