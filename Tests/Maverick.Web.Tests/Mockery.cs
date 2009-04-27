@@ -45,7 +45,9 @@ namespace Maverick.Web.Tests {
             mockRequest.Setup(r => r.Url)
                        .Returns(new Uri(requestUrl));
             mockRequest.Setup(r => r.ApplicationPath)
-                       .Returns(String.Empty);
+                       .Returns("/");
+            mockRequest.Setup(r => r.RawUrl)
+                       .Returns(requestUrl);
             
             var mockResponse = new Mock<HttpResponseBase>();
             mockResponse.Setup(r => r.ApplyAppPathModifier(It.IsAny<string>()))
