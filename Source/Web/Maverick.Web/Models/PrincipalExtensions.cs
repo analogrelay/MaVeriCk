@@ -13,12 +13,7 @@ using Microsoft.IdentityModel.Claims;
 namespace Maverick.Web.Models {
     public static class PrincipalExtensions {
         public static UserIdentity AsUserIdentity(this IPrincipal principal) {
-            IClaimsPrincipal claimsPrincipal = principal as IClaimsPrincipal;
-            if(claimsPrincipal == null) {
-                return null;
-            }
-
-            return new UserIdentity(claimsPrincipal);
+            return new UserIdentity(principal as IClaimsPrincipal);
         }
     }
 }

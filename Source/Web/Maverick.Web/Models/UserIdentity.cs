@@ -7,6 +7,7 @@
 // </summary>
 // ---------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Maverick.Web.Identity;
@@ -20,12 +21,17 @@ namespace Maverick.Web.Models {
         public string IdentifiedBy { get { return GetClaim(MaverickClaimTypes.IdentifiedBy); } }
         public string DisplayName { get { return GetClaim(ClaimTypes.Name); } }
         public string EmailAddress { get { return GetClaim(ClaimTypes.Email); } }
+        public bool Authenticated { get; private set; }
 
         public UserIdentity(IClaimsPrincipal principal) {
             Principal = principal;
+            Authenticated = principal != null;
         }
 
         private string GetClaim(string claimType) {
+            if(!Authenticated || Principal.Identities == null) {
+                return null;
+            }
             // Check all the identities for the claim
             return (from identity in Principal.Identities
                     select GetClaim(identity.Claims, claimType)).FirstOrDefault();

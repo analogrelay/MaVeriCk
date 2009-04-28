@@ -95,7 +95,7 @@ namespace Maverick.Web.Controllers {
             // If there's an "authenticated-by" claim in the token, we can use that to identify the identity source
             UserIdentity identity = Thread.CurrentPrincipal.AsUserIdentity();
             
-            if (identity != null && !String.IsNullOrEmpty(identity.IdentifiedBy)) {
+            if (!String.IsNullOrEmpty(identity.IdentifiedBy)) {
                 identitySource = GetIdentitySource(identity.IdentifiedBy);
             }
 
