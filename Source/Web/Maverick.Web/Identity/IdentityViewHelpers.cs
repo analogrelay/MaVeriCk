@@ -15,6 +15,7 @@ namespace Maverick.Web.Identity {
     public static class IdentityViewHelpers {
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login", Justification = "The term Login is commonly used on the Web")]
         public static MvcForm BeginLoginForm(this HtmlHelper helper) {
+            Arg.NotNull("helper", helper);
             return helper.BeginForm("Login", "Identity", new {id = helper.ViewContext.RouteData.Values["id"]}, FormMethod.Post, null);
         }
     }

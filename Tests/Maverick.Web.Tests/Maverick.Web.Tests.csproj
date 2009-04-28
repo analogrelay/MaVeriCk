@@ -106,6 +106,8 @@
     <Compile Include="Helpers\PathHelpersTests.cs" />
     <Compile Include="Helpers\ResourceNotFoundResultTests.cs" />
     <Compile Include="Identity\DebugIdentitySourceTests.cs" />
+    <Compile Include="Identity\IdentitySourceAttributeTests.cs" />
+    <Compile Include="Identity\IdentityViewHelpersTests.cs" />
     <Compile Include="Identity\ISessionIdentityManagerTests.cs" />
     <Compile Include="MaverickApplicationTests.cs" />
     <Compile Include="Mockery.cs" />
