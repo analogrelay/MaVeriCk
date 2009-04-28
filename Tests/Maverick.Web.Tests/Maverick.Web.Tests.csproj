@@ -129,6 +129,7 @@
     <Compile Include="ModuleFramework\ModuleApplicationTests.cs" />
     <Compile Include="ModuleFramework\ModuleApplicationTests.ExecuteRequest.cs" />
     <Compile Include="ModuleFramework\ModuleDelegatingViewEngineTests.cs" />
+    <Compile Include="ModuleFramework\ModuleExecutionEngineTests.cs" />
     <Compile Include="PortalRequestContextTests.cs" />
     <Compile Include="ResultAssert.cs" />
     <Compile Include="Routing\ModuleRouteRewriterTests.cs" />

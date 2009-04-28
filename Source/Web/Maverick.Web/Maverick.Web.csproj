@@ -224,7 +224,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Themes\_Default\Identity\Web.config" />
-    <Content Include="Views\Themes\_Default\Shared\ControlPanel.ascx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configuration\System.Web\Compilation.config" />

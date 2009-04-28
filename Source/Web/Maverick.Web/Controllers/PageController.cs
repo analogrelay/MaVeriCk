@@ -77,7 +77,6 @@ namespace Maverick.Web.Controllers {
                 }
             }
 
-            // Prepare the control panel
             return View(pageModel);
         }
     }
