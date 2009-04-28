@@ -123,6 +123,7 @@
     <Compile Include="MiscAssert.cs" />
     <Compile Include="Models\ClaimCollectionExtensionsTests.cs" />
     <Compile Include="Models\PageViewModelTests.cs" />
+    <Compile Include="Models\PrincipalExtensionsTests.cs" />
     <Compile Include="ModuleFramework\ModuleApplicationTests.cs" />
     <Compile Include="ModuleFramework\ModuleApplicationTests.ExecuteRequest.cs" />
     <Compile Include="ModuleFramework\ModuleDelegatingViewEngineTests.cs" />
