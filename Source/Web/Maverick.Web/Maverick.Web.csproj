@@ -83,6 +83,7 @@
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Default.aspx.cs">
@@ -123,7 +124,6 @@
     <Compile Include="Identity\WSFederationIdentitySourceBase.cs" />
     <Compile Include="Models\ClaimCollectionExtensions.cs" />
     <Compile Include="Helpers\IdentityHtmlHelpers.cs" />
-    <Compile Include="Models\ControlPanelViewModel.cs" />
     <Compile Include="Models\ModuleApplicationViewModel.cs" />
     <Compile Include="Models\PageViewModel.cs" />
     <Compile Include="Helpers\ImportExtensions.cs" />
@@ -132,6 +132,8 @@
     <Compile Include="Models\ZoneViewModel.cs" />
     <Compile Include="Models\ZoneViewModelCollection.cs" />
     <Compile Include="ModuleFramework\ActionInvokerBasedControllerAdapter.cs" />
+    <Compile Include="ModuleFramework\HeaderContributingViewResultAdapter.cs" />
+    <Compile Include="ModuleFramework\IHeaderContributingResult.cs" />
     <Compile Include="ModuleFramework\ModuleApplicationMetadata.cs" />
     <Compile Include="ModuleFramework\IModuleController.cs" />
     <Compile Include="ModuleFramework\ModuleApplication.cs" />
@@ -150,27 +152,18 @@
     <Compile Include="ModuleFramework\RenderModuleExtensions.cs" />
     <Compile Include="ModuleFramework\RenderModuleResult.cs" />
     <Compile Include="ModuleFramework\ResultCapturingActionInvoker.cs" />
+    <Compile Include="Modules\ClaimDumper\ClaimDumperModuleApplication.cs" />
     <Compile Include="Modules\ClaimDumper\Controllers\HomeController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Modules\ClaimDumper\Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Modules\CurrentTime\Controllers\HomeController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Modules\CurrentTime\Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Modules\CurrentTime\CurrentTimeModuleApplication.cs" />
     <Compile Include="Modules\TaskList\Controllers\HomeController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Modules\TaskList\Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Modules\TaskList\TaskListModuleApplication.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -286,12 +279,10 @@
       <Link>CodeAnalysisDictionary.xml</Link>
     </CodeAnalysisDictionary>
     <Content Include="Configuration\NHibernate.config" />
-    <Content Include="Modules\ClaimDumper\Global.asax" />
     <Content Include="Modules\ClaimDumper\Views\Home\Index.aspx" />
     <Content Include="Modules\ClaimDumper\Web.config" />
-    <Content Include="Modules\CurrentTime\Global.asax" />
     <Content Include="Modules\CurrentTime\Views\Home\Index.aspx" />
-    <Content Include="Modules\TaskList\Global.asax" />
+    <Content Include="Modules\TaskList\Content\Styles.css" />
     <Content Include="Modules\TaskList\Views\Home\Index.aspx" />
     <Content Include="Modules\TaskList\Views\Home\Task.aspx" />
     <Content Include="Modules\Web.config" />

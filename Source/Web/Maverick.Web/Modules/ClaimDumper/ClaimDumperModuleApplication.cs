@@ -1,9 +1,9 @@
-﻿// --------------------------------------------------------------------------------------------------------------------- 
-// <copyright file="Global.asax.cs" company="Andrew Nurse">
+// --------------------------------------------------------------------------------------------------------------------- 
+// <copyright file="ClaimDumperModuleApplication.cs" company="Andrew Nurse">
 //   Copyright (c) 2009 Andrew Nurse.  Licensed under the Ms-PL license: http://opensource.org/licenses/ms-pl.html
 // </copyright>
 // <summary>
-//   Defines the TaskListModuleApplication type.
+//   Defines the ClaimDumperModuleApplication type.
 // </summary>
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -11,15 +11,16 @@ using System.ComponentModel.Composition;
 using System.Web.Routing;
 using Maverick.Web.ModuleFramework;
 
-namespace Maverick.Web.Modules.TaskList {
+namespace Maverick.Web.Modules.ClaimDumper
+{
     [Export(typeof(ModuleApplication))]
     [ModuleApplication(ApplicationId, ApplicationName)]
-    public class TaskListModuleApplication : ModuleApplication {
-        private const string ApplicationId = "3DF331C9-9D4F-4694-9917-1653BFA703FC";
-        private const string ApplicationName = "TaskList";
+    public class ClaimDumperModuleApplication : ModuleApplication {
+        private const string ApplicationId = "8B09AEAE-C340-4FDD-8D52-7A360D925732";
+        private const string ApplicationName = "Claim Dumper";
 
         protected override string FolderPath {
-            get { return ApplicationName; }
+            get { return "ClaimDumper"; }
         }
 
         protected internal override void Init(MaverickApplication application) {
@@ -28,7 +29,7 @@ namespace Maverick.Web.Modules.TaskList {
         }
 
         private static void RegisterRoutes(RouteCollection routes) {
-            routes.RegisterDefaultRoute("Maverick.Web.Modules.TaskList.Controllers");
+            routes.RegisterDefaultRoute("Maverick.Web.Modules.ClaimDumper.Controllers");
         }
     }
 }

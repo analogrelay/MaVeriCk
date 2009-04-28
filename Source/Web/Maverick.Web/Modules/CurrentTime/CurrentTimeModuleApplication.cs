@@ -1,9 +1,9 @@
-// --------------------------------------------------------------------------------------------------------------------- 
-// <copyright file="Global.asax.cs" company="Andrew Nurse">
+﻿// --------------------------------------------------------------------------------------------------------------------- 
+// <copyright file="CurrentTimeModuleApplication.cs" company="Andrew Nurse">
 //   Copyright (c) 2009 Andrew Nurse.  Licensed under the Ms-PL license: http://opensource.org/licenses/ms-pl.html
 // </copyright>
 // <summary>
-//   Defines the ClaimDumperModuleApplication type.
+//   Defines the CurrentTimeModuleApplication type.
 // </summary>
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -11,16 +11,15 @@ using System.ComponentModel.Composition;
 using System.Web.Routing;
 using Maverick.Web.ModuleFramework;
 
-namespace Maverick.Web.Modules.ClaimDumper
-{
+namespace Maverick.Web.Modules.CurrentTime {
     [Export(typeof(ModuleApplication))]
     [ModuleApplication(ApplicationId, ApplicationName)]
-    public class ClaimDumperModuleApplication : ModuleApplication {
-        private const string ApplicationId = "8B09AEAE-C340-4FDD-8D52-7A360D925732";
-        private const string ApplicationName = "Claim Dumper";
+    public class CurrentTimeModuleApplication : ModuleApplication {
+        private const string ApplicationId = "A1FE2A31-0BC9-4B12-9B81-3B75C098EB33";
+        private const string ApplicationName = "Current Time";
 
         protected override string FolderPath {
-            get { return "ClaimDumper"; }
+            get { return "CurrentTime"; }
         }
 
         protected internal override void Init(MaverickApplication application) {
@@ -29,7 +28,7 @@ namespace Maverick.Web.Modules.ClaimDumper
         }
 
         private static void RegisterRoutes(RouteCollection routes) {
-            routes.RegisterDefaultRoute("Maverick.Web.Modules.ClaimDumper.Controllers");
+            routes.RegisterDefaultRoute("Maverick.Web.Modules.CurrentTime.Controllers");
         }
     }
 }

@@ -147,19 +147,19 @@ namespace Maverick.Web.Tests.Controllers {
             // Assert
             Assert.IsNotNull(result, "Expected that a ViewResult would be returned");
 
-            PageViewModel pageModel = result.ViewData.Model as PageViewModel;
-            Assert.IsNotNull(pageModel, "Expected that the Model of the ViewResult would be a PageViewModel");
-            Assert.AreEqual(2, pageModel.Zones.Count);
+            PageViewModel renderingModel = result.ViewData.Model as PageViewModel;
+            Assert.IsNotNull(renderingModel, "Expected that the Model of the ViewResult would be a PageViewModel");
+            Assert.AreEqual(2, renderingModel.Zones.Count);
 
-            Assert.AreSame(module1Result, pageModel["SidebarZone"].ModuleResults[0].ActionResult, "Expected that the action result from the 1st module would be the first module result");
-            Assert.AreSame(module1Context, pageModel["SidebarZone"].ModuleResults[0].ControllerContext, "Expected that the controller context from the 1st module would be the first controller context");
+            Assert.AreSame(module1Result, renderingModel["SidebarZone"].ModuleResults[0].ActionResult, "Expected that the action result from the 1st module would be the first module result");
+            Assert.AreSame(module1Context, renderingModel["SidebarZone"].ModuleResults[0].ControllerContext, "Expected that the controller context from the 1st module would be the first controller context");
 
-            Assert.AreSame(module1Result, pageModel["SidebarZone"].ModuleResults[1].ActionResult, "Expected that the action result from the 2nd module would be the first module result");
-            Assert.AreSame(module1Context, pageModel["SidebarZone"].ModuleResults[1].ControllerContext, "Expected that the controller context from the 2nd module would be the first controller context");
+            Assert.AreSame(module1Result, renderingModel["SidebarZone"].ModuleResults[1].ActionResult, "Expected that the action result from the 2nd module would be the first module result");
+            Assert.AreSame(module1Context, renderingModel["SidebarZone"].ModuleResults[1].ControllerContext, "Expected that the controller context from the 2nd module would be the first controller context");
             
             // NOTE: (3rd module also uses the "first" module application)
-            Assert.AreSame(module2Result, pageModel["ContentZone"].ModuleResults[0].ActionResult, "Expected that the action result from the 2nd module would be the first module result");
-            Assert.AreSame(module2Context, pageModel["ContentZone"].ModuleResults[0].ControllerContext, "Expected that the controller context from the 2nd module would be the first controller context");
+            Assert.AreSame(module2Result, renderingModel["ContentZone"].ModuleResults[0].ActionResult, "Expected that the action result from the 2nd module would be the first module result");
+            Assert.AreSame(module2Context, renderingModel["ContentZone"].ModuleResults[0].ControllerContext, "Expected that the controller context from the 2nd module would be the first controller context");
         }
 
         [TestMethod]
@@ -302,73 +302,73 @@ namespace Maverick.Web.Tests.Controllers {
             // Assert
             Assert.IsNotNull(result, "Expected that a ViewResult would be returned");
 
-            PageViewModel pageModel = result.ViewData.Model as PageViewModel;
-            Assert.IsNotNull(pageModel, "Expected that the Model of the ViewResult would be a PageViewModel");
-            Assert.AreEqual(2, pageModel.Zones.Count);
+            PageViewModel renderingModel = result.ViewData.Model as PageViewModel;
+            Assert.IsNotNull(renderingModel, "Expected that the Model of the ViewResult would be a PageViewModel");
+            Assert.AreEqual(2, renderingModel.Zones.Count);
 
             // Verify SidebarZone
-            Assert.AreSame(module1Result, pageModel["SidebarZone"].ModuleResults[0].ActionResult, "Expected that the action result from the 1st module would be the first module result");
-            Assert.AreSame(module1Context, pageModel["SidebarZone"].ModuleResults[0].ControllerContext, "Expected that the controller context from the 1st module would be the first controller context");
-            Assert.AreSame(module1Result, pageModel["SidebarZone"].ModuleResults[1].ActionResult, "Expected that the action result from the 2nd module would be the first module result");
-            Assert.AreSame(module1Context, pageModel["SidebarZone"].ModuleResults[1].ControllerContext, "Expected that the controller context from the 2nd module would be the first controller context");
+            Assert.AreSame(module1Result, renderingModel["SidebarZone"].ModuleResults[0].ActionResult, "Expected that the action result from the 1st module would be the first module result");
+            Assert.AreSame(module1Context, renderingModel["SidebarZone"].ModuleResults[0].ControllerContext, "Expected that the controller context from the 1st module would be the first controller context");
+            Assert.AreSame(module1Result, renderingModel["SidebarZone"].ModuleResults[1].ActionResult, "Expected that the action result from the 2nd module would be the first module result");
+            Assert.AreSame(module1Context, renderingModel["SidebarZone"].ModuleResults[1].ControllerContext, "Expected that the controller context from the 2nd module would be the first controller context");
             
             // NOTE: (3rd module also uses the "first" module application)
-            Assert.AreSame(module2Result, pageModel["ContentZone"].ModuleResults[0].ActionResult, "Expected that the action result from the 2nd module would be the first module result");
-            Assert.AreSame(module2Context, pageModel["ContentZone"].ModuleResults[0].ControllerContext, "Expected that the controller context from the 2nd module would be the first controller context");
+            Assert.AreSame(module2Result, renderingModel["ContentZone"].ModuleResults[0].ActionResult, "Expected that the action result from the 2nd module would be the first module result");
+            Assert.AreSame(module2Context, renderingModel["ContentZone"].ModuleResults[0].ControllerContext, "Expected that the controller context from the 2nd module would be the first controller context");
         }
 
-        [TestMethod]
-        public void View_Action_Does_Not_Provide_ControlPanelModel_If_No_User() {
-            // Arrange
-            PageController controller = SetupController();
-            controller.HttpContext.GetPortalContext().ActivePage = new Page() {Modules = new List<Module>()};
+        //[TestMethod]
+        //public void View_Action_Does_Not_Provide_ControlPanelModel_If_No_User() {
+        //    // Arrange
+        //    PageController controller = SetupController();
+        //    controller.HttpContext.GetPortalContext().ActivePage = new Page() {Modules = new List<Module>()};
             
-            // Act
-            ActionResult result = controller.ViewPage(null, String.Empty);
+        //    // Act
+        //    ActionResult result = controller.ViewPage(null, String.Empty);
 
-            // Assert
-            ResultAssert.IsViewWithModel<PageViewModel>(result, model => {
-                Assert.IsNull(model.ControlPanelModel);
-            });
-        }
+        //    // Assert
+        //    ResultAssert.IsViewWithModel<PageViewModel>(result, model => {
+        //        Assert.IsNull(model.ControlPanelModel);
+        //    });
+        //}
 
-        [TestMethod]
-        public void View_Action_Does_Not_Provide_ControlPanelModel_If_User_Not_SuperUser() {
-            // Arrange
-            PageController controller = SetupController();
-            controller.HttpContext.GetPortalContext().ActivePage = new Page() { Modules = new List<Module>() };
-            SetupMockUser(controller, false);
+        //[TestMethod]
+        //public void View_Action_Does_Not_Provide_ControlPanelModel_If_User_Not_SuperUser() {
+        //    // Arrange
+        //    PageController controller = SetupController();
+        //    controller.HttpContext.GetPortalContext().ActivePage = new Page() { Modules = new List<Module>() };
+        //    SetupMockUser(controller, false);
 
-            // Act
-            ActionResult result = controller.ViewPage(null, String.Empty);
+        //    // Act
+        //    ActionResult result = controller.ViewPage(null, String.Empty);
 
-            // Assert
-            ResultAssert.IsViewWithModel<PageViewModel>(result, model => {
-                Assert.IsNull(model.ControlPanelModel);
-            });
-        }
+        //    // Assert
+        //    ResultAssert.IsViewWithModel<PageViewModel>(result, model => {
+        //        Assert.IsNull(model.ControlPanelModel);
+        //    });
+        //}
 
-        [TestMethod]
-        public void View_Action_Provides_ControlPanelModel_If_User_Is_SuperUser() {
-            // Arrange
-            PageController controller = SetupController();
-            controller.HttpContext.GetPortalContext().ActivePage = new Page() { Modules = new List<Module>() };
-            SetupMockUser(controller, true);
+        //[TestMethod]
+        //public void View_Action_Provides_ControlPanelModel_If_User_Is_SuperUser() {
+        //    // Arrange
+        //    PageController controller = SetupController();
+        //    controller.HttpContext.GetPortalContext().ActivePage = new Page() { Modules = new List<Module>() };
+        //    SetupMockUser(controller, true);
 
-            // Act
-            ActionResult result = controller.ViewPage(null, String.Empty);
+        //    // Act
+        //    ActionResult result = controller.ViewPage(null, String.Empty);
 
-            // Assert
-            ResultAssert.IsViewWithModel<PageViewModel>(result, model => {
-                Assert.IsNotNull(model.ControlPanelModel);
-                Assert.AreEqual(controller.ModuleExecutor.ModuleApplications.Count, model.ControlPanelModel.Modules.Count());
-                EnumerableAssert.ElementsMatch(controller.ModuleExecutor.ModuleApplications,
-                                               model.ControlPanelModel.Modules,
-                                               (e, c) =>
-                                               e.MetadataView.Id.ToString("N") == c.Value &&
-                                               e.MetadataView.Name == c.Text);
-            });
-        }
+        //    // Assert
+        //    ResultAssert.IsViewWithModel<PageViewModel>(result, model => {
+        //        Assert.IsNotNull(model.ControlPanelModel);
+        //        Assert.AreEqual(controller.ModuleExecutor.ModuleApplications.Count, model.ControlPanelModel.Modules.Count());
+        //        EnumerableAssert.ElementsMatch(controller.ModuleExecutor.ModuleApplications,
+        //                                       model.ControlPanelModel.Modules,
+        //                                       (e, c) =>
+        //                                       e.MetadataView.Id.ToString("N") == c.Value &&
+        //                                       e.MetadataView.Name == c.Text);
+        //    });
+        //}
 
         private static void SetupMockUser(Controller controller, bool superUser) {
             var mockPrincipal = new Mock<IPrincipal>();

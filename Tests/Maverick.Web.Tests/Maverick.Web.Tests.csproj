@@ -125,6 +125,7 @@
     <Compile Include="Models\PageViewModelTests.cs" />
     <Compile Include="Models\PrincipalExtensionsTests.cs" />
     <Compile Include="Models\UserIdentityTests.cs" />
+    <Compile Include="ModuleFramework\HeaderContributingViewResultAdapterTests.cs" />
     <Compile Include="ModuleFramework\ModuleApplicationTests.cs" />
     <Compile Include="ModuleFramework\ModuleApplicationTests.ExecuteRequest.cs" />
     <Compile Include="ModuleFramework\ModuleDelegatingViewEngineTests.cs" />
