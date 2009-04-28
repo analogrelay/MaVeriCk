@@ -13,7 +13,7 @@ namespace Maverick.Web.ModuleFramework {
         public HeaderContributingViewResultAdapter(ViewResultBase innerResult) {
             Arg.NotNull("innerResult", innerResult);
             InnerResult = innerResult;
-            HeaderViewNameFormat = "{0}.import";
+            HeaderViewNameFormat = "{0}.header";
         }
 
         public override void ExecuteResult(ControllerContext context) {
