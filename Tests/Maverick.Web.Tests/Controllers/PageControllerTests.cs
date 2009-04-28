@@ -149,19 +149,19 @@ namespace Maverick.Web.Tests.Controllers {
             // Assert
             Assert.IsNotNull(result, "Expected that a ViewResult would be returned");
 
-            PageViewModel renderingModel = result.ViewData.Model as PageViewModel;
-            Assert.IsNotNull(renderingModel, "Expected that the Model of the ViewResult would be a PageViewModel");
-            Assert.AreEqual(2, renderingModel.Zones.Count);
+            PageViewModel pageModel = result.ViewData.Model as PageViewModel;
+            Assert.IsNotNull(pageModel, "Expected that the Model of the ViewResult would be a PageViewModel");
+            Assert.AreEqual(2, pageModel.Zones.Count);
 
-            Assert.AreSame(module1Result, renderingModel["SidebarZone"].ModuleResults[0].ActionResult, "Expected that the action result from the 1st module would be the first module result");
-            Assert.AreSame(module1Context, renderingModel["SidebarZone"].ModuleResults[0].ControllerContext, "Expected that the controller context from the 1st module would be the first controller context");
+            Assert.AreSame(module1Result, pageModel["SidebarZone"].ModuleResults[0].ActionResult, "Expected that the action result from the 1st module would be the first module result");
+            Assert.AreSame(module1Context, pageModel["SidebarZone"].ModuleResults[0].ControllerContext, "Expected that the controller context from the 1st module would be the first controller context");
 
-            Assert.AreSame(module1Result, renderingModel["SidebarZone"].ModuleResults[1].ActionResult, "Expected that the action result from the 2nd module would be the first module result");
-            Assert.AreSame(module1Context, renderingModel["SidebarZone"].ModuleResults[1].ControllerContext, "Expected that the controller context from the 2nd module would be the first controller context");
+            Assert.AreSame(module1Result, pageModel["SidebarZone"].ModuleResults[1].ActionResult, "Expected that the action result from the 2nd module would be the first module result");
+            Assert.AreSame(module1Context, pageModel["SidebarZone"].ModuleResults[1].ControllerContext, "Expected that the controller context from the 2nd module would be the first controller context");
             
             // NOTE: (3rd module also uses the "first" module application)
-            Assert.AreSame(module2Result, renderingModel["ContentZone"].ModuleResults[0].ActionResult, "Expected that the action result from the 2nd module would be the first module result");
-            Assert.AreSame(module2Context, renderingModel["ContentZone"].ModuleResults[0].ControllerContext, "Expected that the controller context from the 2nd module would be the first controller context");
+            Assert.AreSame(module2Result, pageModel["ContentZone"].ModuleResults[0].ActionResult, "Expected that the action result from the 2nd module would be the first module result");
+            Assert.AreSame(module2Context, pageModel["ContentZone"].ModuleResults[0].ControllerContext, "Expected that the controller context from the 2nd module would be the first controller context");
         }
 
         [TestMethod]
@@ -234,15 +234,15 @@ namespace Maverick.Web.Tests.Controllers {
             // Assert
             Assert.IsNotNull(result, "Expected that a ViewResult would be returned");
 
-            PageViewModel renderingModel = result.ViewData.Model as PageViewModel;
-            Assert.IsNotNull(renderingModel, "Expected that the Model of the ViewResult would be a PageViewModel");
-            Assert.AreEqual(2, renderingModel.Zones.Count);
+            PageViewModel pageModel = result.ViewData.Model as PageViewModel;
+            Assert.IsNotNull(pageModel, "Expected that the Model of the ViewResult would be a PageViewModel");
+            Assert.AreEqual(2, pageModel.Zones.Count);
 
             // Verify SidebarZone
-            Assert.AreSame(module1Result, renderingModel["SidebarZone"].ModuleResults[0].ActionResult, "Expected that the action result from the 1st module would be the first module result");
-            Assert.AreSame(module1Context, renderingModel["SidebarZone"].ModuleResults[0].ControllerContext, "Expected that the controller context from the 1st module would be the first controller context");
-            Assert.AreSame(module1Result, renderingModel["SidebarZone"].ModuleResults[1].ActionResult, "Expected that the action result from the 2nd module would be the first module result");
-            Assert.AreSame(module1Context, renderingModel["SidebarZone"].ModuleResults[1].ControllerContext, "Expected that the controller context from the 2nd module would be the first controller context");
+            Assert.AreSame(module1Result, pageModel["SidebarZone"].ModuleResults[0].ActionResult, "Expected that the action result from the 1st module would be the first module result");
+            Assert.AreSame(module1Context, pageModel["SidebarZone"].ModuleResults[0].ControllerContext, "Expected that the controller context from the 1st module would be the first controller context");
+            Assert.AreSame(module1Result, pageModel["SidebarZone"].ModuleResults[1].ActionResult, "Expected that the action result from the 2nd module would be the first module result");
+            Assert.AreSame(module1Context, pageModel["SidebarZone"].ModuleResults[1].ControllerContext, "Expected that the controller context from the 2nd module would be the first controller context");
             
             // NOTE: (3rd module also uses the "first" module application)
             Assert.AreSame(module2Result, pageModel["ContentZone"].ModuleResults[0].ActionResult, "Expected that the action result from the 2nd module would be the first module result");
