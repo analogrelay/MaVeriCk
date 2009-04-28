@@ -13,8 +13,11 @@ using Maverick.Web.Helpers;
 namespace Maverick.Web.ModuleFramework {
     public static class RenderingExtensions {
         public static void RenderModule(this HtmlHelper helper, ModuleRequestResult moduleResult) {
-            PortalRequestContext portalRequestContext = helper.ViewContext.HttpContext.GetPortalContext();
-            ModuleExecutionEngine.Current.ExecuteModuleResult(portalRequestContext, moduleResult);
+            ModuleExecutionEngine.Current.ExecuteModuleResult(helper.ViewContext.HttpContext.GetPortalContext(), moduleResult);
+        }
+
+        public static void RenderModuleHeader(this HtmlHelper helper, ModuleRequestResult moduleResult) {
+            ModuleExecutionEngine.Current.ExecuteModuleHeader(helper.ViewContext.HttpContext.GetPortalContext(), moduleResult);
         }
     }
 }

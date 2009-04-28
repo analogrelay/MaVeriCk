@@ -149,7 +149,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ModuleFramework\PageOverrideResult.cs" />
-    <Compile Include="ModuleFramework\RenderModuleExtensions.cs" />
+    <Compile Include="ModuleFramework\RenderingExtensions.cs" />
     <Compile Include="ModuleFramework\RenderModuleResult.cs" />
     <Compile Include="ModuleFramework\ResultCapturingActionInvoker.cs" />
     <Compile Include="Modules\ClaimDumper\ClaimDumperModuleApplication.cs" />
