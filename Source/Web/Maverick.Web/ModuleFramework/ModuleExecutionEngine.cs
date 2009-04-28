@@ -7,6 +7,7 @@
 // </summary>
 // ---------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.Web;
@@ -58,16 +59,31 @@ namespace Maverick.Web.ModuleFramework {
         }
 
 
-        public virtual void ExecuteModuleResult(PortalRequestContext portalRequestContext, ModuleRequestResult moduleResult) {
-            // Set the active module
-            ModuleRequestResult oldRequest = portalRequestContext.ActiveModuleRequest;
-            portalRequestContext.ActiveModuleRequest = moduleResult;
+        public virtual void ExecuteModuleResult(PortalRequestContext portalContext, ModuleRequestResult moduleResult) {
+            RunInModuleResultContext(portalContext,
+                                     moduleResult,
+                                     () => moduleResult.ActionResult.ExecuteResult(moduleResult.ControllerContext));
+        }
 
-            // Render the module content
-            moduleResult.ActionResult.ExecuteResult(moduleResult.ControllerContext);
+        public virtual void ExecuteModuleHeader(PortalRequestContext portalContext, ModuleRequestResult moduleResult) {
+            IHeaderContributingResult headerResult = moduleResult.ActionResult as IHeaderContributingResult;
+            if (headerResult != null) {
+                RunInModuleResultContext(portalContext,
+                                         moduleResult,
+                                         () => headerResult.ExecuteHeader(moduleResult.ControllerContext));
+            }
+        }
+
+        protected internal void RunInModuleResultContext(PortalRequestContext portalContext, ModuleRequestResult moduleResult, Action action) {
+            // Set the active module
+            ModuleRequestResult oldRequest = portalContext.ActiveModuleRequest;
+            portalContext.ActiveModuleRequest = moduleResult;
+
+            // Run the action
+            action();
 
             // Restore the previous active module
-            portalRequestContext.ActiveModuleRequest = oldRequest;
+            portalContext.ActiveModuleRequest = oldRequest;
         }
     }
 }
