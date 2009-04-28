@@ -11,7 +11,7 @@ using System.Web.Mvc;
 using Maverick.Web.Helpers;
 
 namespace Maverick.Web.ModuleFramework {
-    public static class RenderModuleExtensions {
+    public static class RenderingExtensions {
         public static void RenderModule(this HtmlHelper helper, ModuleRequestResult moduleResult) {
             PortalRequestContext portalRequestContext = helper.ViewContext.HttpContext.GetPortalContext();
             ModuleExecutionEngine.Current.ExecuteModuleResult(portalRequestContext, moduleResult);
