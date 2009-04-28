@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace Maverick.Web.ModuleFramework {
+    // TODO: Fallback - Use the MasterName if the ViewName fails?
+    // TODO: Full Virtual Path support - If the ViewName is a VirtualPath, what then?
+    // TODO: Common Scripts and Stylesheets... may require a full rewrite :S
     public class HeaderContributingViewResultAdapter : ActionResult, IHeaderContributingResult {
         public ViewResultBase InnerResult { get; private set; }
 

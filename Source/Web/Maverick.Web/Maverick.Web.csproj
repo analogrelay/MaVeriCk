@@ -279,15 +279,23 @@
     </CodeAnalysisDictionary>
     <Content Include="Configuration\NHibernate.config" />
     <Content Include="Modules\ClaimDumper\Views\Home\Index.aspx" />
-    <Content Include="Modules\ClaimDumper\Web.config" />
     <Content Include="Modules\CurrentTime\Views\Home\Index.aspx" />
     <Content Include="Modules\TaskList\Content\Styles.css" />
+    <Content Include="Modules\TaskList\Views\Home\Index.Header.aspx" />
     <Content Include="Modules\TaskList\Views\Home\Index.aspx" />
     <Content Include="Modules\TaskList\Views\Home\Task.aspx" />
-    <Content Include="Modules\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Modules\TaskList\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Modules\CurrentTime\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Modules\ClaimDumper\Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -7,7 +7,9 @@
 // </summary>
 // ---------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
 using Maverick.Models;
+using Maverick.Web.ModuleFramework;
 
 namespace Maverick.Web.Models {
     public class PageViewModel {
@@ -24,6 +26,16 @@ namespace Maverick.Web.Models {
                     _zones.Add(new ZoneViewModel {ZoneName = zoneName});
                 }
                 return _zones[zoneName];                
+            }
+        }
+
+        public IEnumerable<ModuleRequestResult> AllModules {
+            get {
+                foreach(ZoneViewModel zone in Zones) {
+                    foreach(ModuleRequestResult moduleResult in zone.ModuleResults) {
+                        yield return moduleResult;
+                    }
+                }
             }
         }
     }
