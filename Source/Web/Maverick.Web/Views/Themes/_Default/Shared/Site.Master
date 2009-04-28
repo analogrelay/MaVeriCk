@@ -17,12 +17,6 @@
 <body>
     <div class="page">
 
-        <% if (Context.User.IsInRole("SuperUser")) { %>
-        <div id="control_panel">
-            <% Html.RenderPartial("ControlPanel", Model.ControlPanelModel); %>
-        </div>
-        <% } %>
-
         <div id="header">
             <div id="title">
                 <h1>MaVeriCk - Patterns-based Portaling</h1>

@@ -77,22 +77,6 @@ namespace Maverick.Web.Controllers {
                 }
             }
 
-            // Prepare the control panel
-            // TODO: The Control Panel should just be a module, though perhaps a special one (exported to MEF with a special contract name)
-            if (User != null && User.IsInRole("SuperUser")) {
-                pageModel.ControlPanelModel = new ControlPanelViewModel {
-                    Modules = (from appExport in ModuleExecutor.ModuleApplications
-                               select new SelectListItem {
-                                   Text = appExport.MetadataView.Name,
-                                   Value = appExport.MetadataView.Id.ToString("N")
-                               })
-                };
-            }
-
-            // TODO: Skinning
-            // return Skin(ActiveSkin, pageModel)?
-            // SkinnedViewEngine?
-            // Combination of both? (my preference so far)
             return View(pageModel);
         }
     }

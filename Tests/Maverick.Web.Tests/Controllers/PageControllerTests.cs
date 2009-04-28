@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web.Mvc;
 using Maverick.Models;
 using Maverick.Web.Controllers;
@@ -21,6 +22,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using TestUtilities;
 using System.Security.Principal;
+using System.Web;
 
 namespace Maverick.Web.Tests.Controllers {
     [TestClass]
@@ -54,8 +56,8 @@ namespace Maverick.Web.Tests.Controllers {
             // Arrange
             PageController controller = SetupController();
 
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule3Id].GetExportedObject())
-                .Never(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()));
+            Mock.Get(controller.ModuleExecutor)
+                .Never(CreateExecuteModuleExpression(ModuleControllerTests.TestModule3Id));
 
             SetupMockActivePage(controller);
 
@@ -63,12 +65,12 @@ namespace Maverick.Web.Tests.Controllers {
             controller.ViewPage(null, String.Empty);
 
             // Assert
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule1Id].GetExportedObject())
-                .Verify(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()));
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule1Id].GetExportedObject())
-                .Verify(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()));
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule2Id].GetExportedObject())
-                .Verify(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()));
+            Mock.Get(controller.ModuleExecutor)
+                .Verify(CreateExecuteModuleExpression(ModuleControllerTests.TestModule1Id));
+            Mock.Get(controller.ModuleExecutor)
+                .Verify(CreateExecuteModuleExpression(ModuleControllerTests.TestModule1Id));
+            Mock.Get(controller.ModuleExecutor)
+                .Verify(CreateExecuteModuleExpression(ModuleControllerTests.TestModule2Id));
         }
 
         [TestMethod]
@@ -80,8 +82,8 @@ namespace Maverick.Web.Tests.Controllers {
             var moduleResult = new PageOverrideResult(new Mock<ActionResult>().Object);
 
             ControllerContext expectedContext = Mockery.CreateMockControllerContext();
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule1Id].GetExportedObject())
-                .Setup(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()))
+            Mock.Get(controller.ModuleExecutor)
+                .Setup(CreateExecuteModuleExpression(ModuleControllerTests.TestModule1Id))
                 .Returns(new ModuleRequestResult { ActionResult = moduleResult, 
                                                      ControllerContext = expectedContext});
 
@@ -102,11 +104,11 @@ namespace Maverick.Web.Tests.Controllers {
 
             var moduleResult = new PageOverrideResult(new Mock<ActionResult>().Object);
 
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule1Id].GetExportedObject())
-                .Never(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()));
+            Mock.Get(controller.ModuleExecutor)
+                .Never(CreateExecuteModuleExpression(ModuleControllerTests.TestModule1Id));
 
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule2Id].GetExportedObject())
-                .Setup(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()))
+            Mock.Get(controller.ModuleExecutor)
+                .Setup(CreateExecuteModuleExpression(ModuleControllerTests.TestModule2Id))
                 .Returns(new ModuleRequestResult { ActionResult = moduleResult });
 
             // Act
@@ -127,15 +129,15 @@ namespace Maverick.Web.Tests.Controllers {
             ControllerContext module1Context = Mockery.CreateMockControllerContext();
             ControllerContext module2Context = Mockery.CreateMockControllerContext();
 
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule1Id].GetExportedObject())
-                .Setup(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()))
+            Mock.Get(controller.ModuleExecutor)
+                .Setup(CreateExecuteModuleExpression(ModuleControllerTests.TestModule1Id))
                 .Returns(new ModuleRequestResult {
                     ActionResult = module1Result,
                     ControllerContext = module1Context
                 });
 
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule2Id].GetExportedObject())
-                .Setup(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()))
+            Mock.Get(controller.ModuleExecutor)
+                .Setup(CreateExecuteModuleExpression(ModuleControllerTests.TestModule2Id))
                 .Returns(new ModuleRequestResult {
                     ActionResult = module2Result,
                     ControllerContext = module2Context
@@ -167,9 +169,6 @@ namespace Maverick.Web.Tests.Controllers {
             // Arrange
             PageController controller = SetupController();
 
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule3Id].GetExportedObject())
-                .Never(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()));
-
             SetupMockActivePage(controller);
 
             // Act
@@ -181,92 +180,25 @@ namespace Maverick.Web.Tests.Controllers {
         }
 
         [TestMethod]
-        public void View_Action_Provides_Module_Application_With_Module_Object_Representing_Current_Module() {
-            // Arrange
-            PageController controller = SetupController();
-            PortalRequestContext requestContext = controller.HttpContext.GetPortalContext();
-
-            Module testModule = new Module {Id = 1, ModuleApplicationId = ModuleControllerTests.TestModule1Id};
-            requestContext.ActivePage = new Page {
-                Modules = new List<Module> { testModule }
-            };
-
-            ModuleRequestContext actualContext = null;
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule1Id].GetExportedObject())
-                .Setup(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()))
-                .Callback<ModuleRequestContext>(context => actualContext = context);
-
-            // Act
-            controller.ViewPage(null, String.Empty);
-
-            // Assert
-            Assert.AreSame(testModule, actualContext.Module, "Expected that the first module would receive the correct module object");
-        }
-
-        [TestMethod]
-        public void View_Action_Stores_ModuleApplication_In_ModuleContext() {
-            // Arrange
-            PageController controller = SetupController();
-            PortalRequestContext requestContext = controller.HttpContext.GetPortalContext();
-
-            Module testModule = new Module { Id = 1, ModuleApplicationId = ModuleControllerTests.TestModule1Id };
-            requestContext.ActivePage = new Page {
-                Modules = new List<Module> { testModule }
-            };
-
-            ModuleRequestContext actualContext = null;
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule1Id].GetExportedObject())
-                .Setup(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()))
-                .Callback<ModuleRequestContext>(context => actualContext = context);
-
-            // Act
-            controller.ViewPage(null, String.Empty);
-
-            // Assert
-            Assert.AreSame(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule1Id].GetExportedObject(), actualContext.Application, 
-                           "Expected that the first module would receive the correct module application");
+        public void View_Action_Provides_Module_Executor_With_Module_Object_Representing_Current_Module() {
+            RunSimpleModuleExecutionTest((ctl, ctx, mod, route) => Assert.AreEqual(1, mod.Id));
         }
 
         [TestMethod]
         public void View_Action_Provides_Empty_ModuleRoute_If_ModuleId_Does_Not_Match_ModuleId_Parameter() {
-            RunSimpleModuleExecutionTest((ctl, ctx) => Assert.AreEqual(String.Empty, ctx.ModuleRoutingUrl, "Expected that the routing url provided would be empty"));
+            RunSimpleModuleExecutionTest((ctl, ctx, mod, route) => Assert.AreEqual(String.Empty, route, "Expected that the routing url provided would be empty"));
         }
 
         [TestMethod]
         public void View_Action_Provides_ModuleRoute_From_Parameter_If_ModuleId_Matches_Parameter() {
-            // Arrange
-            PageController controller = SetupController();
-            PortalRequestContext requestContext = controller.HttpContext.GetPortalContext();
-
-            Module testModule = new Module { Id = 1, ModuleApplicationId = ModuleControllerTests.TestModule1Id };
-            Module otherModule = new Module { Id = 42, ModuleApplicationId = ModuleControllerTests.TestModule2Id };
-            requestContext.ActivePage = new Page {
-                Modules = new List<Module> { testModule, otherModule }
-            };
-
-            ModuleRequestContext actualContext = null;
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule1Id].GetExportedObject())
-                .Setup(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()))
-                .Callback<ModuleRequestContext>(context => actualContext = context);
-
-            ModuleRequestContext otherContext = null;
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule2Id].GetExportedObject())
-                .Setup(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()))
-                .Callback<ModuleRequestContext>(context => otherContext = context);
-
-            // Act
-            controller.ViewPage(1, "Foo/Bar/Baz");
-
-            // Assert
-            Assert.AreEqual("Foo/Bar/Baz", actualContext.ModuleRoutingUrl,
-                            "Expected that the routing url provided would be the module route");
-            Assert.AreEqual(String.Empty, otherContext.ModuleRoutingUrl,
-                            "Expected that the routing url provided would be empty");
+            RunSimpleModuleExecutionTest(1,
+                                         "Zoop/Zork/Zoink",
+                                         (ctl, ctx, mod, route) => Assert.AreEqual("Zoop/Zork/Zoink", route));
         }
 
         [TestMethod]
-        public void View_Action_Provides_Original_HttpContext_Base_To_Module_Application() {
-            RunSimpleModuleExecutionTest((ctl, ctx) => Assert.AreSame(ctl.HttpContext, ctx.HttpContext,
+        public void View_Action_Provides_Original_HttpContext_Base_To_Module_Executor() {
+            RunSimpleModuleExecutionTest((ctl, ctx, mod, route) => Assert.AreSame(ctl.HttpContext, ctx,
                            "Expected that the request context provided to the module would be for the 'app' root"));
         }
 
@@ -282,15 +214,15 @@ namespace Maverick.Web.Tests.Controllers {
             ControllerContext module1Context = Mockery.CreateMockControllerContext();
             ControllerContext module2Context = Mockery.CreateMockControllerContext();
 
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule1Id].GetExportedObject())
-                .Setup(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()))
+            Mock.Get(controller.ModuleExecutor)
+                .Setup(CreateExecuteModuleExpression(ModuleControllerTests.TestModule1Id))
                 .Returns(new ModuleRequestResult {
                     ActionResult = module1Result,
                     ControllerContext = module1Context
                 });
 
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule2Id].GetExportedObject())
-                .Setup(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()))
+            Mock.Get(controller.ModuleExecutor)
+                .Setup(CreateExecuteModuleExpression(ModuleControllerTests.TestModule2Id))
                 .Returns(new ModuleRequestResult {
                     ActionResult = module2Result,
                     ControllerContext = module2Context
@@ -317,59 +249,6 @@ namespace Maverick.Web.Tests.Controllers {
             Assert.AreSame(module2Context, pageModel["ContentZone"].ModuleResults[0].ControllerContext, "Expected that the controller context from the 2nd module would be the first controller context");
         }
 
-        [TestMethod]
-        public void View_Action_Does_Not_Provide_ControlPanelModel_If_No_User() {
-            // Arrange
-            PageController controller = SetupController();
-            controller.HttpContext.GetPortalContext().ActivePage = new Page() {Modules = new List<Module>()};
-            
-            // Act
-            ActionResult result = controller.ViewPage(null, String.Empty);
-
-            // Assert
-            ResultAssert.IsViewWithModel<PageViewModel>(result, model => {
-                Assert.IsNull(model.ControlPanelModel);
-            });
-        }
-
-        [TestMethod]
-        public void View_Action_Does_Not_Provide_ControlPanelModel_If_User_Not_SuperUser() {
-            // Arrange
-            PageController controller = SetupController();
-            controller.HttpContext.GetPortalContext().ActivePage = new Page() { Modules = new List<Module>() };
-            SetupMockUser(controller, false);
-
-            // Act
-            ActionResult result = controller.ViewPage(null, String.Empty);
-
-            // Assert
-            ResultAssert.IsViewWithModel<PageViewModel>(result, model => {
-                Assert.IsNull(model.ControlPanelModel);
-            });
-        }
-
-        [TestMethod]
-        public void View_Action_Provides_ControlPanelModel_If_User_Is_SuperUser() {
-            // Arrange
-            PageController controller = SetupController();
-            controller.HttpContext.GetPortalContext().ActivePage = new Page() { Modules = new List<Module>() };
-            SetupMockUser(controller, true);
-
-            // Act
-            ActionResult result = controller.ViewPage(null, String.Empty);
-
-            // Assert
-            ResultAssert.IsViewWithModel<PageViewModel>(result, model => {
-                Assert.IsNotNull(model.ControlPanelModel);
-                Assert.AreEqual(controller.ModuleExecutor.ModuleApplications.Count, model.ControlPanelModel.Modules.Count());
-                EnumerableAssert.ElementsMatch(controller.ModuleExecutor.ModuleApplications,
-                                               model.ControlPanelModel.Modules,
-                                               (e, c) =>
-                                               e.MetadataView.Id.ToString("N") == c.Value &&
-                                               e.MetadataView.Name == c.Text);
-            });
-        }
-
         private static void SetupMockUser(Controller controller, bool superUser) {
             var mockPrincipal = new Mock<IPrincipal>();
             mockPrincipal.Setup(p => p.IsInRole("SuperUser"))
@@ -379,36 +258,44 @@ namespace Maverick.Web.Tests.Controllers {
                 .Returns(mockPrincipal.Object);
         }
 
-        private static void RunSimpleModuleExecutionTest(Action<PageController, ModuleRequestContext> assert) {
+        private static void RunSimpleModuleExecutionTest(Action<PageController, HttpContextBase, Module, string> assert) {
+            RunSimpleModuleExecutionTest(42, "Foo/Bar/Baz", assert);
+        }
+
+        private static void RunSimpleModuleExecutionTest(int moduleId, string moduleRoute, Action<PageController, HttpContextBase, Module, string> assert) {
             PageController controller = SetupController();
             PortalRequestContext requestContext = controller.HttpContext.GetPortalContext();
 
-            Module testModule = new Module { Id = 1, ModuleApplicationId = ModuleControllerTests.TestModule1Id };
+            Module testModule = new Module {Id = 1, ModuleApplicationId = ModuleControllerTests.TestModule1Id};
             requestContext.ActivePage = new Page {
-                Modules = new List<Module> { testModule }
+                Modules = new List<Module> {testModule}
             };
 
-            ModuleRequestContext actualContext = null;
-            Mock.Get(controller.ModuleExecutor.ModuleApplications[ModuleControllerTests.TestModule1Id].GetExportedObject())
-                .Setup(app => app.ExecuteRequest(It.IsAny<ModuleRequestContext>()))
-                .Callback<ModuleRequestContext>(context => actualContext = context);
+            bool callbackHit = false;
+            Mock.Get(controller.ModuleExecutor)
+                .Setup(CreateExecuteModuleExpression(ModuleControllerTests.TestModule1Id))
+                .Callback<HttpContextBase, Module, string>((c, m, s) => {
+                    assert(controller, c, m, s);
+                    callbackHit = true;
+                });
 
             // Act
-            controller.ViewPage(42, "Foo/Bar/Baz");
+            controller.ViewPage(moduleId, moduleRoute);
 
             // Assert
-            assert(controller, actualContext);
+            Assert.IsTrue(callbackHit);
+        }
+
+        private static Expression<Func<ModuleExecutionEngine, ModuleRequestResult>> CreateExecuteModuleExpression(Guid moduleApplicationId) {
+            return exec => exec.ExecuteModule(It.IsAny<HttpContextBase>(),
+                                              It.Is<Module>(
+                                                  m => m.ModuleApplicationId == moduleApplicationId),
+                                              It.IsAny<string>());
         }
 
         private static PageController SetupController() {
             PageController controller = new PageController {
-                ModuleExecutor = new ModuleExecutionEngine {
-                    ModuleApplications = new ModuleApplicationCollection {
-                        Mockery.CreateMockApplicationExport(ModuleControllerTests.TestModule1Id),
-                        Mockery.CreateMockApplicationExport(ModuleControllerTests.TestModule2Id),
-                        Mockery.CreateMockApplicationExport(ModuleControllerTests.TestModule3Id)
-                    }
-                }
+                ModuleExecutor = new Mock<ModuleExecutionEngine>().Object
             };
             controller.ControllerContext = Mockery.CreateMockControllerContext(controller);
             return controller;

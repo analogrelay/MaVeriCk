@@ -28,6 +28,7 @@ namespace Maverick.Web.Tests.Controllers {
         public static readonly Guid TestModule1Id = new Guid("{58E48CC5-A6DF-471e-AFB6-5DA107300FA4}");
         public static readonly Guid TestModule2Id = new Guid("{3BEA8263-7E60-4801-B9F9-8E294158113E}");
         public static readonly Guid TestModule3Id = new Guid("{EEA85012-1754-4326-824F-2483F10EDFEF}");
+        public static readonly Guid TestModule4Id = new Guid("{B4A855D4-91C3-412C-A7F5-B8ED437A72D3}");
 
         [TestMethod]
         public void Controller_Is_Exported_To_CompositionContainer() {
@@ -179,10 +180,10 @@ namespace Maverick.Web.Tests.Controllers {
             Mock<ModuleRepository> mockModuleService = ConfigureModuleService(controller);
             mockModuleService.Never(s => s.Delete(It.IsAny<Module>()));
             mockModuleService.Setup(s => s.GetAll())
-                             .Returns(new List<Module> {
-                                new Module {Id = 42},
-                                new Module {Id = 24}
-                             }.AsEntityQuery());
+                .Returns(new List<Module> {
+                    new Module {Id = 42},
+                    new Module {Id = 24}
+                }.AsEntityQuery());
 
             // Act
             ActionResult result = controller.Delete(43);
@@ -197,10 +198,10 @@ namespace Maverick.Web.Tests.Controllers {
             ModuleController controller = CreateController();
             Mock<ModuleRepository> mockModuleService = ConfigureModuleService(controller);
             mockModuleService.Setup(s => s.GetAll())
-                             .Returns(new List<Module> {
-                                new Module {Id = 42},
-                                new Module {Id = 24}
-                             }.AsEntityQuery());
+                .Returns(new List<Module> {
+                    new Module {Id = 42},
+                    new Module {Id = 24}
+                }.AsEntityQuery());
 
             // Act
             ActionResult result = controller.Delete(24);
@@ -215,10 +216,10 @@ namespace Maverick.Web.Tests.Controllers {
             ModuleController controller = CreateController();
             Mock<ModuleRepository> mockModuleService = ConfigureModuleService(controller);
             mockModuleService.Setup(s => s.GetAll())
-                             .Returns(new List<Module> {
-                                new Module {Id = 42},
-                                new Module {Id = 24}
-                             }.AsEntityQuery());
+                .Returns(new List<Module> {
+                    new Module {Id = 42},
+                    new Module {Id = 24}
+                }.AsEntityQuery());
 
             // Act
             controller.Delete(24);

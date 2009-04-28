@@ -32,6 +32,10 @@ namespace Maverick.Web.ModuleFramework {
         public ModuleApplicationCollection ModuleApplications { get; set; }
 
         public virtual ModuleRequestResult ExecuteModule(HttpContextBase httpContext, Module moduleModel, string moduleRoute) {
+            Arg.NotNull("httpContext", httpContext);
+            Arg.NotNull("moduleModel", moduleModel);
+            Arg.NotNull("moduleRoute", moduleRoute); // Empty route is OK!
+
             // If the module application for this module is installed
             if (ModuleApplications.Contains(moduleModel.ModuleApplicationId)) {
                 // Get the module's application
