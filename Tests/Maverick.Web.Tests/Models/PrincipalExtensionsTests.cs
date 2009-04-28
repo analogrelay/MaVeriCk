@@ -22,7 +22,7 @@ namespace Maverick.Web.Tests.Models {
         [TestMethod]
         public void AsUserIdentity_Returns_UnauthenticatedIdentity_If_Principal_Not_IClaimsPrincipal() {
             // Arrange
-            IPrincipal principal = new GenericPrincipal(new GenericIdentity("Foo"), new[] {"Bar"});
+            IPrincipal principal = Mockery.CreatePrincipal();
             
             // Act
             UserIdentity identity = principal.AsUserIdentity();
@@ -35,7 +35,7 @@ namespace Maverick.Web.Tests.Models {
         [TestMethod]
         public void AsUserIdentity_Returns_AuthenticatedIdentity_If_Principal_Is_IClaimsPrincipal() {
             // Arrange
-            IClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(new Claim(ClaimTypes.Role, "Foo")));
+            IClaimsPrincipal principal = Mockery.CreateClaimsPrincipal();
 
             // Act
             UserIdentity identity = principal.AsUserIdentity();

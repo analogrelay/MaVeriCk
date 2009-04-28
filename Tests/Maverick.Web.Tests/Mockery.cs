@@ -11,10 +11,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel.Composition;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Maverick.Web.ModuleFramework;
+using Microsoft.IdentityModel.Claims;
 using Moq;
 
 namespace Maverick.Web.Tests {
@@ -106,6 +108,14 @@ namespace Maverick.Web.Tests {
                             new { controller = "Page", action = "View", id = "" });
             HtmlHelper helper = new HtmlHelper(CreateViewContext("http://localhost/Foo/Bar"), new ViewPage(), routes);
             return helper;
+        }
+
+        internal static GenericPrincipal CreatePrincipal() {
+            return new GenericPrincipal(new GenericIdentity("Foo"), new[] { "Bar" });
+        }
+
+        internal static ClaimsPrincipal CreateClaimsPrincipal() {
+            return new ClaimsPrincipal(new ClaimsIdentity(new Claim(ClaimTypes.Role, "Foo")));
         }
     }
 }
