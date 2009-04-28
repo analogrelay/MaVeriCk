@@ -11,7 +11,7 @@ using Maverick.Models;
 
 namespace Maverick.Web.Models {
     public class PageViewModel {
-        private ZoneViewModelCollection _zones = new ZoneViewModelCollection();
+        private readonly ZoneViewModelCollection _zones = new ZoneViewModelCollection();
 
         public Page Page { get; set; }
         public ControlPanelViewModel ControlPanelModel { get; set; }
