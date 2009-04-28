@@ -18,6 +18,7 @@
     <div class="page">
 
         <div id="header">
+            <% Html.RenderModule(Model.ControlPanelResult); %>
             <div id="title">
                 <h1>MaVeriCk - Patterns-based Portaling</h1>
             </div>

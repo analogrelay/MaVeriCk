@@ -152,7 +152,7 @@
     <Compile Include="ModuleFramework\RenderModuleExtensions.cs" />
     <Compile Include="ModuleFramework\RenderModuleResult.cs" />
     <Compile Include="ModuleFramework\ResultCapturingActionInvoker.cs" />
-    <Compile Include="Modules\AdminBar\ClaimDumperModuleApplication.cs" />
+    <Compile Include="Modules\AdminBar\AdminBarModuleApplication.cs" />
     <Compile Include="Modules\AdminBar\Controllers\HomeController.cs" />
     <Compile Include="Modules\ClaimDumper\ClaimDumperModuleApplication.cs" />
     <Compile Include="Modules\ClaimDumper\Controllers\HomeController.cs">
@@ -281,19 +281,26 @@
     </CodeAnalysisDictionary>
     <Content Include="Configuration\NHibernate.config" />
     <Content Include="Modules\ClaimDumper\Views\Home\Index.aspx" />
-    <Content Include="Modules\ClaimDumper\Web.config" />
+    <Content Include="Modules\ClaimDumper\Views\Web.config" />
     <Content Include="Modules\CurrentTime\Views\Home\Index.aspx" />
     <Content Include="Modules\TaskList\Content\Styles.css" />
     <Content Include="Modules\TaskList\Views\Home\Index.aspx" />
     <Content Include="Modules\TaskList\Views\Home\Task.aspx" />
-    <Content Include="Modules\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Modules\AdminBar\Content\Images\Admin.png" />
+    <Content Include="Modules\AdminBar\Content\Images\DownArrow.png" />
     <Content Include="Modules\AdminBar\Views\Home\Index.aspx" />
-    <Content Include="Modules\AdminBar\Web.config" />
+    <Content Include="Modules\AdminBar\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Modules\CurrentTime\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Modules\TaskList\Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
