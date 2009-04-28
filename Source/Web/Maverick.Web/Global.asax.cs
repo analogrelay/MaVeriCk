@@ -39,7 +39,6 @@ namespace Maverick.Web {
         [Import]
         public static PagePrerouter PagePrerouter { get; set; }
 
-        [Export(typeof(Func<HttpContextBase>))]
         public static HttpContextBase CurrentContext {
             get {
                 if(_currentContext == null) {
@@ -50,6 +49,11 @@ namespace Maverick.Web {
             
             // We really don't want people playing with this outside of the test
             internal set { _currentContext = value; }
+        }
+
+        [Export(typeof(Func<HttpContextBase>))]
+        public static HttpContextBase GetCurrentContext() {
+            return CurrentContext;
         }
 
         public static RouteCollection Routes {
@@ -90,19 +94,19 @@ namespace Maverick.Web {
             routes.MapRoute(
                 "ModuleRoute",
                 "{moduleId}/{*moduleRoute}",
-                new {controller = "Page", action = "View", moduleId=string.Empty, moduleRoute=string.Empty},
+                new {controller = "Page", action = "View", moduleId = String.Empty, moduleRoute = String.Empty},
                 new {moduleId = @"[0-9]*"});
 
             routes.MapRoute(
                 "ModuleRenderRoute",
                 "_Module/Render/{moduleId}/{*moduleRoute}",
-                new { controller = "Module", action = "Render", moduleRoute = string.Empty },
+                new { controller = "Module", action = "Render", moduleRoute = String.Empty },
                 new { moduleId = @"[0-9]+" }
             );
             routes.MapRoute(
                 "Default",
                 "_{controller}/{action}/{id}",
-                new {controller = "Page", action = "View", id = string.Empty }
+                new { controller = "Page", action = "View", id = String.Empty }
             );
         }
 
@@ -116,7 +120,7 @@ namespace Maverick.Web {
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "This code was generated as an instance method by the ASP.Net MVC templates")]
-        internal static void Application_Start() {
+        public void Application_Start() {
             Compose();
 
             RegisterRoutes(Routes);
