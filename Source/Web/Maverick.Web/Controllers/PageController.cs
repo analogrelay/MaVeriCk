@@ -28,6 +28,9 @@ namespace Maverick.Web.Controllers {
         [Import(typeof(ModuleRepository))]
         public ModuleRepository ModuleRepository { get; set; }
 
+        [Import(WebContractNames.ControlPanelId)]
+        public string ControlPanelId { get; set; }
+
         public Page ActivePage {
             get { return HttpContext.GetPortalContext().ActivePage; }
         }
@@ -44,6 +47,27 @@ namespace Maverick.Web.Controllers {
 
             IList<Module> modules = page.Modules.ToList();
 
+            // Execute the control panel module if specified and the user has permission
+            if (!String.IsNullOrEmpty(ControlPanelId)) {
+                Guid controlPanelGuid = Guid.Empty;
+                try {
+                    controlPanelGuid = new Guid(ControlPanelId);
+                } catch(FormatException) {}
+                if (controlPanelGuid != Guid.Empty) {
+                    Module controlPanelModule = new Module() { ModuleApplicationId = controlPanelGuid };
+                    ModuleRequestResult controlPanelResult = ModuleExecutor.ExecuteModule(HttpContext,
+                                                                                          controlPanelModule,
+                                                                                          String.Empty);
+
+                    // If the result is a "Page Override" result (meaning it should be executed as the sole ActionResult for this page)
+                    // Then execute it immediately
+                    if (controlPanelResult != null && controlPanelResult.ActionResult is PageOverrideResult) {
+                        return new RenderModuleResult { ModuleRequestResult = controlPanelResult };
+                    }
+                    pageModel.ControlPanelResult = controlPanelResult;
+                }
+            }
+
             // If there is a selected module (moduleId != null), run it first
             ModuleRequestResult selectedResult = null;
             if (moduleId.HasValue) {
@@ -51,8 +75,7 @@ namespace Maverick.Web.Controllers {
                 if (selectedModule != null) {
                     selectedResult = ModuleExecutor.ExecuteModule(HttpContext, selectedModule, moduleRoute);
 
-                    // If the result is a "Page Override" result (meaning it should be executed as the sole ActionResult for this page)
-                    // Then execute it immediately
+                    // See Control Panel above
                     if (selectedResult != null && selectedResult.ActionResult is PageOverrideResult) {
                         return new RenderModuleResult {ModuleRequestResult = selectedResult};
                     }

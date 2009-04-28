@@ -152,6 +152,8 @@
     <Compile Include="ModuleFramework\RenderModuleExtensions.cs" />
     <Compile Include="ModuleFramework\RenderModuleResult.cs" />
     <Compile Include="ModuleFramework\ResultCapturingActionInvoker.cs" />
+    <Compile Include="Modules\AdminBar\ClaimDumperModuleApplication.cs" />
+    <Compile Include="Modules\AdminBar\Controllers\HomeController.cs" />
     <Compile Include="Modules\ClaimDumper\ClaimDumperModuleApplication.cs" />
     <Compile Include="Modules\ClaimDumper\Controllers\HomeController.cs">
       <SubType>Code</SubType>
@@ -288,6 +290,10 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Modules\AdminBar\Views\Home\Index.aspx" />
+    <Content Include="Modules\AdminBar\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

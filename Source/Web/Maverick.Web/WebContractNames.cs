@@ -12,5 +12,6 @@ namespace Maverick.Web {
         private const string ContractPrefix = "Maverick.Web.";
         public const string DataContextManagerName = ContractPrefix + "DataContextManagerName";
         public const string AppDefaultTheme = ContractPrefix + "AppDefaultTheme";
+        public const string ControlPanelId = ContractPrefix + "ControlPanelId";
     }
 }

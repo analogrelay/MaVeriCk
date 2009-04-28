@@ -7,7 +7,9 @@
 // </summary>
 // ---------------------------------------------------------------------------------------------------------------------
 
+using System;
 using Maverick.Models;
+using Maverick.Web.ModuleFramework;
 
 namespace Maverick.Web.Models {
     public class PageViewModel {
@@ -17,6 +19,8 @@ namespace Maverick.Web.Models {
         public ZoneViewModelCollection Zones {
             get { return _zones; }
         }
+
+        public ModuleRequestResult ControlPanelResult { get; set; }
 
         public ZoneViewModel this[string zoneName] {
             get {

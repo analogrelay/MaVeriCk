@@ -23,6 +23,7 @@ using Moq;
 using TestUtilities;
 using System.Security.Principal;
 using System.Web;
+using System.Threading;
 
 namespace Maverick.Web.Tests.Controllers {
     [TestClass]
@@ -46,9 +47,91 @@ namespace Maverick.Web.Tests.Controllers {
         }
 
         [TestMethod]
+        public void ControlPanelId_Is_Imported_From_CompositionContainer() {
+            // Assert
+            CompositionAssert.IsImported<PageController>(p => p.ControlPanelId, WebContractNames.ControlPanelId);
+        }
+
+        [TestMethod]
         public void ViewPage_Has_Action_Name_View() {
             // Assert
             ActionFilterAssert.HasActionName(p => p.ViewPage(null, "foo"), "View");
+        }
+
+        [TestMethod]
+        public void View_Action_Executes_ControlPanel_If_Id_Is_Not_NullOrEmpty() {
+            // Arrange
+            PageController controller = SetupController();
+            controller.ControlPanelId = ModuleControllerTests.TestModule3Id.ToString("N");
+
+            SetupMockActivePage(controller);
+
+            ModuleRequestResult expectedResult = new ModuleRequestResult();
+            Mock.Get(controller.ModuleExecutor)
+                .Setup(CreateExecuteModuleExpression(ModuleControllerTests.TestModule3Id))
+                .Returns(expectedResult);
+
+            // Act
+            ActionResult result = controller.ViewPage(null, String.Empty);
+
+            // Assert
+            ResultAssert.IsViewWithModel<PageViewModel>(result, model => {
+                Assert.AreSame(expectedResult, model.ControlPanelResult);
+            });
+        }
+
+        [TestMethod]
+        public void View_Action_Returns_RenderModuleResult_If_ControlPanel_Returns_PageOverrideResult() {
+            // Arrange
+            PageController controller = SetupController();
+            controller.ControlPanelId = ModuleControllerTests.TestModule3Id.ToString("N");
+
+            SetupMockActivePage(controller);
+
+            ModuleRequestResult expectedResult = new ModuleRequestResult() {
+                ActionResult = new PageOverrideResult(new EmptyResult()),
+                ControllerContext = Mockery.CreateMockControllerContext()
+            };
+            Mock.Get(controller.ModuleExecutor)
+                .Setup(CreateExecuteModuleExpression(ModuleControllerTests.TestModule3Id))
+                .Returns(expectedResult);
+
+            // Act
+            ActionResult result = controller.ViewPage(null, String.Empty);
+
+            // Assert
+            ResultAssert.IsRenderModule(result, expectedResult);
+        }
+
+        [TestMethod]
+        public void View_Action_Does_Not_Execute_ControlPanel_If_Id_Is_Null() {
+            // Arrange
+            PageController controller = SetupController();
+            
+            SetupMockActivePage(controller);
+            Mock.Get(controller.ModuleExecutor)
+                .Never(CreateExecuteModuleExpression(ModuleControllerTests.TestModule3Id));
+
+            // Act
+            controller.ViewPage(null, String.Empty);
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void View_Action_Does_Not_Execute_ControlPanel_If_Id_Is_Invalid_Guid() {
+            // Arrange
+            PageController controller = SetupController();
+            controller.ControlPanelId = "FooBarBaz";
+
+            SetupMockActivePage(controller);
+            Mock.Get(controller.ModuleExecutor)
+                .Never(CreateExecuteModuleExpression(ModuleControllerTests.TestModule3Id));
+
+            // Act
+            controller.ViewPage(null, String.Empty);
+
+            // Assert
         }
 
         [TestMethod]
@@ -81,19 +164,19 @@ namespace Maverick.Web.Tests.Controllers {
 
             var moduleResult = new PageOverrideResult(new Mock<ActionResult>().Object);
 
-            ControllerContext expectedContext = Mockery.CreateMockControllerContext();
+            ModuleRequestResult expectedResult = new ModuleRequestResult {
+                ActionResult = moduleResult,
+                ControllerContext = Mockery.CreateMockControllerContext()
+            };
             Mock.Get(controller.ModuleExecutor)
                 .Setup(CreateExecuteModuleExpression(ModuleControllerTests.TestModule1Id))
-                .Returns(new ModuleRequestResult { ActionResult = moduleResult, 
-                                                     ControllerContext = expectedContext});
+                .Returns(expectedResult);
 
             // Act
-            RenderModuleResult actualResult = controller.ViewPage(1, String.Empty) as RenderModuleResult;
+            ActionResult result = controller.ViewPage(1, String.Empty);
 
             // Assert
-            Assert.IsNotNull(actualResult);
-            Assert.AreEqual(moduleResult, actualResult.ModuleRequestResult.ActionResult);
-            Assert.AreSame(expectedContext, actualResult.ModuleRequestResult.ControllerContext);
+            ResultAssert.IsRenderModule(result, expectedResult);
         }
 
         [TestMethod]

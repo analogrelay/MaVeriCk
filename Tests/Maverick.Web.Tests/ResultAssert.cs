@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Maverick.Web.Helpers;
+using Maverick.Web.ModuleFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestUtilities;
 
@@ -178,6 +179,11 @@ namespace Maverick.Web.Tests {
 
         public static void IsUnauthorized(ActionResult result) {
             Assert.IsInstanceOfType(result, typeof(HttpUnauthorizedResult));
+        }
+
+        public static void IsRenderModule(ActionResult result, ModuleRequestResult moduleResult) {
+            RenderModuleResult renderModuleResult = result.AssertCast<RenderModuleResult>();
+            Assert.AreSame(moduleResult, renderModuleResult.ModuleRequestResult);
         }
 
         private static void StringsEqualOrBothNullOrEmpty(string expected, string actual, string messageFormat, string bothEmptyParameter) {
