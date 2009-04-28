@@ -14,7 +14,6 @@ namespace Maverick.Web.Models {
         private readonly ZoneViewModelCollection _zones = new ZoneViewModelCollection();
 
         public Page Page { get; set; }
-        public ControlPanelViewModel ControlPanelModel { get; set; }
         public ZoneViewModelCollection Zones {
             get { return _zones; }
         }
