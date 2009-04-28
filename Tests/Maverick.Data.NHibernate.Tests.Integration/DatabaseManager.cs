@@ -16,6 +16,7 @@ using NHibernate.Tool.hbm2ddl;
 
 namespace Maverick.Data.NHibernate.Tests.Integration {
     public static class DatabaseManager {
+        // File-based
         public static string GetDatabaseFileName(string testClass, string testName) {
             string directory = Path.Combine("TestDatabases", testClass);
             if(!Directory.Exists(directory)) {
