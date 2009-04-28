@@ -28,7 +28,9 @@ namespace Maverick.Web.Models {
             Authenticated = principal != null;
         }
 
-        private string GetClaim(string claimType) {
+        internal string GetClaim(string claimType) {
+            Arg.NotNullOrEmpty("claimType", claimType);
+
             if(!Authenticated || Principal.Identities == null) {
                 return null;
             }
@@ -37,7 +39,10 @@ namespace Maverick.Web.Models {
                     select GetClaim(identity.Claims, claimType)).FirstOrDefault();
         }
 
-        private static string GetClaim(IEnumerable<Claim> claims, string claimType) {
+        internal static string GetClaim(IEnumerable<Claim> claims, string claimType) {
+            Arg.NotNull("claims", claims);
+            Arg.NotNullOrEmpty("claimType", claimType);
+
             return (from claim in claims
                     where claim.ClaimType == claimType
                     select claim.Value).FirstOrDefault();
