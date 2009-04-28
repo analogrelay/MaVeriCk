@@ -31,11 +31,17 @@ namespace Maverick.Web.ModuleFramework {
             Arg.NotNull("context", context);
             Arg.NotNullOrEmpty("headerViewName", headerViewName);
 
+            ViewEngineResult viewEngineResult = InnerResult.ViewEngineCollection.FindPartialView(context, headerViewName);
+            if (viewEngineResult.View == null) {
+                // Unlike the normal view engine result, if there's no "header" view, we just silently fail and produce no output
+                return new EmptyResult();
+            }
             return new PartialViewResult() {
                 TempData = InnerResult.TempData,
                 ViewData = InnerResult.ViewData,
                 ViewEngineCollection = InnerResult.ViewEngineCollection,
-                ViewName = headerViewName
+                ViewName = headerViewName,
+                View = viewEngineResult.View
             };
         }
 
