@@ -1,4 +1,5 @@
 <%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<Maverick.Web.ModuleFramework.ModuleRequestResult>" %>
+<!-- Start Module #<%= Model.Module.Id %> -->
 <h3><%= Model.Module.Title %></h3>
 <% Html.RenderModule(Model); %>
 
@@ -8,3 +9,4 @@
     <input type="submit" value="Delete this Module" />
     <% } %>
 <% } %>
+<!-- End Module #<%= Model.Module.Id %> -->

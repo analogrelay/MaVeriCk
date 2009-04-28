@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace Maverick.Web.ModuleFramework {
+    // TODO: Fallback - Use the MasterName if the ViewName fails?
+    // TODO: Full Virtual Path support - If the ViewName is a VirtualPath, what then?
+    // TODO: Common Scripts and Stylesheets... may require a full rewrite :S
     public class HeaderContributingViewResultAdapter : ActionResult, IHeaderContributingResult {
         public ViewResultBase InnerResult { get; private set; }
 
@@ -13,7 +16,7 @@ namespace Maverick.Web.ModuleFramework {
         public HeaderContributingViewResultAdapter(ViewResultBase innerResult) {
             Arg.NotNull("innerResult", innerResult);
             InnerResult = innerResult;
-            HeaderViewNameFormat = "{0}.import";
+            HeaderViewNameFormat = "{0}.header";
         }
 
         public override void ExecuteResult(ControllerContext context) {
@@ -31,11 +34,17 @@ namespace Maverick.Web.ModuleFramework {
             Arg.NotNull("context", context);
             Arg.NotNullOrEmpty("headerViewName", headerViewName);
 
+            ViewEngineResult viewEngineResult = InnerResult.ViewEngineCollection.FindPartialView(context, headerViewName);
+            if (viewEngineResult.View == null) {
+                // Unlike the normal view engine result, if there's no "header" view, we just silently fail and produce no output
+                return new EmptyResult();
+            }
             return new PartialViewResult() {
                 TempData = InnerResult.TempData,
                 ViewData = InnerResult.ViewData,
                 ViewEngineCollection = InnerResult.ViewEngineCollection,
-                ViewName = headerViewName
+                ViewName = headerViewName,
+                View = viewEngineResult.View
             };
         }
 

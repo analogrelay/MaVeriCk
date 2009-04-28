@@ -20,6 +20,9 @@ using TestUtilities;
 namespace Maverick.Web.Tests.ModuleFramework {
     [TestClass]
     public class HeaderContributingViewResultAdapterTests {
+        private const string ExistsMockViewName = "exists.header";
+        private const string DoesNotExistMockViewName = "doesnotexist.header";
+
         [TestMethod]
         public void Constructor_Requires_Non_Null_ViewResultBase() {
             AutoTester.ArgumentNull<ViewResultBase>(marker => new HeaderContributingViewResultAdapter(marker));
@@ -28,7 +31,7 @@ namespace Maverick.Web.Tests.ModuleFramework {
         [TestMethod]
         public void Constructor_Initializes_HeaderViewNameFormat_Property() {
             ViewResult innerResult = new ViewResult();
-            Assert.AreEqual("{0}.import", new HeaderContributingViewResultAdapter(innerResult).HeaderViewNameFormat);
+            Assert.AreEqual("{0}.header", new HeaderContributingViewResultAdapter(innerResult).HeaderViewNameFormat);
         }
 
         [TestMethod]
@@ -67,17 +70,16 @@ namespace Maverick.Web.Tests.ModuleFramework {
             ViewResult innerResult = new ViewResult() {ViewName = "foo"};
             ControllerContext context = Mockery.CreateMockControllerContext();
             var mockAdapter = new Mock<HeaderContributingViewResultAdapter>(innerResult) { CallBase = true };
-            mockAdapter.Setup(a => a.CreateHeaderResult(context, "foo.import"))
+            mockAdapter.Setup(a => a.CreateHeaderResult(context, "foo.header"))
                        .Returns(new EmptyResult());
             
             // Act
             mockAdapter.Object.ExecuteHeader(context);
 
             // Assert
-            mockAdapter.Verify(a => a.CreateHeaderResult(context, "foo.import"));
+            mockAdapter.Verify(a => a.CreateHeaderResult(context, "foo.header"));
         }
 
-        
         [TestMethod]
         public void GetHeaderViewName_Uses_HeaderViewNameFormat_To_Determine_HeaderViewName() {
             // Arrange
@@ -106,7 +108,7 @@ namespace Maverick.Web.Tests.ModuleFramework {
             string actual = adapter.GetHeaderViewName(context);
 
             // Assert
-            Assert.AreEqual("foo.import", actual);
+            Assert.AreEqual("foo.header", actual);
         }
 
         [TestMethod]
@@ -127,7 +129,7 @@ namespace Maverick.Web.Tests.ModuleFramework {
             ControllerContext context = Mockery.CreateMockControllerContext();
 
             // Act
-            PartialViewResult result = adapter.CreateHeaderResult(context, "View.Import") as PartialViewResult;
+            PartialViewResult result = adapter.CreateHeaderResult(context, ExistsMockViewName) as PartialViewResult;
 
             // Assert
             Assert.IsNotNull(result);
@@ -139,6 +141,20 @@ namespace Maverick.Web.Tests.ModuleFramework {
         }
 
         [TestMethod]
+        public void CreateHeaderResult_Creates_EmptyResult_If_HeaderView_Not_Found() {
+            // Arrange
+            ViewResult innerResult = CreateFullViewResult();
+            HeaderContributingViewResultAdapter adapter = new HeaderContributingViewResultAdapter(innerResult);
+            ControllerContext context = Mockery.CreateMockControllerContext();
+
+            // Act
+            ActionResult result = adapter.CreateHeaderResult(context, DoesNotExistMockViewName);
+
+            // Assert
+            ResultAssert.IsEmpty(result);
+        }
+        
+        [TestMethod]
         public void CreateHeaderResult_Creates_PartialViewResult_With_HeaderViewName_As_ViewName_And_No_View() {
             // Arrange
             ViewResult innerResult = CreateFullViewResult();
@@ -146,21 +162,31 @@ namespace Maverick.Web.Tests.ModuleFramework {
             ControllerContext context = Mockery.CreateMockControllerContext();
 
             // Act
-            PartialViewResult result = adapter.CreateHeaderResult(context, "View.Import") as PartialViewResult;
+            PartialViewResult result = adapter.CreateHeaderResult(context, ExistsMockViewName) as PartialViewResult;
 
             // Assert
-            Assert.IsNull(result.View);
-            Assert.AreEqual("View.Import", result.ViewName);
+            Assert.IsNotNull(result.View);
+            Assert.AreEqual(ExistsMockViewName, result.ViewName);
         }
 
         private static ViewResult CreateFullViewResult() {
+            Mock<IViewEngine> mockViewEngine = new Mock<IViewEngine>();
+            mockViewEngine.Setup(
+                e => e.FindPartialView(It.IsAny<ControllerContext>(), ExistsMockViewName, It.IsAny<bool>()))
+                .Returns(new ViewEngineResult(new Mock<IView>().Object, mockViewEngine.Object));
+            mockViewEngine.Setup(
+                e => e.FindPartialView(It.IsAny<ControllerContext>(), DoesNotExistMockViewName, It.IsAny<bool>()))
+                .Returns(new ViewEngineResult(new[] {"foo"}));
+
             return new ViewResult() {
                 ViewName = "View",
                 MasterName = "Master",
                 TempData = new TempDataDictionary(),
                 View = new Mock<IView>().Object,
                 ViewData = new ViewDataDictionary(),
-                ViewEngineCollection = new ViewEngineCollection()
+                ViewEngineCollection = new ViewEngineCollection() {
+                    mockViewEngine.Object
+                }
             };
         }
 

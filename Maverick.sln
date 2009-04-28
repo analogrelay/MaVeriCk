@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		CodeCoverageTestRun.testrunconfig = CodeCoverageTestRun.testrunconfig
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
-		Maverick.vsmdi = Maverick.vsmdi
+		maverick.vsmdi = maverick.vsmdi
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maverick.Core", "Source\Core\Maverick.Core\Maverick.Core.csproj", "{0DDF699A-DDB4-49C0-A43E-D4ACD7E0C23F}"

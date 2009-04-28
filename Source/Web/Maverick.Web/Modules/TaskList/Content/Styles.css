@@ -1,4 +1,5 @@
 ﻿.active 
 {
-    color: Red;
+    font-weight: bold;
+    font-size: xx-large
 }
