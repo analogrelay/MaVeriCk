@@ -142,7 +142,7 @@ namespace Maverick.Web.Tests.ModuleFramework {
         }
 
         [TestMethod]
-        public void ExecuteRequest_Returns_Result_And_ControllerContext_From_Controller() {
+        public void ExecuteRequest_Returns_AdaptedResult_And_ControllerContext_From_Controller() {
             // Arrange
             ModuleApplication app = CreateTestApplication();
 
@@ -150,6 +150,11 @@ namespace Maverick.Web.Tests.ModuleFramework {
 
             ControllerContext controllerContext = Mockery.CreateMockControllerContext();
             ActionResult actionResult = new Mock<ActionResult>().Object;
+
+            EmptyResult expected = new EmptyResult();
+            Mock.Get(app)
+                .Setup(a => a.AdaptResult(actionResult))
+                .Returns(expected);
 
             IModuleController controller = SetupMockController(actionResult, controllerContext);
             app.ControllerFactory = SetupControllerFactory(controller);
@@ -160,7 +165,7 @@ namespace Maverick.Web.Tests.ModuleFramework {
             ModuleRequestResult result = app.ExecuteRequest(moduleRequestContext);
 
             // Assert
-            Assert.AreSame(actionResult, result.ActionResult, "Expected that the result of the action would be returned by the application");
+            Assert.AreSame(expected, result.ActionResult, "Expected that the result of the action would be adapted and returned by the application");
             Assert.AreSame(controllerContext, result.ControllerContext, "Expected that the controller context of the controller would be returned by the application");
         }
 
@@ -248,7 +253,7 @@ namespace Maverick.Web.Tests.ModuleFramework {
                 .Verify(f => f.ReleaseController(controller));
         }
 
-        private IModuleController SetupExecuteRequestCall(ModuleApplication app) {
+        private static IModuleController SetupExecuteRequestCall(ModuleApplication app) {
             RouteData expectedRouteData = SetupGetRouteDataCall(app);
 
             ControllerContext controllerContext = Mockery.CreateMockControllerContext();
@@ -264,7 +269,7 @@ namespace Maverick.Web.Tests.ModuleFramework {
             return controller;
         }
 
-        private IModuleController SetupMockController(ActionResult actionResult, ControllerContext controllerContext) {
+        private static IModuleController SetupMockController(ActionResult actionResult, ControllerContext controllerContext) {
             var mockController = new Mock<IModuleController>();
             mockController.Setup(c => c.ResultOfLastExecute)
                 .Returns(actionResult);
@@ -273,14 +278,14 @@ namespace Maverick.Web.Tests.ModuleFramework {
             return mockController.Object;
         }
 
-        private IControllerFactory SetupControllerFactory(IController controller) {
+        private static IControllerFactory SetupControllerFactory(IController controller) {
             var mockControllerFactory = new Mock<IControllerFactory>();
             mockControllerFactory.Setup(f => f.CreateController(It.IsAny<RequestContext>(), It.IsAny<string>()))
                 .Returns(controller);
             return mockControllerFactory.Object;
         }
 
-        private RouteData SetupGetRouteDataCall(ModuleApplication app) {
+        private static RouteData SetupGetRouteDataCall(ModuleApplication app) {
             RouteData expectedRouteData = CreateTestRouteData();
 
             Mock.Get(app)
@@ -289,13 +294,13 @@ namespace Maverick.Web.Tests.ModuleFramework {
             return expectedRouteData;
         }
 
-        private RouteData CreateTestRouteData() {
+        private static RouteData CreateTestRouteData() {
             RouteData expectedRouteData = new RouteData();
             expectedRouteData.Values["controller"] = "Foo";
             return expectedRouteData;
         }
 
-        private ModuleRequestContext CreateModuleContext(ModuleApplication app, string moduleRoutingUrl) {
+        private static ModuleRequestContext CreateModuleContext(ModuleApplication app, string moduleRoutingUrl) {
             return new ModuleRequestContext {
                 Application = app,
                 HttpContext = Mockery.CreateMockHttpContext("http://localhost/Portal/Page/ModuleRoute"),
@@ -304,7 +309,7 @@ namespace Maverick.Web.Tests.ModuleFramework {
             };
         }
 
-        private ModuleApplication CreateTestApplication() {
+        private static ModuleApplication CreateTestApplication() {
             return new Mock<ModuleApplication> {CallBase = true}.Object;
         }
     }

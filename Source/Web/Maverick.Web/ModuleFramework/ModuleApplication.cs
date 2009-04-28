@@ -96,7 +96,7 @@ namespace Maverick.Web.ModuleFramework {
                 // Return the final result
                 return new ModuleRequestResult {
                     Application = this,
-                    ActionResult = result,
+                    ActionResult = AdaptResult(result),
                     ControllerContext = moduleController.ControllerContext,
                     Module = context.Module
                 };
@@ -119,7 +119,12 @@ namespace Maverick.Web.ModuleFramework {
             }
         }
 
-        protected virtual IModuleController AdaptController(IController controller) {
+        protected internal virtual ActionResult AdaptResult(ActionResult result) {
+            ViewResultBase viewResult = result as ViewResultBase;
+            return viewResult != null ? new HeaderContributingViewResultAdapter(viewResult) : result;
+        }
+
+        protected internal virtual IModuleController AdaptController(IController controller) {
             Controller mvcController = controller as Controller;
             if (mvcController != null && mvcController.ActionInvoker is ControllerActionInvoker) {
                 return new MvcControllerAdapter(mvcController);

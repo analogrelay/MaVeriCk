@@ -7,6 +7,7 @@
 // </summary>
 // ---------------------------------------------------------------------------------------------------------------------
 
+using System.Web.Mvc;
 using Maverick.Web.ModuleFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -36,6 +37,34 @@ namespace Maverick.Web.Tests.ModuleFramework {
 
             // Assert
             Assert.AreEqual(1, initCounter, "Expected that init would be called once, and only once");
+        }
+
+        [TestMethod]
+        public void AdaptResult_Returns_Original_Result_If_Not_ViewResultBase() {
+            // Arrange
+            ModuleApplication app = CreateTestApplication();
+            ActionResult toAdapt = new EmptyResult();
+            
+            // Act
+            ActionResult adapted = app.AdaptResult(toAdapt);
+
+            // Assert
+            Assert.AreSame(adapted, toAdapt);
+        }
+
+        [TestMethod]
+        public void AdaptResult_Returns_HeaderContributingViewResultAdapter_If_ViewResultBase() {
+            // Arrange
+            ModuleApplication app = CreateTestApplication();
+            ViewResultBase toAdapt = new ViewResult();
+
+            // Act
+            HeaderContributingViewResultAdapter adapted =
+                app.AdaptResult(toAdapt) as HeaderContributingViewResultAdapter;
+
+            // Assert
+            Assert.IsNotNull(adapted);
+            Assert.AreSame(toAdapt, adapted.InnerResult);
         }
     }
 }
