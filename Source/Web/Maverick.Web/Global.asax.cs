@@ -25,7 +25,6 @@ using Maverick.Web.Theming;
 
 namespace Maverick.Web {
     public class MaverickApplication : HttpApplication {
-        private static HttpContextBase _currentContext;
         private static RouteCollection _routes;
         private static string _dataContextManagerName;
 
@@ -39,21 +38,9 @@ namespace Maverick.Web {
         [Import]
         public static PagePrerouter PagePrerouter { get; set; }
 
-        public static HttpContextBase CurrentContext {
-            get {
-                if(_currentContext == null) {
-                    _currentContext = new HttpContextWrapper(HttpContext.Current);
-                }
-                return _currentContext;
-            }
-            
-            // We really don't want people playing with this outside of the test
-            internal set { _currentContext = value; }
-        }
-
         [Export(typeof(Func<HttpContextBase>))]
         public static HttpContextBase GetCurrentContext() {
-            return CurrentContext;
+            return new HttpContextWrapper(HttpContext.Current);
         }
 
         public static RouteCollection Routes {

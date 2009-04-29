@@ -149,40 +149,6 @@ namespace Maverick.Web.Tests {
         }
 
         [TestMethod]
-        public void CurrentContext_Returns_CurrentHttpContext_If_Not_Overridden() {
-            // Arrange
-            HttpRequest req = new HttpRequest("Foo.txt", "http://localhost", "foo=bar");
-            HttpResponse resp = new HttpResponse(new StringWriter());
-            HttpContext context = new HttpContext(req, resp);
-            HttpContext.Current = context;
-
-            // Act
-            HttpContextBase httpContext = MaverickApplication.CurrentContext;
-
-            // Assert
-            // Gonna have to use reflection...
-            Assert.AreSame(context, httpContext.GetType().GetField("_context", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(httpContext));
-
-            MaverickApplication.CurrentContext = null;
-        }
-
-        [TestMethod]
-        public void CurrentContext_Returns_Provided_HttpContextBase_If_Overridden() {
-            // Arrange
-            HttpContextBase expected = Mockery.CreateMockHttpContext();
-            MaverickApplication.CurrentContext = expected;
-
-            // Act
-            HttpContextBase actual = MaverickApplication.CurrentContext;
-
-            // Assert
-            // Gonna have to use reflection...
-            Assert.AreSame(expected, actual);
-
-            MaverickApplication.CurrentContext = null;
-        }
-
-        [TestMethod]
         public void Routes_Returns_RouteTable_Routes_If_Not_Overridden() {
             // Assert
             Assert.AreSame(RouteTable.Routes, MaverickApplication.Routes);

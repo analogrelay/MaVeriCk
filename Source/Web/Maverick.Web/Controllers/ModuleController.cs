@@ -37,7 +37,7 @@ namespace Maverick.Web.Controllers {
 
         [Authorize(Roles = "SuperUser")]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(string modules) {
+        public ActionResult Create(string id) {
             // Check for an active page
             PortalRequestContext portalContext = HttpContext.GetPortalContext();
             if(portalContext.ActivePage == null) {
@@ -47,7 +47,7 @@ namespace Maverick.Web.Controllers {
             // Parse the guid
             Guid appGuid = Guid.Empty;
             try {
-                appGuid = new Guid(modules);
+                appGuid = new Guid(id);
             } catch(FormatException) {
                 return ResourceNotFound();
             }

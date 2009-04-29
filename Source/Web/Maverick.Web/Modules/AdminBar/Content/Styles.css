@@ -78,7 +78,7 @@ ul#cp_module_app_list li p
     margin: 0
 }
 
-ul#cp_module_app_list li button
+ul#cp_module_app_list li input[type='submit']
 {
     float: right;
 }

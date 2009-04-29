@@ -4,8 +4,10 @@
 <ul id="cp_module_app_list">
     <% foreach (ModuleApplicationViewModel appModel in Model) {%>
     <li>
-        <button class="ui-corner-all ui-state-default">
-            Add this Module</button>
+        <% using (Html.BeginForm("Create", "Module")) {%>
+        <input name="id" type="hidden" value="<%=appModel.Id%>" />
+        <input type="submit" class="ui-corner-all ui-state-default" value="Add this Module" />
+        <% } %>
         <img src="<%= Url.Content(appModel.LogoUrl ?? "~/Modules/AdminBar/Content/Images/UnknownModule.png") %>"
             alt="<%=appModel.Name %>" />
         <h4>
