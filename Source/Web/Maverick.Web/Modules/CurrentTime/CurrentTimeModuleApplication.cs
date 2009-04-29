@@ -13,7 +13,7 @@ using Maverick.Web.ModuleFramework;
 
 namespace Maverick.Web.Modules.CurrentTime {
     [Export(typeof(ModuleApplication))]
-    [ModuleApplication(ApplicationId, ApplicationName)]
+    [ModuleApplication(ApplicationId, ApplicationName, "1.0.0.0", "Displays the Current Time", "Maverick", "~/Modules/CurrentTime/Content/Images/Icon.png")]
     public class CurrentTimeModuleApplication : ModuleApplication {
         private const string ApplicationId = "A1FE2A31-0BC9-4B12-9B81-3B75C098EB33";
         private const string ApplicationName = "Current Time";

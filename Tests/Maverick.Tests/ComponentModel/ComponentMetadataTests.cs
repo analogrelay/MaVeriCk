@@ -25,8 +25,7 @@ namespace Maverick.Tests.ComponentModel {
         private const string TestGuidString = "40464E2E-B487-47B7-A329-56BBA828C036";
         private const string TestKey = "Foo";
         private const string TestValue = "Bar";
-        private const string TestUrlString = "http://www.microsoft.com";
-        private static readonly Uri TestUrl = new Uri(TestUrlString);
+        private const string TestUrl = "http://www.microsoft.com";
 
         private class TestMetadataView : ComponentMetadata {
             public TestMetadataView(IDictionary<string, object> metadata) : base(metadata) {}
@@ -160,8 +159,8 @@ namespace Maverick.Tests.ComponentModel {
         }
 
         [TestMethod]
-        public void Vendor_Returns_Empty_String_As_Default() {
-            RunSuccessfulDefaultValueTest(m => m.Vendor, String.Empty);
+        public void Vendor_Returns_Null_String_As_Default() {
+            RunSuccessfulDefaultValueTest(m => m.Vendor, null);
         }
 
         [TestMethod]
@@ -170,21 +169,21 @@ namespace Maverick.Tests.ComponentModel {
         }
 
         [TestMethod]
-        public void Description_Returns_Empty_String_As_Default() {
-            RunSuccessfulDefaultValueTest(m => m.Description, String.Empty);
+        public void Description_Returns_Null_String_As_Default() {
+            RunSuccessfulDefaultValueTest(m => m.Description, null);
         }
 
         [TestMethod]
         public void LogoUrl_Returns_LogoUrl_Metadata_Value() {
-            RunSuccessfulPropertyTest("LogoUrl", m => m.LogoUrl, TestUrlString, TestUrl);
+            RunSuccessfulPropertyTest("LogoUrl", m => m.LogoUrl, TestUrl, TestUrl);
         }
 
         [TestMethod]
-        public void LogoUrl_Returns_Null_Url_As_Default() {
-            RunSuccessfulDefaultValueTest(m => m.LogoUrl, (Uri)null);
+        public void LogoUrl_Returns_Null_String_As_Default() {
+            RunSuccessfulDefaultValueTest(m => m.LogoUrl, null);
         }
 
-        private static void RunSuccessfulDefaultValueTest<T>(Func<ComponentMetadata, object> getter, T expectedValue) {
+        private static void RunSuccessfulDefaultValueTest<T>(Func<ComponentMetadata, T> getter, T expectedValue) {
             TestMetadataView metadataView = new TestMetadataView(new Dictionary<string, object>());
 
             // Act and Assert

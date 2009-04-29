@@ -13,7 +13,7 @@ using Maverick.Web.ModuleFramework;
 
 namespace Maverick.Web.Modules.TaskList {
     [Export(typeof(ModuleApplication))]
-    [ModuleApplication(ApplicationId, ApplicationName)]
+    [ModuleApplication(ApplicationId, ApplicationName, "1.0.0.0", "A simple, non-persistent, AJAX task list", "Maverick", "~/Modules/TaskList/Content/Images/Icon.png")]
     public class TaskListModuleApplication : ModuleApplication {
         private const string ApplicationId = "3DF331C9-9D4F-4694-9917-1653BFA703FC";
         private const string ApplicationName = "TaskList";

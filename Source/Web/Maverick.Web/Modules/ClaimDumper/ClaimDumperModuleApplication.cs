@@ -14,7 +14,7 @@ using Maverick.Web.ModuleFramework;
 namespace Maverick.Web.Modules.ClaimDumper
 {
     [Export(typeof(ModuleApplication))]
-    [ModuleApplication(ApplicationId, ApplicationName)]
+    [ModuleApplication(ApplicationId, ApplicationName, "1.0.0.0", "Dumps the Security Claims for the Current User", "Maverick", "~/Modules/ClaimDumper/Content/Images/Icon.png")]
     public class ClaimDumperModuleApplication : ModuleApplication {
         private const string ApplicationId = "8B09AEAE-C340-4FDD-8D52-7A360D925732";
         private const string ApplicationName = "Claim Dumper";

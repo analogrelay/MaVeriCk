@@ -34,6 +34,9 @@ namespace Maverick.Web.Models {
 
         public IEnumerable<ModuleRequestResult> AllModules {
             get {
+                if(ControlPanelResult != null) {
+                    yield return ControlPanelResult;
+                }
                 foreach(ZoneViewModel zone in Zones) {
                     foreach(ModuleRequestResult moduleResult in zone.ModuleResults) {
                         yield return moduleResult;

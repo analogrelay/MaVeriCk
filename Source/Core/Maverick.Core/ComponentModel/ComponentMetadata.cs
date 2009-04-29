@@ -32,11 +32,11 @@ namespace Maverick.ComponentModel {
         }
 
         public string Vendor {
-            get { return GetMetadataProperty(VendorProperty, String.Empty); }
+            get { return GetMetadataProperty(VendorProperty, (string)null); }
         }
 
-        public Uri LogoUrl {
-            get { return GetMetadataProperty(LogoUrlProperty, (Uri)null); }
+        public string LogoUrl {
+            get { return GetMetadataProperty(LogoUrlProperty, (string)null); }
         }
 
         public Version Version {
@@ -44,7 +44,7 @@ namespace Maverick.ComponentModel {
         }
 
         public string Description {
-            get { return GetMetadataProperty(DescriptionProperty, String.Empty); }
+            get { return GetMetadataProperty(DescriptionProperty, (string)null); }
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "The type parameter is always necessary for required metadata properties since there is no way to infer it")]

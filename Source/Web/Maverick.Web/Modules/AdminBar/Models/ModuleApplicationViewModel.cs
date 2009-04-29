@@ -9,9 +9,13 @@
 
 using System;
 
-namespace Maverick.Web.Models {
+namespace Maverick.Web.Modules.AdminBar.Models {
     public class ModuleApplicationViewModel {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
+        public string Vendor { get; set; }
+        public string LogoUrl { get; set; }
+        public string Version { get; set; }
+        public string Description { get; set; }
     }
 }

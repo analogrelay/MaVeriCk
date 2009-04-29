@@ -1,0 +1,84 @@
+﻿#cp_root
+{
+    padding: 0.4em 1em;
+    height: 2em;
+    background-color: White;
+}
+
+.cp_menu
+{
+    clear: left;
+    margin: 0 0.1em 0 0.1em;
+    padding: .4em 1.5em .4em 0.75em;
+    text-decoration: none !important;
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+}
+
+.cp_menu img
+{
+    position: relative;
+    top: 2px;
+    border: none;
+}
+
+.hidden
+{
+    position: absolute;
+    top: 0;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+#cp_title 
+{
+    display:inline;
+}
+
+.cp_icon_right 
+{
+    position: absolute;
+    right: 0.2em;
+    left: auto;
+    top: 0.6em;
+}
+
+ul#cp_module_app_list
+{
+    padding-left: 0;
+    list-style-type: none;
+}
+
+ul#cp_module_app_list li
+{
+    margin-bottom: 1em;
+}
+
+ul#cp_module_app_list li img
+{
+    float: left;
+    padding: 0.5em;
+}
+
+ul#cp_module_app_list li h4
+{
+    margin: 0
+}
+
+ul#cp_module_app_list li h5
+{
+    margin: 0
+}
+
+ul#cp_module_app_list li p
+{
+    margin: 0
+}
+
+ul#cp_module_app_list li button
+{
+    float: right;
+}

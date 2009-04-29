@@ -14,7 +14,7 @@ using Maverick.Web.ModuleFramework;
 namespace Maverick.Web.Modules.AdminBar
 {
     [Export(typeof(ModuleApplication))]
-    [ModuleApplication(ApplicationId, ApplicationName)]
+    [ModuleApplication(ApplicationId, ApplicationName, "1.0.0.0", "To be removed, do not add", "Maverick", "~/Modules/AdminBar/Content/Images/Icon.png")]
     public class AdminBarModuleApplication : ModuleApplication {
         private const string ApplicationId = "332883DC-9133-4333-9781-08CF6971C09C";
         private const string ApplicationName = "AdminBar";
