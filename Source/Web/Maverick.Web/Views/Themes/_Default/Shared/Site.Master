@@ -15,7 +15,7 @@
     <script src="<%=Url.Content("~/Scripts/Maverick.Main.js") %>" type="text/javascript"></script>
     <% Html.RenderModuleHeaders(Model.AllModules); %>
     <script type="text/javascript">
-        $(document).ready(MaverickMain);
+        $(document).ready(Maverick.Main);
     </script>
 </head>
 

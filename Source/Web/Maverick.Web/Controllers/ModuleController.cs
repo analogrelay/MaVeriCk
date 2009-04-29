@@ -85,6 +85,9 @@ namespace Maverick.Web.Controllers {
             
             ModuleRepository.Delete(module);
 
+            if (Request.IsAjaxRequest()) {
+                return new EmptyResult();
+            }
             return RedirectToAction("View", "Page");
         }
 
