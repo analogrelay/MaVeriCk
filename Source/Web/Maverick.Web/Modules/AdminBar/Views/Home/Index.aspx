@@ -12,7 +12,7 @@
             <li><a href="#">New Page ...</a></li>
             <li><a href="#">New Child Page ...</a></li>
             <li><a href="#">Delete this Page</a></li>
-            <li><a id="cp_page_addmodule" href="#" onclick="Maverick.AdminBar.AddModuleDialog_Show">Add a Module ...</a></li>
+            <li><a id="cp_page_addmodule" href="#">Add a Module ...</a></li>
         </ul>
     </div>
     <a id="cp_site_menu_trigger" class="cp_menu ui-widget ui-state-default ui-corner-all" href="#cp_site_menu">
