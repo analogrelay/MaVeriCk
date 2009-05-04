@@ -333,6 +333,7 @@ div#title
 .module-container
 {
     padding: 0.4em;
+    margin-bottom: 1em;
 }
 
 .module-action
