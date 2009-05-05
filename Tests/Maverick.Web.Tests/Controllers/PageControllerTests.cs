@@ -332,15 +332,6 @@ namespace Maverick.Web.Tests.Controllers {
             Assert.AreSame(module2Context, pageModel["ContentZone"].ModuleResults[0].ControllerContext, "Expected that the controller context from the 2nd module would be the first controller context");
         }
 
-        private static void SetupMockUser(Controller controller, bool superUser) {
-            var mockPrincipal = new Mock<IPrincipal>();
-            mockPrincipal.Setup(p => p.IsInRole("SuperUser"))
-                .Returns(superUser);
-            Mock.Get(controller.HttpContext)
-                .Setup(c => c.User)
-                .Returns(mockPrincipal.Object);
-        }
-
         private static void RunSimpleModuleExecutionTest(Action<PageController, HttpContextBase, Module, string> assert) {
             RunSimpleModuleExecutionTest(42, "Foo/Bar/Baz", assert);
         }
