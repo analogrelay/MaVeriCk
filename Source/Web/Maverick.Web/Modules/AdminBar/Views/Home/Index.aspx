@@ -9,9 +9,9 @@
     </a>
     <div id="cp_page_menu" class="hidden">
         <ul>
-            <li><a href="#">New Page ...</a></li>
-            <li><a href="#">New Child Page ...</a></li>
-            <li><a href="#">Delete this Page</a></li>
+            <li><a id="cp_page_addpage" href="#">New Page ...</a></li>
+            <li><a id="cp_page_addchildpage" href="#">New Child Page ...</a></li>
+            <li><a id="cp_page_deletepage" href="#">Delete this Page</a></li>
             <li><a id="cp_page_addmodule" href="#">Add a Module ...</a></li>
         </ul>
     </div>
@@ -35,6 +35,18 @@
     </div>
     
     <div id="cp_page_addmodule_dlg" title="Add a Module">
+        <%-- TODO: Ajax Render --%>
         <% Html.RenderPartial("ModuleApplicationList", Model.ModuleApplications);%>
+    </div>
+    
+    <div id="cp_page_addpage_dlg" class="cp_page_addpage_dlg" title="Create a Page">
+        <%-- TODO: Ajax Render --%>
+        <%-- TODO: Find a better way to pass "null"... The MVC helpers keep replacing it with this view's Model --%>
+        <% Html.RenderPartial("AddPageDialog", new Maverick.Models.Page() { Id = -1 }); %>
+    </div>
+    
+    <div id="cp_page_addchildpage_dlg" class="cp_page_addpage_dlg" title="Create a Child Page of this Page">
+        <%-- TODO: Ajax Render --%>
+        <% Html.RenderPartial("AddPageDialog", Model.ActivePage);%>
     </div>
 </div>

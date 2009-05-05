@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Maverick.Web.Helpers;
 using Maverick.Web.Models;
 using Maverick.Web.Modules.AdminBar.Models;
 using Maverick.Web.ModuleFramework;
@@ -30,6 +31,7 @@ namespace Maverick.Web.Modules.AdminBar.Controllers {
             }
 
             return View(new ControlPanelViewModel() {
+                ActivePage = HttpContext.GetPortalContext().ActivePage,
                 ModuleApplications = CreateModuleApplicationModels()
             });
         }

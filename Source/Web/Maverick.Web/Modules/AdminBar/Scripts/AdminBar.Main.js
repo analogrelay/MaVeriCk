@@ -34,11 +34,27 @@ Maverick.AdminBar.Main = function() {
             "Cancel": function() { $(this).dialog('close'); }
         }
     });
+    $('.cp_page_addpage_dlg').dialog({
+        autoOpen: false,
+        modal: true,
+        height: 400,
+        width: 600,
+        buttons: {
+            "Add": function() { $(this).find('.cp_dlg_form').submit(); /* TODO: AJAX */ },
+            "Cancel": function() { $(this).dialog('close'); }
+        }
+    });
 }
 
 Maverick.AdminBar.MenuHandlers = {
     cp_page_addmodule: function() {
         $('#cp_page_addmodule_dlg').dialog('open');
+    },
+    cp_page_addpage: function() {
+        $('#cp_page_addpage_dlg').dialog('open');
+    },
+    cp_page_addchildpage: function() {
+        $('#cp_page_addchildpage_dlg').dialog('open');
     }
 }
 

@@ -254,27 +254,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configuration\Maverick\Components.config" />
-    <Content Include="Content\Themes\Exploitable\images\img01.gif" />
-    <Content Include="Content\Themes\Exploitable\images\img02.gif" />
-    <Content Include="Content\Themes\Exploitable\images\img03.gif" />
-    <Content Include="Content\Themes\Exploitable\images\img04.jpg" />
-    <Content Include="Content\Themes\Exploitable\images\img05.jpg" />
-    <Content Include="Content\Themes\Exploitable\images\img06.jpg" />
-    <Content Include="Content\Themes\Exploitable\images\img07.gif" />
-    <Content Include="Content\Themes\Exploitable\images\img08.jpg" />
-    <Content Include="Content\Themes\Exploitable\images\img09.jpg" />
-    <Content Include="Content\Themes\Exploitable\images\img10.jpg" />
-    <Content Include="Content\Themes\Exploitable\images\img11.gif" />
-    <Content Include="Content\Themes\Exploitable\images\spacer.gif" />
-    <Content Include="Content\Themes\Exploitable\style.css" />
     <Content Include="Scripts\Maverick.Main.js" />
-    <Content Include="Views\Themes\Exploitable\license.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Themes\Exploitable\Shared\ContentModule.ascx" />
-    <Content Include="Views\Themes\Exploitable\Shared\SidebarModule.ascx" />
-    <Content Include="Views\Themes\Exploitable\Shared\Site.Master" />
-    <Content Include="Views\Themes\Exploitable\Shared\View.aspx" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\..\..\CodeAnalysisDictionary.xml">
@@ -322,6 +302,7 @@
     <Content Include="Modules\AdminBar\Content\Images\UnknownModule.png" />
     <Content Include="Modules\AdminBar\Content\Styles.css" />
     <Content Include="Modules\AdminBar\Scripts\AdminBar.Main.js" />
+    <Content Include="Modules\AdminBar\Views\Home\AddPageDialog.aspx" />
     <Content Include="Modules\AdminBar\Views\Home\Index.Header.aspx" />
     <Content Include="Modules\AdminBar\Views\Home\ModuleApplicationList.aspx" />
     <Content Include="Modules\ClaimDumper\Content\Images\Icon.png" />
