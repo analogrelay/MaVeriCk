@@ -7,18 +7,35 @@
 // </summary>
 // ---------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Maverick.Models {
     public class Page {
+        [Required]
+        [Range(0, Int32.MaxValue)]
         public virtual int Id { get; set; }
+
+        [Required]
+        [StringLength(256)]
         public virtual string Title { get; set; }
+
+        [Required]
+        [StringLength(1024)]
+        [RegularExpression(@"(/([^:#?\s\\/]+))+")]
         public virtual string Path { get; set; }
+
+        [Required]
         public virtual Portal Portal { get; set; }
+
+        [DisplayName("Parent Page")]
         public virtual Page ParentPage { get; set; }
         
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "Data Layers may wish to set the value of this collection")]
+        [DisplayName("Child Pages")]
         public virtual IList<Page> ChildPages { get; set; }
 
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "Data Layers may wish to set the value of this collection")]

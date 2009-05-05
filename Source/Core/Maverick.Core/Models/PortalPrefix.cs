@@ -7,10 +7,21 @@
 // </summary>
 // ---------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace Maverick.Models {
     public class PortalPrefix {
-        public virtual string Prefix { get; set; }
-        public virtual Portal Portal { get; set; }
+        [Required]
+        [Range(0, Int32.MaxValue)]
         public virtual int Id { get; set; }
+
+        [Required]
+        [StringLength(256)]
+        [RegularExpression(@"[^:#?\s\\/]+(:[0-9]+)*(/([^:#?\s\\/]+))+")]
+        public virtual string Prefix { get; set; }
+
+        [Required]
+        public virtual Portal Portal { get; set; }
     }
 }
