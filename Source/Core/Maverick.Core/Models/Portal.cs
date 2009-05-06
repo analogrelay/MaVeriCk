@@ -14,7 +14,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Maverick.Models {
     public class Portal {
-        [Required]
         [Range(0, Int32.MaxValue)]
         public virtual int Id { get; set; }
 

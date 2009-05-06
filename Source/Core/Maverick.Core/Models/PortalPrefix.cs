@@ -12,7 +12,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Maverick.Models {
     public class PortalPrefix {
-        [Required]
         [Range(0, Int32.MaxValue)]
         public virtual int Id { get; set; }
 
