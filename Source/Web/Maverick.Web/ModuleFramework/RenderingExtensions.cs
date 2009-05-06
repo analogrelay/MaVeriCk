@@ -48,13 +48,17 @@ namespace Maverick.Web.ModuleFramework {
             }
         }
 
-        private static void RenderWithinCommentedBlock(this HtmlHelper helper, string blockName, int moduleId, Action renderAction) {
+        private static void RenderWithinCommentedBlock(this HtmlHelper helper, string blockName, int? moduleId, Action renderAction) {
             TextWriter output = helper.ViewContext.HttpContext.Response.Output;
             output.WriteLine();
-            output.WriteLine("<!-- Start Module #{0} {1} -->", moduleId, blockName);
+            output.WriteLine("<!-- Start Module{0}{1} -->", moduleId.ToFormattedString("#{0}", String.Empty), blockName);
             renderAction();
             output.WriteLine();
-            output.WriteLine("<!-- End Module #{0} {1} -->", moduleId, blockName);
+            output.WriteLine("<!-- End Module{0}{1} -->", moduleId.ToFormattedString("#{0}", String.Empty), blockName);
+        }
+
+        private static string ToFormattedString<T>(this T? nullable, string formatString, string nullString) where T : struct {
+            return nullable.HasValue ? String.Format(formatString, nullable.Value) : nullString;
         }
     }
 }

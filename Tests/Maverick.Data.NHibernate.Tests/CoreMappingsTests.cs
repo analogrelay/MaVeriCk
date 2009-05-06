@@ -61,8 +61,12 @@ namespace Maverick.Data.NHibernate.Tests {
             TestFileManager.CompareFilesAgainstBaseline(MappingFileOutputPath, MappingBaselinePath, "*.hbm.xml", (e, a) => {
                 FileAssert.TextFilesAreEqual(e, a, TokenTransformer, "The mapping files did not match");
             });
-#endif
             Directory.Delete(TestFilesPath, true);
+#else
+            foreach (string file in Directory.GetFiles(MappingFileOutputPath, "*.hbm.xml")) {
+                File.Copy(file, Path.Combine(MappingBaselinePath, Path.GetFileName(file)));
+            }
+#endif
         }
 
         private static string TokenTransformer(string arg) {

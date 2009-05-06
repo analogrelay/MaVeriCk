@@ -13,9 +13,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Maverick.Models {
-    public class Portal {
+    public class Portal : EntityBase {
         [Range(0, Int32.MaxValue)]
-        public virtual int Id { get; set; }
+        public override int? Id { get; set; }
 
         [Required]
         [StringLength(256)]

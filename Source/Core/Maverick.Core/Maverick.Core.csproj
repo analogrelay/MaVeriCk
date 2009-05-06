@@ -93,6 +93,7 @@
     <Compile Include="Composition\SingleExportComposablePartDefinitionBase.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Guard.cs" />
+    <Compile Include="Models\EntityBase.cs" />
     <Compile Include="Models\Module.cs" />
     <Compile Include="Models\Page.cs" />
     <Compile Include="Models\Portal.cs" />

@@ -11,9 +11,9 @@ using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Maverick.Models {
-    public class PortalPrefix {
+    public class PortalPrefix : EntityBase {
         [Range(0, Int32.MaxValue)]
-        public virtual int Id { get; set; }
+        public override int? Id { get; set; }
 
         [Required]
         [StringLength(256)]

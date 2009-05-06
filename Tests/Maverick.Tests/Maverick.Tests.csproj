@@ -82,6 +82,7 @@
     <Compile Include="Composition\SingleExportComposablePartDefinitionBaseTests.cs" />
     <Compile Include="Composition\SingleExportComposablePartTests.cs" />
     <Compile Include="MockEntitySet.cs" />
+    <Compile Include="Models\EntityBaseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

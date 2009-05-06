@@ -22,7 +22,7 @@ namespace Maverick.Data.NHibernate {
         public class PortalMap : ClassMap<Portal> {
             public PortalMap() {
                 WithTable("Portals");
-                Id(p => p.Id, "Id");
+                Id(p => p.Id, "Id").GeneratedBy.Identity();
                 Map(p => p.Name, "Name").WithLengthOf(256).Not.Nullable();
                 HasMany(p => p.PortalPrefixes).KeyColumnNames.Add("PortalId").Inverse();
                 HasMany(p => p.Pages).KeyColumnNames.Add("PageId").Inverse();
@@ -33,7 +33,7 @@ namespace Maverick.Data.NHibernate {
         public class PortalPrefixMap : ClassMap<PortalPrefix> {
             public PortalPrefixMap() {
                 WithTable("PortalPrefixes");
-                Id(p => p.Id, "Id");
+                Id(p => p.Id, "Id").GeneratedBy.Identity();
                 Map(p => p.Prefix, "Prefix").WithLengthOf(256).Not.Nullable();
                 References(p => p.Portal, "PortalId").Not.Nullable();
             }
@@ -43,7 +43,7 @@ namespace Maverick.Data.NHibernate {
         public class PageMap : ClassMap<Page> {
             public PageMap() {
                 WithTable("Pages");
-                Id(p => p.Id, "Id");
+                Id(p => p.Id, "Id").GeneratedBy.Identity();
                 Map(p => p.Title, "Title").WithLengthOf(256).Not.Nullable();
                 Map(p => p.Path, "Path").WithLengthOf(1024).Not.Nullable();
                 References(p => p.ParentPage, "ParentId").Nullable();
@@ -57,7 +57,7 @@ namespace Maverick.Data.NHibernate {
         public class ModuleMap : ClassMap<Module> {
             public ModuleMap() {
                 WithTable("Modules");
-                Id(p => p.Id, "Id");
+                Id(p => p.Id, "Id").GeneratedBy.Identity();
                 Map(p => p.Title, "Title").WithLengthOf(256).Not.Nullable();
                 Map(p => p.ZoneName, "ZoneName").WithLengthOf(256).Not.Nullable();
                 Map(p => p.ModuleApplicationId, "ModuleApplicationId").Not.Nullable();
@@ -66,7 +66,8 @@ namespace Maverick.Data.NHibernate {
         }
 
         public override void ContributeMappings(MappingConfiguration configuration) {
-            // TODO: Use FluentNHibernate auto mapping instead
+            // TODO: Use FluentNHibernate auto mapping instead and provide modules with a way to simply provide their model classes for automapping
+            // TODO: so they are no longer depending on NHibernate.
             configuration.FluentMappings.AddFromAssemblyOf<PageMap>();
         }
     }
