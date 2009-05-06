@@ -111,7 +111,22 @@ namespace Maverick.DomainServices.Tests {
             UpdateModel_Outside_DataBatch_With_Two_Models_Attaches_Them_To_DataContext_As_Modified_And_Saves();
         }
 
-        protected override void VerifyTestModel(Portal model, int id) {
+        [TestMethod]
+        public void AddPortal_Throws_InvalidModelStateException_If_IsNew_False_On_Incoming_Portal() {
+            AddModel_Throws_InvalidModelStateException_If_IsNew_False_On_Incoming_Model();
+        }
+
+        [TestMethod]
+        public void DeletePortal_Throws_InvalidModelStateException_If_IsNew_True_On_Incoming_Portal() {
+            DeleteModel_Throws_InvalidModelStateException_If_IsNew_True_On_Incoming_Model();
+        }
+
+        [TestMethod]
+        public void UpdatePortal_Overrides_Throw_InvalidModelStateException_If_IsNew_True_On_Incoming_Portals() {
+            UpdateModel_Overrides_Throw_InvalidModelStateException_If_IsNew_True_On_Incoming_Models();
+        }
+
+        protected override void VerifyTestModel(Portal model, int? id) {
             Assert.AreEqual(id, model.Id);
             Assert.AreEqual(String.Format("Test Portal #{0}", id), model.Name);
         }
@@ -120,7 +135,7 @@ namespace Maverick.DomainServices.Tests {
             return new PortalRepository();
         }
 
-        protected override Portal CreateTestModel(int id) {
+        protected override Portal CreateTestModel(int? id) {
             return new Portal {
                 Id = id,
                 Name = String.Format("Test Portal #{0}", id)

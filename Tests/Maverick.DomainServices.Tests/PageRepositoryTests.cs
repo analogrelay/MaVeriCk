@@ -155,7 +155,22 @@ namespace Maverick.DomainServices.Tests {
             Assert.AreEqual(0, page.Id);
         }
 
-        private MockEntitySet<Page> SetupMockPrefixes() {
+        [TestMethod]
+        public void AddPage_Throws_InvalidModelStateException_If_IsNew_False_On_Incoming_Page() {
+            AddModel_Throws_InvalidModelStateException_If_IsNew_False_On_Incoming_Model();
+        }
+
+        [TestMethod]
+        public void DeletePage_Throws_InvalidModelStateException_If_IsNew_True_On_Incoming_Page() {
+            DeleteModel_Throws_InvalidModelStateException_If_IsNew_True_On_Incoming_Model();
+        }
+
+        [TestMethod]
+        public void UpdatePage_Overrides_Throw_InvalidModelStateException_If_IsNew_True_On_Incoming_Pages() {
+            UpdateModel_Overrides_Throw_InvalidModelStateException_If_IsNew_True_On_Incoming_Models();
+        }
+
+        private static MockEntitySet<Page> SetupMockPrefixes() {
             return new MockEntitySet<Page> {
                 new Page { Id = 0, Path = "/" },
                 new Page { Id = 1, Path = "/Bar" },
@@ -167,7 +182,7 @@ namespace Maverick.DomainServices.Tests {
             };
         }
 
-        protected override void VerifyTestModel(Page model, int id) {
+        protected override void VerifyTestModel(Page model, int? id) {
             Assert.AreEqual(id, model.Id);
             Assert.AreEqual(String.Format("Test Page #{0}", id), model.Title);
             Assert.AreEqual(String.Format("/Page/Id/{0}", id), model.Path);
@@ -177,7 +192,7 @@ namespace Maverick.DomainServices.Tests {
             return new PageRepository();
         }
 
-        protected override Page CreateTestModel(int id) {
+        protected override Page CreateTestModel(int? id) {
             return new Page {
                 Id = id,
                 Title = String.Format("Test Page #{0}", id),

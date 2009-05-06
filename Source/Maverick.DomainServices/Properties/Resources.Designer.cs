@@ -61,11 +61,38 @@ namespace Maverick.DomainServices.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The IsNew property of the object provided to Add must be true.  Objects retrieved from the repository cannot be provided to the Add method; only newly constructed objects should be provided to Add..
+        /// </summary>
+        internal static string Error_AddRequiresNewObject {
+            get {
+                return ResourceManager.GetString("Error_AddRequiresNewObject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot start a data batch, one is already running.  Nested data batches are not supported at this time.
         /// </summary>
         internal static string Error_DataBatchAlreadyRunning {
             get {
                 return ResourceManager.GetString("Error_DataBatchAlreadyRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The IsNew property of the object provided to Delete must be false.  Newly constructed objects cannot be provided to the Delete method; only objects retrieved from the repository should be provided to Delete..
+        /// </summary>
+        internal static string Error_DeleteRequiresNonNewObject {
+            get {
+                return ResourceManager.GetString("Error_DeleteRequiresNonNewObject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The object passed into this method is not in the correct state.  Ensure that only objects where IsNew is true are passed to Add methods;  Similarly, objects where IsNew is false should be passed to Update and Delete methods..
+        /// </summary>
+        internal static string Error_ModelStateInvalid {
+            get {
+                return ResourceManager.GetString("Error_ModelStateInvalid", resourceCulture);
             }
         }
         
@@ -84,6 +111,15 @@ namespace Maverick.DomainServices.Properties {
         internal static string Error_NoDataContextManager {
             get {
                 return ResourceManager.GetString("Error_NoDataContextManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The IsNew property of the object provided to Update must be false.  Newly constructed objects cannot be provided to the Update method; only objects retrieved from the repository should be provided to Update..
+        /// </summary>
+        internal static string Error_UpdateRequiresNonNewObject {
+            get {
+                return ResourceManager.GetString("Error_UpdateRequiresNonNewObject", resourceCulture);
             }
         }
     }

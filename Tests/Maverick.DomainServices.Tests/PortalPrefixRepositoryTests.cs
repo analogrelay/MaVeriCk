@@ -175,13 +175,28 @@ namespace Maverick.DomainServices.Tests {
             Assert.AreEqual("Portal", portalPrefixes.Included[0], "Expected that the 'Portal' property would configured for eager loading");
         }
 
-        private MockEntitySet<PortalPrefix> SetupMockPrefixes() {
+        [TestMethod]
+        public void AddPortalPrefix_Throws_InvalidModelStateException_If_IsNew_False_On_Incoming_PortalPrefix() {
+            AddModel_Throws_InvalidModelStateException_If_IsNew_False_On_Incoming_Model();
+        }
+
+        [TestMethod]
+        public void DeletePortalPrefix_Throws_InvalidModelStateException_If_IsNew_True_On_Incoming_PortalPrefix() {
+            DeleteModel_Throws_InvalidModelStateException_If_IsNew_True_On_Incoming_Model();
+        }
+
+        [TestMethod]
+        public void UpdatePortalPrefix_Overrides_Throw_InvalidModelStateException_If_IsNew_True_On_Incoming_PortalPrefixes() {
+            UpdateModel_Overrides_Throw_InvalidModelStateException_If_IsNew_True_On_Incoming_Models();
+        }
+
+        private static MockEntitySet<PortalPrefix> SetupMockPrefixes() {
             return new MockEntitySet<PortalPrefix> {
                 new PortalPrefix() { Id = 1, Prefix = "localhost/" }, new PortalPrefix() { Id = 2, Prefix = "localhost/Foo/" }, new PortalPrefix() { Id = 3, Prefix = "localhost/Foo/Bar/Baz/" }, new PortalPrefix() { Id = 4, Prefix = "localhost/Foo/Bar/" }, new PortalPrefix() { Id = 5, Prefix = "localhost:8080/" }, new PortalPrefix() { Id = 6, Prefix = "localhost:8080/Quz/" },
             };
         }
 
-        protected override void VerifyTestModel(PortalPrefix model, int id) {
+        protected override void VerifyTestModel(PortalPrefix model, int? id) {
             Assert.AreEqual(id, model.Id);
             Assert.AreEqual(String.Format("Test Portal Prefix #{0}", id), model.Prefix);
         }
@@ -190,7 +205,7 @@ namespace Maverick.DomainServices.Tests {
             return new PortalPrefixRepository();
         }
 
-        protected override PortalPrefix CreateTestModel(int id) {
+        protected override PortalPrefix CreateTestModel(int? id) {
             return new PortalPrefix {
                 Id = id,
                 Prefix = String.Format("Test Portal Prefix #{0}", id)

@@ -17,30 +17,34 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using TestUtilities;
 using TargetResources = Maverick.DomainServices.Properties.Resources;
+using Maverick.Models;
 
 namespace Maverick.DomainServices.Tests {
-    public abstract class RepositoryTestBase<TService, TModel> where TService : RepositoryBase<TModel> where TModel : class {
+    // TODO: I'm not happy with the way I had to write these tests... is there a better way?
+    public abstract class RepositoryTestBase<TService, TModel>
+        where TService : RepositoryBase<TModel>
+        where TModel : EntityBase {
         protected void GetModels_Returns_ModelSet_From_Database() {
             // Arrange
             TService service = CreateService();
             service.DataContextManager = CreateDataContextManager(new MockEntitySet<TModel> {
                 CreateTestModels(2)
             });
-            
+
             // Act
             IList<TModel> models = service.GetAll().ToList();
-            
+
             // Assert
             Assert.AreEqual(2, models.Count, "Expected that 2 {0} objects would be returned", typeof(TModel).Name);
             VerifyTestModels(models, 2);
         }
 
         protected void AddModel_Throws_InvalidOperationException_If_No_Current_DataContextManager() {
-           RunNoDataContextManagerTest(service => service.Add(CreateTestModel(42)));
+            RunNoDataContextManagerTest(service => service.Add(CreateTestModel(null)));
         }
 
         protected void AddModel_Throws_InvalidOperationException_If_No_Current_DataContext() {
-            RunNoDataContextTest(service => service.Add(CreateTestModel(42)));
+            RunNoDataContextTest(service => service.Add(CreateTestModel(null)));
         }
 
         protected void AddModel_Throws_ArgumentNullException_If_Model_Null() {
@@ -50,33 +54,45 @@ namespace Maverick.DomainServices.Tests {
         protected void AddModel_Outside_DataBatch_Adds_Model_To_ModelSet_In_Database_And_Saves() {
             // Arrange
             MockEntitySet<TModel> entitySet = new MockEntitySet<TModel>();
-            
+
             RunUnbatchedTest(entitySet, service => {
+                TModel expected = CreateTestModel(null);
+                
                 // Act
-                service.Add(CreateTestModel(42));
+                service.Add(expected);
 
                 // Assert
                 Assert.AreEqual(1, entitySet.Inserted.Count, "Expected that the {0} object would be queued for insertion", typeof(TModel).Name);
-                VerifyTestModel(entitySet.Inserted[0], 42);
+                Assert.AreSame(expected, entitySet.Inserted[0]);
             });
         }
 
         protected void AddModel_Within_DataBatch_Adds_Model_To_Context_Provided_By_Batch_And_Does_Not_Save() {
             // Arrange
             MockEntitySet<TModel> entitySet = new MockEntitySet<TModel>();
-            
+
             // Act
             RunBatchedTest(entitySet,
                            service => {
-                               service.Add(CreateTestModel(42));
+                               TModel expected = CreateTestModel(null);
+                               service.Add(expected);
 
                                // Assert
                                Assert.AreEqual(1,
                                                entitySet.Inserted.Count,
                                                "Expected that the {0} object would be queued for insertion",
                                                typeof(TModel).Name);
-                               VerifyTestModel(entitySet.Inserted[0], 42);
+                               Assert.AreSame(expected, entitySet.Inserted[0]);
                            });
+        }
+
+        protected void AddModel_Throws_InvalidModelStateException_If_IsNew_False_On_Incoming_Model() {
+            // Arrange
+            MockEntitySet<TModel> entitySet = new MockEntitySet<TModel>();
+            TService service = SetupServiceForUnbatchedTest(entitySet);
+
+            // Act and Assert
+            ExceptionAssert.Throws<InvalidModelStateException>(() => service.Add(CreateTestModel(42)), TargetResources.Error_AddRequiresNewObject);
         }
 
         protected void DeleteModel_Throws_InvalidOperationException_If_No_Current_DataContextManager() {
@@ -94,7 +110,7 @@ namespace Maverick.DomainServices.Tests {
         protected void DeleteModel_Outside_DataBatch_Deletes_Model_From_ModelSet_In_Database_And_Saves() {
             // Arrange
             MockEntitySet<TModel> entitySet = new MockEntitySet<TModel>();
-            
+
             // Act
             RunUnbatchedTest(entitySet,
                              service => {
@@ -112,7 +128,7 @@ namespace Maverick.DomainServices.Tests {
         protected void DeleteModel_Inside_DataBatch_Deletes_Model_From_ModelSet_In_Database_And_Does_Not_Save() {
             // Arrange
             MockEntitySet<TModel> entitySet = new MockEntitySet<TModel>();
-            
+
             // Act
             RunBatchedTest(entitySet,
                            service => {
@@ -125,6 +141,15 @@ namespace Maverick.DomainServices.Tests {
                                                typeof(TModel).Name);
                                VerifyTestModel(entitySet.Deleted[0], 42);
                            });
+        }
+
+        protected void DeleteModel_Throws_InvalidModelStateException_If_IsNew_True_On_Incoming_Model() {
+            // Arrange
+            MockEntitySet<TModel> entitySet = new MockEntitySet<TModel>();
+            TService service = SetupServiceForUnbatchedTest(entitySet);
+
+            // Act and Assert
+            ExceptionAssert.Throws<InvalidModelStateException>(() => service.Delete(CreateTestModel(null)), TargetResources.Error_DeleteRequiresNonNewObject);
         }
 
         protected void UpdateModel_Overrides_Throw_InvalidOperationException_If_No_Current_DataContextManager() {
@@ -147,7 +172,7 @@ namespace Maverick.DomainServices.Tests {
         protected void UpdateModel_Outside_DataBatch_With_One_Model_Attaches_It_To_DataContext_As_Modified_And_Saves() {
             // Arrange
             MockEntitySet<TModel> entitySet = new MockEntitySet<TModel>();
-            
+
             // Act
             RunUnbatchedTest(entitySet,
                              service => {
@@ -166,7 +191,7 @@ namespace Maverick.DomainServices.Tests {
         protected void UpdateModel_Inside_DataBatch_With_One_Model_Attaches_It_To_DataContext_As_Modified_And_Does_Not_Save() {
             // Arrange
             MockEntitySet<TModel> entitySet = new MockEntitySet<TModel>();
-            
+
             // Act
             RunBatchedTest(entitySet,
                            service => {
@@ -185,7 +210,7 @@ namespace Maverick.DomainServices.Tests {
         protected void UpdateModel_Outside_DataBatch_With_Two_Models_Attaches_Them_To_DataContext_As_Modified_And_Saves() {
             // Arrange
             MockEntitySet<TModel> entitySet = new MockEntitySet<TModel>();
-            
+
             // Act
             RunUnbatchedTest(entitySet,
                              service => {
@@ -204,7 +229,7 @@ namespace Maverick.DomainServices.Tests {
         protected void UpdateModel_Inside_DataBatch_With_Two_Models_Attaches_Them_To_DataContext_As_Modified_And_Does_Not_Save() {
             // Arrange
             MockEntitySet<TModel> entitySet = new MockEntitySet<TModel>();
-            
+
             // Act
             RunBatchedTest(entitySet,
                            service => {
@@ -220,6 +245,18 @@ namespace Maverick.DomainServices.Tests {
                            });
         }
 
+        protected void UpdateModel_Overrides_Throw_InvalidModelStateException_If_IsNew_True_On_Incoming_Models() {
+            // Arrange
+            MockEntitySet<TModel> entitySet = new MockEntitySet<TModel>();
+            TService service = SetupServiceForUnbatchedTest(entitySet);
+
+            // Act and Assert
+            ExceptionAssert.Throws<InvalidModelStateException>(() => service.Update(CreateTestModel(null)), TargetResources.Error_UpdateRequiresNonNewObject);
+            ExceptionAssert.Throws<InvalidModelStateException>(() => service.Update(CreateTestModel(null), CreateTestModel(42)), TargetResources.Error_UpdateRequiresNonNewObject);
+            ExceptionAssert.Throws<InvalidModelStateException>(() => service.Update(CreateTestModel(42), CreateTestModel(null)), TargetResources.Error_UpdateRequiresNonNewObject);
+
+        }
+
         protected void RunArgumentTest(Func<TService, Expression<Action<TModel>>> callToTest) {
             // Arrange
             TService service = CreateService();
@@ -233,14 +270,14 @@ namespace Maverick.DomainServices.Tests {
             TService service = CreateService();
             var mockContextManager = new Mock<DataContextManager>();
             service.DataContextManager = mockContextManager.Object;
-            
+
             // Act and Assert
             ExceptionAssert.Throws<InvalidOperationException>(() => callToTest(service), TargetResources.Error_NoDataContext);
         }
 
         protected void RunNoDataContextManagerTest(Action<TService> callToTest) {
             DataBatch.DataContextManager = null;
-            
+
             // Arrange
             TService service = CreateService();
 
@@ -282,8 +319,8 @@ namespace Maverick.DomainServices.Tests {
 
 
         protected abstract TService CreateService();
-        protected abstract TModel CreateTestModel(int id);
-        protected abstract void VerifyTestModel(TModel model, int id);
+        protected abstract TModel CreateTestModel(int? id);
+        protected abstract void VerifyTestModel(TModel model, int? id);
         protected abstract void AddMockModelSet(MockDataContext context, MockEntitySet<TModel> entitySet);
 
         private TService SetupServiceForBatchedTest(MockEntitySet<TModel> entitySet) {

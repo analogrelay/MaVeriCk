@@ -11,9 +11,10 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Maverick.Data;
 using Maverick.DomainServices.Properties;
+using Maverick.Models;
 
 namespace Maverick.DomainServices {
-    public abstract class RepositoryBase<TModel> where TModel : class {
+    public abstract class RepositoryBase<TModel> where TModel : EntityBase {
         private DataContextManager _dataContextManager;
 
         public virtual DataContextManager DataContextManager {
@@ -34,18 +35,21 @@ namespace Maverick.DomainServices {
         [SuppressMessage("Microsoft.Design", "CA1030:UseEventsWhereAppropriate", Justification = "This method does not attach a listener, thus it is not covered by this rule")]
         public virtual void Add(TModel toAdd) {
             Arg.NotNull("toAdd", toAdd);
+            ValidateForAdd(toAdd);
 
             RunCommand(s => s.InsertOnSave(toAdd));
         }
 
         public virtual void Delete(TModel toDelete) {
             Arg.NotNull("toDelete", toDelete);
+            ValidateForDelete(toDelete);
 
             RunCommand(s => s.DeleteOnSave(toDelete));
         }
 
         public virtual void Update(TModel modified) {
             Arg.NotNull("modified", modified);
+            ValidateForUpdate(null, modified);
 
             RunCommand(s => s.UpdateOnSave(modified));
         }
@@ -53,8 +57,34 @@ namespace Maverick.DomainServices {
         public virtual void Update(TModel original, TModel modified) {
             Arg.NotNull("original", original);
             Arg.NotNull("modified", modified);
+            ValidateForUpdate(original, modified);
 
             RunCommand(s => s.UpdateOnSave(original, modified));
+        }
+
+        protected internal virtual void ValidateForAdd(TModel model) {
+            Arg.NotNull("model", model);
+
+            if(!model.IsNew) {
+                throw new InvalidModelStateException(Resources.Error_AddRequiresNewObject);
+            }
+        }
+
+        protected internal virtual void ValidateForDelete(TModel model) {
+            Arg.NotNull("model", model);
+
+            if (model.IsNew) {
+                throw new InvalidModelStateException(Resources.Error_DeleteRequiresNonNewObject);
+            }
+        }
+
+        protected internal virtual void ValidateForUpdate(TModel original, TModel modified) {
+            // Original can be null
+            Arg.NotNull("modified", modified);
+
+            if (modified.IsNew || (original != null && original.IsNew)) {
+                throw new InvalidModelStateException(Resources.Error_UpdateRequiresNonNewObject);
+            }
         }
 
         protected virtual IEntitySet<TModel> GetEntitySet(DataContext dataContext) {

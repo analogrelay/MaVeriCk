@@ -65,6 +65,7 @@
     <Compile Include="..\..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="InvalidModelStateExceptionTests.cs" />
     <Compile Include="ModuleRepositoryTests.cs" />
     <Compile Include="PageRepositoryTests.cs" />
     <Compile Include="PortalPrefixRepositoryTests.cs" />

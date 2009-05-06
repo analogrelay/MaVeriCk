@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="ExpressionHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="InvalidModelStateException.cs" />
     <Compile Include="ModuleRepository.cs" />
     <Compile Include="PageRepository.cs" />
     <Compile Include="PortalPrefixRepository.cs" />
