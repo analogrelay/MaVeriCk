@@ -10,7 +10,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
 
 namespace Maverick.Models {
     [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Module", Justification = "While VB.Net's Module keyword may conflict with this name, changing it would make it inconsistent with the rest of the models.  Model type names are designed to exactly match database tables (although in singular form)")]
@@ -24,11 +23,9 @@ namespace Maverick.Models {
 
         [Required]
         [StringLength(50)]
-        [DisplayName("Zone Name")]
         public virtual string ZoneName { get; set; }
 
         [Required]
-        [DisplayName("Module Application Id")]
         public virtual Guid ModuleApplicationId { get; set; }
 
         [Required]

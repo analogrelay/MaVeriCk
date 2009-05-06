@@ -31,11 +31,9 @@ namespace Maverick.Models {
         [Required]
         public virtual Portal Portal { get; set; }
 
-        [DisplayName("Parent Page")]
         public virtual Page ParentPage { get; set; }
         
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "Data Layers may wish to set the value of this collection")]
-        [DisplayName("Child Pages")]
         public virtual IList<Page> ChildPages { get; set; }
 
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "Data Layers may wish to set the value of this collection")]
