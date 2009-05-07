@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Maverick.Core, Version=0.1.0.18499, Culture=neutral, PublicKeyToken=null" namespace="Maverick.Models">
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="{{ASSEMBLY}}" namespace="Maverick.Models">
   <class name="Page" table="Pages" xmlns="urn:nhibernate-mapping-2.2">
     <id name="Id" type="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" column="Id">
       <generator class="identity" />
@@ -14,11 +14,11 @@
     <many-to-one not-null="true" name="Portal" column="PortalId" />
     <bag name="ChildPages" inverse="true">
       <key column="ParentId" />
-      <one-to-many class="Maverick.Models.Page, Maverick.Core, Version=0.1.0.18499, Culture=neutral, PublicKeyToken=null" />
+      <one-to-many class="Maverick.Models.Page, {{ASSEMBLY}}" />
     </bag>
     <bag name="Modules" inverse="true">
       <key column="PageId" />
-      <one-to-many class="Maverick.Models.Module, Maverick.Core, Version=0.1.0.18499, Culture=neutral, PublicKeyToken=null" />
+      <one-to-many class="Maverick.Models.Module, {{ASSEMBLY}}" />
     </bag>
   </class>
 </hibernate-mapping>
