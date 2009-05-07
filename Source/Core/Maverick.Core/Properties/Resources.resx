@@ -129,4 +129,14 @@
   <data name="Error_RequiredMetadataKeyMissing" xml:space="preserve">
     <value>The required metadata key '{0}' was not found on the component.  Ensure you have applied the proper attribute to the component class.  All Maverick component types have an attribute type which is used to attach required metadata to implementations of that component type.  For example, DataContextFactory components must have a DataContextFactoryAttribute applied.</value>
   </data>
+  <data name="Error_ValidationFailed" xml:space="preserve">
+    <value>There were errors validating the {0}</value>
+  </data>
+  <data name="Error_ValidationFailedRuleMessagesList" xml:space="preserve">
+    <value>:
+{0}</value>
+  </data>
+  <data name="Error_ValidationFailedRuleMesssage" xml:space="preserve">
+    <value>* {0}</value>
+  </data>
 </root>

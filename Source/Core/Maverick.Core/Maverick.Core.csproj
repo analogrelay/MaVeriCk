@@ -109,6 +109,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Validation\ValidationError.cs" />
+    <Compile Include="Validation\ValidationFailedException.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CommonErrors.resx">

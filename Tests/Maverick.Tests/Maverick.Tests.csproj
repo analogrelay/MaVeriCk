@@ -84,6 +84,8 @@
     <Compile Include="MockEntitySet.cs" />
     <Compile Include="Models\EntityBaseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\ValidationErrorTests.cs" />
+    <Compile Include="Validation\ValidationFailedExceptionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Core\Maverick.Core\Maverick.Core.csproj">

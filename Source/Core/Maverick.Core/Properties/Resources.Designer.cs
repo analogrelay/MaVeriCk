@@ -95,5 +95,33 @@ namespace Maverick.Properties {
                 return ResourceManager.GetString("Error_RequiredMetadataKeyMissing", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There were errors validating the {0}.
+        /// </summary>
+        internal static string Error_ValidationFailed {
+            get {
+                return ResourceManager.GetString("Error_ValidationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to :
+        ///{0}.
+        /// </summary>
+        internal static string Error_ValidationFailedRuleMessagesList {
+            get {
+                return ResourceManager.GetString("Error_ValidationFailedRuleMessagesList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to * {0}.
+        /// </summary>
+        internal static string Error_ValidationFailedRuleMesssage {
+            get {
+                return ResourceManager.GetString("Error_ValidationFailedRuleMesssage", resourceCulture);
+            }
+        }
     }
 }
