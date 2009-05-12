@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="Validation\ValidationError.cs" />
     <Compile Include="Validation\ValidationFailedException.cs" />
+    <Compile Include="Validation\Validator.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CommonErrors.resx">

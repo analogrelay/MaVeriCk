@@ -16,6 +16,15 @@ namespace TestUtilities {
     public static class ExceptionAssert {
         private const string MessageArgumentNullOrEmpty = "Argument '{0}' cannot be null or an empty string{1}Parameter name: {0}";
 
+        public static Exception Capture(Action act) {
+            try {
+                act();
+            } catch(Exception ex) {
+                return ex;
+            }
+            return null;
+        }
+
         public static void Throws<TException>(Action act) where TException : Exception {
             Throws<TException>(act, ex => true);
         }
