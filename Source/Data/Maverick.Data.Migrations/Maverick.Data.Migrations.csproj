@@ -77,10 +77,12 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="0001_Portals.cs" />
+    <Compile Include="0005_SetupTestPortal.cs" />
     <Compile Include="DatabaseModules.cs" />
     <Compile Include="0002_PortalPrefixes.cs" />
     <Compile Include="0003_Pages.cs" />
     <Compile Include="0004_Modules.cs" />
+    <Compile Include="DbProviderExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
