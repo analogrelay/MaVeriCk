@@ -19,7 +19,7 @@ namespace Maverick.Tests.Models {
         public void IsNew_Returns_True_If_Id_Null() {
             // Arrange
             var mockEntity = new Mock<EntityBase>() {CallBase = true};
-            mockEntity.SetupGet(e => e.Id)
+            mockEntity.SetupGet(e => e.IdValue)
                       .Returns(() => null);
 
             // Act
@@ -33,7 +33,7 @@ namespace Maverick.Tests.Models {
         public void IsNew_Returns_False_If_Id_NotNull() {
             // Arrange
             var mockEntity = new Mock<EntityBase>() { CallBase = true };
-            mockEntity.SetupGet(e => e.Id)
+            mockEntity.SetupGet(e => e.IdValue)
                       .Returns(42);
 
             // Act

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Inherits="Maverick.Web.ModuleFramework.ModuleViewPage<ControlPanelViewModel>" %>
+<%@ Page Language="C#" Inherits="Maverick.Web.ModuleFramework.ModuleViewPage<ControlPanelViewModel>" %>
 
 <div id="cp_root">
     <div id="cp_title" class="ui-widget">

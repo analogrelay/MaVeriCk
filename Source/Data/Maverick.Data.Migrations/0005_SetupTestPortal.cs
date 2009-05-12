@@ -22,7 +22,7 @@ namespace Maverick.Data.Migrations {
             db.InsertDataInto("PortalPrefixes",
                               new {
                                   PortalId = portalId,
-                                  Prefix = "localhost/Maverick"
+                                  Prefix = "localhost/Maverick/"
                               },
                               false);
             db.InsertDataInto("Pages",

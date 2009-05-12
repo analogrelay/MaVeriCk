@@ -13,7 +13,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Maverick.Models {
     public class PortalPrefix : EntityBase {
         [Range(0, Int32.MaxValue)]
-        public override int? Id { get; set; }
+        public virtual int? Id { get; set; }
 
         [Required]
         [StringLength(256)]
@@ -22,5 +22,11 @@ namespace Maverick.Models {
 
         [Required]
         public virtual Portal Portal { get; set; }
+
+        protected internal override int? IdValue {
+            get {
+                return Id;
+            }
+        }
     }
 }

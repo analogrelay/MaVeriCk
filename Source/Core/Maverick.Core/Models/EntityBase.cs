@@ -15,11 +15,11 @@ using System.Text;
 namespace Maverick.Models {
     public abstract class EntityBase {
         // Some data layers have trouble with inherited members, so by making this abstract, it's a little easier to deal with.
-        public abstract int? Id { get; set; }
+        protected internal abstract int? IdValue { get; }
         
         public virtual bool IsNew {
             get {
-                return Id == null;
+                return IdValue == null;
             }
         }
     }

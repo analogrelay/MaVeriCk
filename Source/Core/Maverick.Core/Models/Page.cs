@@ -15,7 +15,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Maverick.Models {
     public class Page : EntityBase {
         [Range(0, Int32.MaxValue)]
-        public override int? Id { get; set; }
+        public virtual int? Id { get; set; }
 
         [Required]
         [StringLength(256)]
@@ -36,5 +36,11 @@ namespace Maverick.Models {
 
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "Data Layers may wish to set the value of this collection")]
         public virtual IList<Module> Modules { get; set; }
+
+        protected internal override int? IdValue {
+            get {
+                return Id;
+            }
+        }
     }
 }
