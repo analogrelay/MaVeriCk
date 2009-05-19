@@ -1,0 +1,102 @@
+===============================
+= Maverick v0.1 Release Notes =
+===============================
+
+-----------------
+- Prerequisites -
+-----------------
+
+	* SQL Server 2005 or higher (Express Edition or higher)
+		* SQL Server Management Studio (Express or higher)
+	* Visual Studio 2008 SP1
+	* ASP.Net MVC 1.0 MSI Install [http://www.microsoft.com/downloads/details.aspx?FamilyID=53289097-73ce-43bf-b6a6-35e00103cb4b&displaylang=en]
+	* .Net 3.5 SP1
+	* MsysGit (to contribute changes, if desired) [http://code.google.com/p/msysgit/]
+	* Microsoft IIS (ASP.Net development server is not supported at this time, but it will be supported in future versions)
+
+----------------------
+- Getting the source -
+----------------------
+
+A) One-time source package download
+
+Size: About 50MB
+
+There are two ways to get the source.  First, you can download a package from GitHub (http://github.com/anurse/MaVeriCk).  You can either download the latest source (not guaranteed to work) or download a package from the Downloads section.  
+
+B) Git Clone (recommended if you wish to make and track changes to the project)
+
+Size: About 90MB, including full history
+
+If you have MsysGit (or another Git implementation) installed, you can clone the public Git repository on GitHub and create a complete local copy of the entire repository. This copy includes copies of EVERY change made to the repository and is approximately 30MB larger than the source package alone.  The advantage to this package is that you can view the entire history of the project and make changes to your local repository.  You can then submit your changes as patches.
+
+To clone our Git repository, start by opening a command prompt.  Create a directory on your hard drive to store the sources, and "CD" to the directory _above_ this directory (i.e. if you created E:\Development\Maverick, change directory to E:\Development in your command prompt).  Then, type the following command (assuming MsysGit is installed and in your PATH):
+
+	git clone git://github.com/anurse/MaVeriCk.git Maverick
+
+(Replace 'Maverick' with the name of the directory you created)
+
+C) GitHub Fork (recommended if you plan to contribute major changes to the project)
+
+If you create a GitHub account, you can fork the MaVeriCk project repository and create your own online repository to manage your changes, then you can submit a Pull Request to the MaVeriCk project to request that your changes be pulled back into the main branch.  To do this, simply visit the GitHub page for MaVeriCk: [http://github.com/anurse/MaVeriCk/tree/master] and click the "fork" button.  The result of this process will be a new GitHub project which you are the administrator for.  You can then use the GitHub guides [http://github.com/guides/home] to help get started working with GitHub
+
+-----------------------
+- Installing Maverick -
+-----------------------
+
+1. Configuring IIS
+	
+	a. Open the IIS Console
+
+	b. Select "Application Pools"
+
+	c. Right-click the ApplicationPool to be used by Maverick and select "Advanced Settings..."
+
+	d. Set "Load User Profile" to true
+
+2. Creating the SQL Server Database:
+
+	a. Create a new Database in SQL Server (we suggest the name "Maverick" to save time)
+
+	b. Optional, but recommended: Give your IIS AppPool Identity 'db_owner' permission to the database
+		If you wish to use SQL Integrated Security (which is recommended), you must ensure that your IIS AppPool's user identity has access to the database.
+		
+		i. Create a Login for that user ("NT AUTHORITY\Network Service" by default on Vista).  NOTE: On Windows 7, the default IIS AppPool identity is "IIS AppPool\[AppPoolName]".  This should be valid for SQL Server, but if you encouter errors, change the Identity property of your AppPool back to "Network Service" and make sure "NT AUTHORITY\Network Service" has db_owner permission to the database.
+
+		ii. Give that Login db_owner permission on the database by opening the Login's properties, selecting "User Mapping", checking the database you created and then the "db_owner" role.
+
+3. Building the source
+
+	a. Open the Maverick.sln file in Microsoft Visual Studio 2008 SP1
+		NOTE: If prompted to create a virtual directory in IIS, click "Yes".  If you receive errors while trying to load the Test projects, simply ignore them and make sure they are unloaded.  The Test projects require Visual Studio 2008 Professional Edition or higher.
+
+	b. Build the solution
+
+	c. Optional, but recommended: Run all tests (Test > Run > All Tests in Solution)
+		NOTE: The Integration tests, in the Maverick.Data.NHiberate.Tests.Integration project, are not loaded by default.  It is recommended that you run them at least once.  To do this, reload the project, rebuild the solution, run all tests, and then unload the project again.  Since these tests take a few minutes to complete, it is not recommended that you run them frequently.
+	
+4. Installing Maverick Database Objects
+
+	a. Right click the "Maverick.Data.Migrations" project in the "Data" solution folder and select "Set as StartUp Project"
+
+	b. IF you did NOT use the name "Maverick" for the database, or if your current Windows User (NOT the IIS AppPool user) does not have 'db_owner' permission on the database, edit the connection string in the App.config file in this project to refer to the correct database and user (if necessary)
+
+	c. Run the solution without debugging (Ctrl-F5, or Debug > Start without Debugging)
+		Verify that a command prompt window appears displaying the following messages:
+			Upgrading to version 1 (Module: DEFAULT)
+			Upgrading to version 2 (Module: DEFAULT)
+			Upgrading to version 3 (Module: DEFAULT)
+			Upgrading to version 4 (Module: DEFAULT)
+			Upgrading to version 5 (Module: DEFAULT)
+
+	d. Press any key to close the command prompt window that appeared
+
+5. Running Maverick
+
+	a. Set the "Maverick.Web" project in the "Web" solution folder as the StartUp project (see 3a.)
+
+	b. Verify that the "Default.aspx" file in this project is the Start page (right click > Set as Start Page
+
+	c. IF you did NOT use the name "Maverick" for the database, or if your IIS AppPool User does not have 'db_owner' permission on the database, edit the connection string in the "Configuration/ConnectionStrings.config" file in this project to refer to the correct database and user (if necessary)
+
+	d. Run the solution with (F5) or without (Ctrl-F5) debugging, your choice

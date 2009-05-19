@@ -11,27 +11,29 @@ namespace Maverick.Data.Migrations {
                                   Name = "Test Portal"
                               },
                               false);
-            int portalId = db.GetLastId("Portals");
-
+            db.GetLastId("Portals");
             db.InsertDataInto("PortalPrefixes",
                               new {
-                                  PortalId = portalId,
+                                  Id = 1,
+                                  PortalId = 1,
                                   Prefix = "localhost/"
                               },
-                              false);
+                              true);
             db.InsertDataInto("PortalPrefixes",
                               new {
-                                  PortalId = portalId,
-                                  Prefix = "localhost/Maverick/"
+                                  Id = 2,
+                                  PortalId = 1,
+                                  Prefix = "localhost/Maverick"
                               },
-                              false);
+                              true);
             db.InsertDataInto("Pages",
                               new {
-                                  PortalId = portalId,
+                                  Id = 1,
+                                  PortalId = 1,
                                   Path = "/",
                                   Title = "Test Page"
                               },
-                              false);
+                              true);
         }
 
         public void Down(DbProvider db) {
